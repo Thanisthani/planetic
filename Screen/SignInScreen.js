@@ -2,10 +2,10 @@ import React from 'react'
 import { View, Text, StyleSheet, StatusBar } from 'react-native'
 import SignIn from '../component/signIn/SignIn'
 
-const SignInScreen = () => {
+const SignInScreen = ({navigation}) => {
     return (
         <View style={Styles.conatiner}>
-            <SignIn />
+            <SignIn navigation ={navigation} />
         </View>
     )
 }

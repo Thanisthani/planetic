@@ -3,6 +3,8 @@ import { View, TextInput,Text, StyleSheet, Pressable, TouchableOpacity,Alert } f
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import * as EmailValidator from 'email-validator';
+import { auth } from '../../firebase'
+import {  createUserWithEmailAndPassword } from "firebase/auth";
 
 
 const SignupSchema = Yup.object().shape(
@@ -13,7 +15,16 @@ const SignupSchema = Yup.object().shape(
     }
 )
 
-const SignUp = () => {
+const SignUp = ({ navigation }) => {
+    const RegisterUser = (email,password) => {
+        createUserWithEmailAndPassword(auth, email, password)
+            .then((re) => {
+                console.log(re);
+            })
+            .catch((re) => {
+                console.log(re );
+        })
+    }
     return (
         <View style={Styles.wrapper}>
             <View style={Styles.headerwrapper}>
@@ -25,7 +36,7 @@ const SignUp = () => {
             </View>
             <Formik
                 initialValues={{ email: "", username:"",password: "" }}
-                onSubmit={values => { console.log(values) }}
+                onSubmit={values => { RegisterUser(values.email,values.password) }}
                 validationSchema={SignupSchema}
                 validateOnMount={true}>
                 {({
@@ -83,7 +94,7 @@ const SignUp = () => {
             </Pressable>
             <View style={Styles.wrapperSignup}>
                             <Text style={Styles.signUP}>Already do you have an account ? </Text>
-                            <TouchableOpacity onPress={() => navigation.goBack()}>
+                            <TouchableOpacity onPress={() => navigation.push("SignInScreen")}>
                                 <Text style={[Styles.signUP,{ color: "#19B4BF",fontWeight:"bold" }]}>Log In</Text>
                                 </TouchableOpacity>
                         </View>

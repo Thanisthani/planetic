@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text,StyleSheet, Image, TouchableOpacity } from 'react-native'
 
-const Welcome = () => {
+const Welcome = ({navigation}) => {
     return (
         <View style={Styles.container}>
             <View style={Styles.imgWrapper}>
@@ -11,17 +11,17 @@ const Welcome = () => {
                 <Text style={Styles.header}>Start explore Plannetic</Text>
                     <Text style={Styles.subTitle}>and get extra features {'\n'}by registration </Text>
             </View>
-            <Buttons />
+            <Buttons navigation={navigation} />
         </View>
     )
 }
 
-const Buttons = () => (
+const Buttons = ({navigation}) => (
     <View style={Styles.buttonWrapper}>
-        <TouchableOpacity style={Styles.btn}>
+        <TouchableOpacity onPress={ ()=> navigation.push('SignUpScreen')} on style={Styles.btn}>
             <Text style={Styles.btnText}>Join Us</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[Styles.btn,{backgroundColor:"white"}]}>
+        <TouchableOpacity onPress={ ()=> navigation.push('SignInScreen')} style={[Styles.btn,{backgroundColor:"white"}]}>
             <Text style={[Styles.btnText,{color:'#19B4BF'}]}>Log In</Text>
         </TouchableOpacity>
     </View>

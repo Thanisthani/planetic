@@ -3,7 +3,8 @@ import { View, TextInput,Text, StyleSheet, Pressable, TouchableOpacity,Alert } f
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import * as EmailValidator from 'email-validator';
-
+import { auth } from '../../firebase'
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 const LoginSchema = Yup.object().shape(
     {
@@ -14,7 +15,29 @@ const LoginSchema = Yup.object().shape(
 
 
 
-const SignIn = () => {
+
+const SignIn = ({ navigation }) => {
+    const onLogin =  (email,password) => {
+        signInWithEmailAndPassword(auth, email, password)
+       .then((re) => {
+           console.log("Sucessfully log in " );
+       })
+       .catch((re) => {
+           console.log(re.message + "hi");
+           Alert.alert(
+               "Please check your email & password !",
+               "If you not registered click register",
+           [{ text: "Register", onPress: () => navigation.push("SignUpScreen") },
+               {text: "Try again" }
+           ])
+    })
+       // try {
+       //     await firebase.auth().signWithEmailAndPassword(email, password)
+       //     console.log("Login sucessful");
+       // } catch (error) {
+       //     Alert.alert(error.message)
+       // }
+    }
     return (
         <View style={Styles.wrapper}>
             <View style={Styles.headerwrapper}>
@@ -29,7 +52,8 @@ const SignIn = () => {
             <Formik
                 initialValues={{ email: "", password: "" }}
                 onSubmit={values => {
-                    console.log(values.email,values.password)
+                    // console.log(values.email,values.password)
+                    onLogin(values.email,values.password)
                 }}
                 validationSchema={LoginSchema}
                 validateOnMount={true}>
