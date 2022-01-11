@@ -14,7 +14,7 @@ const Suggestion = () => {
 
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                 
-            <View style={{ marginRight: 20, marginLeft:20 }}>
+            <View style={{  marginLeft:20 }}>
                 <Image style={Styles.suggestplace}
                         source={require("../../assets/Ella.jpeg")} />
                     <View style={Styles.suggestBottom}>
@@ -42,7 +42,7 @@ const Suggestion = () => {
                 </View>
 
 
-                <View style={{ marginRight: 20, marginBottom:10 }}>
+                <View style={{ marginBottom:10 }}>
                 <Image style={Styles.suggestplace}
                         source={require("../../assets/suggest-kandy.jpg")} />
                     <View style={Styles.suggestBottom}>
@@ -70,7 +70,7 @@ const Suggestion = () => {
                 </View>
 
                 
-                <View style={{ marginRight: 20 }}>
+                <View style={{  }}>
                 <Image style={Styles.suggestplace}
                         source={require("../../assets/suggest-kandy.jpg")} />
                     <View style={Styles.suggestBottom}>
@@ -124,7 +124,8 @@ const Styles = StyleSheet.create({
         width: 250,
         height: 130,
         borderTopLeftRadius: 10,
-       borderTopRightRadius:10
+        borderTopRightRadius: 10,
+       marginRight:10
     },
     suggestBottom: {
         width: 250,

@@ -10,70 +10,65 @@ const Popularplace = () => {
                 <Text style={[Styles.header,{fontWeight:"bold"}]}>Popular</Text> 
                 <Text style={Styles.header}> places</Text>
             </View>
+
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-            <View>
+
+
+            <View style={{marginLeft:20, marginBottom:10}}>
                 <ImageBackground style={Styles.suggestImg} 
                     source={require("../../assets/suggest-kandy.jpg")}
-                    imageStyle={{ borderRadius: 20 }} >
-                    <View style={Styles.suggestTextWrapper}>
-                        <Text></Text>
-                    <View style={Styles.suggestBottom}>
-                    {/* <Text style={Styles.suggestText}>Kandy</Text> */}
-                            <Text style={Styles.suggestText}>Heritage</Text>
-                            <Text style={Styles.suggestText}>05 Days</Text>
+                        imageStyle={{ borderRadius: 20 }} >
+                        <View style={Styles.suggestTextWrapper}>
+
+                            <Text></Text>
+
+                            <View style={[Styles.suggestplace, Styles.suggestBottom]}>
+                                <Entypo name="location-pin" size={24} color="#19B4BF" />
+                                <Text style={Styles.suggestplaceText}>Kandy</Text>
+                            </View>
+
+                        </View>
+                </ImageBackground> 
+                </View>
+                
+
+                <View style={{ marginBottom:10}}>
+                <ImageBackground style={Styles.suggestImg} 
+                    source={require("../../assets/Ella.jpeg")}
+                        imageStyle={{ borderRadius: 20 }} >
+                        <View style={Styles.suggestTextWrapper}>
+
+                            <Text></Text>
+
+                            <View style={[Styles.suggestplace, Styles.suggestBottom]}>
+                                <Entypo name="location-pin" size={24} color="#19B4BF" />
+                                <Text style={Styles.suggestplaceText}>Badulla</Text>
+                            </View>
                             
                         </View>
-                        </View>
-                </ImageBackground>
-                <View style={Styles.suggestplace}>
-                <Entypo name="location-pin" size={24} color="#19B4BF" />
-                <Text style={Styles.suggestplaceText}>Kandy</Text>
-                    </View>
-                    
-                
+                </ImageBackground> 
                 </View>
-                <View>
-                <ImageBackground style={Styles.suggestImg}
+                
+
+                <View style={{ marginBottom:10}}>
+                <ImageBackground style={Styles.suggestImg} 
                     source={require("../../assets/suggest-kandy.jpg")}
-                    imageStyle={{ borderRadius: 20 }} >
-                    <View style={Styles.suggestTextWrapper}>
-                        <Text></Text>
-                    <View style={Styles.suggestBottom}>
-                    {/* <Text style={Styles.suggestText}>Kandy</Text> */}
-                            <Text style={Styles.suggestText}>Heritage</Text>
-                            <Text style={Styles.suggestText}>05 Days</Text>
+                        imageStyle={{ borderRadius: 20 }} >
+                        <View style={Styles.suggestTextWrapper}>
+
+                            <Text></Text>
+
+                            <View style={[Styles.suggestplace, Styles.suggestBottom]}>
+                                <Entypo name="location-pin" size={24} color="#19B4BF" />
+                                <Text style={Styles.suggestplaceText}>Kandy</Text>
+                            </View>
                             
                         </View>
-                        </View>
-                </ImageBackground>
-                <View style={Styles.suggestplace}>
-                <Entypo name="location-pin" size={24} color="#19B4BF" />
-                <Text style={Styles.suggestplaceText}>Kandy</Text>
-                    </View>
-                    
-                
-                </View>
-                <View>
-                <ImageBackground style={Styles.suggestImg}
-                    source={require("../../assets/suggest-kandy.jpg")}
-                    imageStyle={{ borderRadius: 20 }} >
-                    <View style={Styles.suggestTextWrapper}>
-                        <Text></Text>
-                    <View style={Styles.suggestBottom}>
-                    {/* <Text style={Styles.suggestText}>Kandy</Text> */}
-                            <Text style={Styles.suggestText}>Heritage</Text>
-                            <Text style={Styles.suggestText}>05 Days</Text>
-                            
-                        </View>
-                        </View>
-                </ImageBackground>
-                <View style={Styles.suggestplace}>
-                <Entypo name="location-pin" size={24} color="#19B4BF" />
-                <Text style={Styles.suggestplaceText}>Kandy</Text>
-                    </View>
-                    
-                
-                </View>
+                </ImageBackground> 
+            </View>
+
+               
+             
                 </ScrollView>
             
         </View>
@@ -83,20 +78,22 @@ const Popularplace = () => {
 const Styles = StyleSheet.create({
     container: {
         marginTop: 20,
-        paddingHorizontal:20
+        // paddingHorizontal:20
+      
     },
     headerWrapper: {
         flexDirection: "row",
-        marginBottom:20
+        marginBottom: 20,
+        marginLeft:20
     },
     header: {
         fontSize: 20,
         color:"#4c4c4b"
     },
     suggestImg: {
-    width: 160,
+        width: 160,
         height: 200,
-        marginRight:20
+        marginRight:10
         
     },
     suggestTextWrapper: {
@@ -105,12 +102,11 @@ const Styles = StyleSheet.create({
         marginHorizontal:0
     },
     suggestBottom: {
-        flexDirection:"row",
         borderBottomLeftRadius: 20,
         borderBottomRightRadius: 20,
-        backgroundColor: 'rgba(52, 52, 52, 0.8)',
+        backgroundColor: 'rgba(52, 52, 52, 0.6)',
         width: 160,
-        justifyContent:"space-between"
+        
     },
     suggestText: {
         fontSize: 16,
@@ -123,12 +119,14 @@ const Styles = StyleSheet.create({
     suggestplace: {
         flexDirection: "row",
         paddingHorizontal: 10,
-        paddingTop:7
+        paddingTop: 7,
+       
     },
     suggestplaceText: {
         fontSize: 17,
-        color: "#19B4BF",
-        fontWeight:"bold"
+        color: "white",
+        fontWeight: "bold",
+        paddingBottom:10
     }
 })
 
