@@ -20,6 +20,7 @@ const SignUp = ({ navigation }) => {
         createUserWithEmailAndPassword(auth, email, password)
             .then((re) => {
                 console.log(re);
+                navigation.push("HomeScreen");
             })
             .catch((re) => {
                 console.log(re );

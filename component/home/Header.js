@@ -6,13 +6,18 @@ import { AntDesign } from '@expo/vector-icons';
 const Header = () => {
     return (
         <View style={Styles.container}>
-            <ImageBackground style={Styles.img} imageStyle={{ borderBottomRightRadius: 30, borderBottomLeftRadius: 30, }} source={require("../../assets/header-pic.jpg")} resizeMode="cover" >
+            <ImageBackground style={Styles.img}
+                imageStyle={{ borderBottomRightRadius: 30, borderBottomLeftRadius: 30, }}
+                source={require("../../assets/heading3.jpg")} resizeMode="cover" >
+                
                 <View style={Styles.imgWrapper}>
                     <Image style={Styles.profile} source={require("../../assets/profile-pic.jpg")} /> 
-                  <TouchableOpacity>
+
+                    <TouchableOpacity>
                         <Text style={Styles.getTrip}>+ Get trip plan</Text>
-                        </TouchableOpacity> 
-                    </View>    
+                    </TouchableOpacity> 
+                </View>
+                
                     <View style={Styles.headingWrapper}>
                         <Text style={[Styles.heading, { fontWeight:'bold'}]}>Explore</Text>
                         <Text style={Styles.heading}>new places</Text>
@@ -37,7 +42,7 @@ const Styles = StyleSheet.create({
        
     },
     img: {
-        height: 230,
+        height: 210,
         zIndex:200
         // borderBottomLeftRadius: 2,
         // borderBottomRightRadius:5
@@ -50,8 +55,8 @@ const Styles = StyleSheet.create({
         marginRight:20
     },
     profile: {
-        marginTop: 10,
-        marginLeft:35,
+        marginTop: 5,
+        marginLeft:20,
         height: 60,
         width: 60,
         borderRadius:50
@@ -66,7 +71,7 @@ const Styles = StyleSheet.create({
     headingWrapper: {
         flexDirection: "row",
         paddingLeft: 20,
-        paddingTop: 30,
+        paddingTop: 20,
         
     },
     heading: {
@@ -79,10 +84,8 @@ const Styles = StyleSheet.create({
     },
     search: {
         alignItems: "center",
-        marginTop: 35,
-        // alignContent: "center",
+        marginTop: 30,
         flexDirection: "row",
-        // justifyContent: "center",
         backgroundColor: "white",
         elevation: 10,
         paddingHorizontal: 20,

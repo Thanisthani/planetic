@@ -136,7 +136,7 @@ const Styles = StyleSheet.create({
         paddingHorizontal:15,
         borderBottomLeftRadius: 10,
         borderBottomRightRadius: 10,
-        borderWidth: 0.2,
+        borderWidth: 0.4,
         borderColor:"#19B4BF"
     },
     suggestText: {
