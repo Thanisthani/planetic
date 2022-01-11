@@ -1,0 +1,103 @@
+import React from 'react'
+import { View, Image, Text, ImageBackground, StatusBar, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
+import { AntDesign } from '@expo/vector-icons';
+
+
+const Header = () => {
+    return (
+        <View style={Styles.container}>
+            <ImageBackground style={Styles.img} imageStyle={{ borderBottomRightRadius: 30, borderBottomLeftRadius: 30, }} source={require("../../assets/header-pic.jpg")} resizeMode="cover" >
+                <View style={Styles.imgWrapper}>
+                    <Image style={Styles.profile} source={require("../../assets/profile-pic.jpg")} /> 
+                  <TouchableOpacity>
+                        <Text style={Styles.getTrip}>+ Get trip plan</Text>
+                        </TouchableOpacity> 
+                    </View>    
+                    <View style={Styles.headingWrapper}>
+                        <Text style={[Styles.heading, { fontWeight:'bold'}]}>Explore</Text>
+                        <Text style={Styles.heading}>new places</Text>
+                    </View>
+                    <View style={Styles.searchWrapper}>
+                    <View style={Styles.search}>
+                    <AntDesign name="search1" size={20} color="black" />
+                    <TextInput style={Styles.searchtext} placeholder=' Where do you want to go?' />   
+                        </View>
+                        </View>
+                    
+                    
+            </ImageBackground>
+        
+        </View>
+    )
+}
+
+const Styles = StyleSheet.create({
+    container: {
+        // flex: 1,
+       
+    },
+    img: {
+        height: 230,
+        // borderBottomLeftRadius: 2,
+        // borderBottomRightRadius:5
+
+    },
+    imgWrapper: {
+        marginTop: StatusBar.currentHeight,
+        flexDirection: "row",
+        justifyContent: "space-between",
+        marginRight:20
+    },
+    profile: {
+        marginTop: 10,
+        marginLeft:35,
+        height: 60,
+        width: 60,
+        borderRadius:50
+    },
+    getTrip: {
+        backgroundColor: "#19B4BF",
+        padding: 10,
+        borderRadius: 30,
+        color: "white",
+        fontSize:15
+    },
+    headingWrapper: {
+        flexDirection: "row",
+        paddingLeft: 20,
+        paddingTop: 30,
+        
+    },
+    heading: {
+        color: "white",
+        fontSize: 28,
+        paddingRight:5
+    },
+    searchWrapper: {
+        alignItems:"center"
+    },
+    search: {
+        alignItems: "center",
+        marginTop: 45,
+        // alignContent: "center",
+        flexDirection: "row",
+        // justifyContent: "center",
+        backgroundColor: "white",
+        elevation: 10,
+        paddingHorizontal: 20,
+        paddingVertical: 5,
+        width: "87%",
+        borderRadius: 13,
+        
+    },
+    searchtext: {
+        
+        fontSize: 17,
+        color: "#afafb1",
+   
+        
+        
+    }
+})
+
+export default Header
