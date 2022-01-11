@@ -38,12 +38,13 @@ const Styles = StyleSheet.create({
     },
     img: {
         height: 230,
+        zIndex:200
         // borderBottomLeftRadius: 2,
         // borderBottomRightRadius:5
 
     },
     imgWrapper: {
-        marginTop: StatusBar.currentHeight,
+        marginTop: StatusBar.currentHeight+10,
         flexDirection: "row",
         justifyContent: "space-between",
         marginRight:20
@@ -78,7 +79,7 @@ const Styles = StyleSheet.create({
     },
     search: {
         alignItems: "center",
-        marginTop: 45,
+        marginTop: 35,
         // alignContent: "center",
         flexDirection: "row",
         // justifyContent: "center",

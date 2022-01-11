@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text,StyleSheet, StatusBar } from 'react-native'
+import { View, Text,StyleSheet, StatusBar, ScrollView } from 'react-native'
 import Header from '../component/home/Header'
 import Popularplace from '../component/home/Popularplace'
 import Suggestion from '../component/home/Suggestion'
@@ -8,8 +8,13 @@ const HomeScreen = () => {
     return (
         <View style={Styles.container}>
             <Header />
+            <ScrollView>
+            
             <Suggestion />
             <Popularplace />
+
+            </ScrollView>
+         
         </View>
     )
 }

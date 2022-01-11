@@ -11,85 +11,95 @@ const Suggestion = () => {
                 <Text style={[Styles.header,{fontWeight:"bold"}]}>Suggestion</Text> 
                 <Text style={Styles.header}> for You</Text>
             </View>
-            <ScrollView  horizontal={true} showsHorizontalScrollIndicator={false}>
-            <View style={{marginRight:20,marginBottom:10}}>
-                <Image style={Styles.suggestplace}
-                    source={require("../../assets/suggest-kandy.jpg")} />
-                <View style={Styles.suggestBottom}>
-                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "baseline" }}>
-                        <View style={{flexDirection: "row"}}>
-                    <Entypo name="location-pin" size={24} color="#19B4BF" />
-                            <Text style={Styles.suggestText}>Kandy</Text>
-                        </View>
-                            <Text style={[Styles.catogary]}>Heritage</Text>         
-                </View>
-                <View style={{flexDirection: "row",alignItems:"center"}}>
-                        <AntDesign name="clockcircle" size={13} color="#19B4BF" />
-                        <Text style={[Styles.catogary]}>  05 Days</Text>
-                        </View>
-                </View>
+
+            <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                 
+            <View style={{ marginRight: 20, marginLeft:20 }}>
+                <Image style={Styles.suggestplace}
+                        source={require("../../assets/Ella.jpeg")} />
+                    <View style={Styles.suggestBottom}>
+    
+                        <View style={{ flexDirection: "row", justifyContent: "center" }}>
+                            <Text style={Styles.suggestText}>Ella</Text>
+                        </View>
+                        
+                        <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                            
+                            <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                <AntDesign name="clockcircle" size={13} color="#19B4BF" />
+                                <Text style={[Styles.catogary]}>  04 Days</Text>
+                            </View>
+
+                            <View style={{ flexDirection: "row" }}>
+                                <Entypo name="location-pin" size={20} color="#19B4BF" />
+                                <Text style={[Styles.catogary]}>Nature</Text>         
+                            </View>
+                            
+                        </View>
+
+                    </View>
+                    
                 </View>
 
-                <View style={{marginRight:20}}>
+
+                <View style={{ marginRight: 20, marginBottom:10 }}>
                 <Image style={Styles.suggestplace}
-                    source={require("../../assets/suggest-kandy.jpg")} />
-                <View style={Styles.suggestBottom}>
-                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "baseline" }}>
-                        <View style={{flexDirection: "row"}}>
-                    <Entypo name="location-pin" size={24} color="#19B4BF" />
+                        source={require("../../assets/suggest-kandy.jpg")} />
+                    <View style={Styles.suggestBottom}>
+
+                        <View style={{ flexDirection: "row", justifyContent: "center" }}>
                             <Text style={Styles.suggestText}>Kandy</Text>
                         </View>
-                            <Text style={[Styles.catogary]}>Heritage</Text>         
-                </View>
-                <View style={{flexDirection: "row",alignItems:"center"}}>
-                        <AntDesign name="clockcircle" size={13} color="#19B4BF" />
-                        <Text style={[Styles.catogary]}>  05 Days</Text>
+                        
+                        <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                            
+                            <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                <AntDesign name="clockcircle" size={13} color="#19B4BF" />
+                                <Text style={[Styles.catogary]}>  05 Days</Text>
+                            </View>
+
+                            <View style={{ flexDirection: "row" }}>
+                                <Entypo name="location-pin" size={20} color="#19B4BF" />
+                                <Text style={[Styles.catogary]}>Heritage</Text>         
+                            </View>
+                            
                         </View>
-                </View>
-                
+
+                    </View>
+                    
                 </View>
 
-                <View style={{marginRight:20}}>
+                
+                <View style={{ marginRight: 20 }}>
                 <Image style={Styles.suggestplace}
-                    source={require("../../assets/suggest-kandy.jpg")} />
-                <View style={Styles.suggestBottom}>
-                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "baseline" }}>
-                        <View style={{flexDirection: "row"}}>
-                    <Entypo name="location-pin" size={24} color="#19B4BF" />
+                        source={require("../../assets/suggest-kandy.jpg")} />
+                    <View style={Styles.suggestBottom}>
+    
+                        <View style={{ flexDirection: "row", justifyContent: "center" }}>
                             <Text style={Styles.suggestText}>Kandy</Text>
                         </View>
-                            <Text style={[Styles.catogary]}>Heritage</Text>         
-                </View>
-                <View style={{flexDirection: "row",alignItems:"center"}}>
-                        <AntDesign name="clockcircle" size={13} color="#19B4BF" />
-                        <Text style={[Styles.catogary]}>  05 Days</Text>
+                        
+                        <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                            
+                            <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                <AntDesign name="clockcircle" size={13} color="#19B4BF" />
+                                <Text style={[Styles.catogary]}>  05 Days</Text>
+                            </View>
+
+                            <View style={{ flexDirection: "row" }}>
+                                <Entypo name="location-pin" size={20} color="#19B4BF" />
+                                <Text style={[Styles.catogary]}>Heritage</Text>         
+                            </View>
+                            
                         </View>
-                </View>
-                
+
+                    </View>
+                    
                 </View>
 
-                <View style={{marginRight:20}}>
-                <Image style={Styles.suggestplace}
-                    source={require("../../assets/suggest-kandy.jpg")} />
-                <View style={Styles.suggestBottom}>
-                    <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "baseline" }}>
-                        <View style={{flexDirection: "row"}}>
-                    <Entypo name="location-pin" size={24} color="#19B4BF" />
-                            <Text style={Styles.suggestText}>Kandy</Text>
-                        </View>
-                            <Text style={[Styles.catogary]}>Heritage</Text>         
-                </View>
-                <View style={{flexDirection: "row",alignItems:"center"}}>
-                        <AntDesign name="clockcircle" size={13} color="#19B4BF" />
-                        <Text style={[Styles.catogary]}>  05 Days</Text>
-                        </View>
-                </View>
-                
-                </View>
-                </ScrollView>
-          
-            
+
+            </ScrollView>
+              
         </View>
     )
 }
@@ -97,12 +107,14 @@ const Suggestion = () => {
 const Styles = StyleSheet.create({
     container: {
         marginTop: 20,
-        paddingHorizontal: 20,
+        // paddingHorizontal: 20,
        
     },
     headerWrapper: {
+        marginTop: 10,
         flexDirection: "row",
-        marginBottom:20
+        marginBottom: 20,
+        marginLeft:20
     },
     header: {
         fontSize: 20,
@@ -117,15 +129,19 @@ const Styles = StyleSheet.create({
     suggestBottom: {
         width: 250,
         backgroundColor: "white",
-        elevation: 3,
-        paddingVertical: 5,
+        // elevation: 2,
+        paddingTop: 8,
+        paddingBottom:5,
         paddingHorizontal:15,
         borderBottomLeftRadius: 10,
-        borderBottomRightRadius:10
+        borderBottomRightRadius: 10,
+        borderWidth: 0.2,
+        borderColor:"#19B4BF"
     },
     suggestText: {
         fontSize: 19,
-        fontWeight:"bold"
+        fontWeight: "bold",
+        color: "#4c4c4b",
     },
     catogary: {
         fontSize: 15,
