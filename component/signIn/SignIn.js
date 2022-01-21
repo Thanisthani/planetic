@@ -21,7 +21,6 @@ const SignIn = ({ navigation }) => {
         signInWithEmailAndPassword(auth, email, password)
        .then((re) => {
            console.log("Sucessfully log in ");
-           navigation.push("HomeScreen");
        })
        .catch((re) => {
            console.log(re.message + "hi");

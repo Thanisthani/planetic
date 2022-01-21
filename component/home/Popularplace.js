@@ -1,8 +1,34 @@
-import React from 'react'
-import { View, Text, StyleSheet, Image, ImageBackground, ScrollView } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { View, Text, StyleSheet, Image, ImageBackground, ScrollView,TouchableOpacity } from 'react-native'
 import { Entypo } from '@expo/vector-icons';
+import { collection, onSnapshot } from '@firebase/firestore'
+import {db} from '../../firebase'
 
-const Popularplace = () => {
+
+const Popularplace = ({ navigation }) => {
+
+    const [pPlace,setPPlace] = useState([])
+
+    const getPopularplace = () =>
+    {
+        const places = collection(db, 'Destination')
+        onSnapshot(places, (snapshot) =>
+        {
+            setPPlace((snapshot.docs.map((place) => ({ id: place.id, ...place.data() }))))
+      
+        })
+        
+    }
+
+    const handleData = (dplace) =>
+    {
+        console.log(dplace)
+        }
+    
+    useEffect(() => {
+        getPopularplace();
+    })
+
     return (
         <View style={Styles.container}>
             
@@ -13,10 +39,19 @@ const Popularplace = () => {
 
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
 
-
-            <View style={{marginLeft:20, marginBottom:10}}>
+                {pPlace.map((place) => (
+                    <TouchableOpacity key={place.id}
+                        onPress={() => {
+                            navigation.navigate('DestinationScreen', {
+                                place_name: place.d_name,
+                                 
+                                })   
+                          }}>
+                      
+                    <View  style={{ marginLeft: 10, marginBottom: 10 }}>
+                        
                 <ImageBackground style={Styles.suggestImg} 
-                    source={require("../../assets/suggest-kandy.jpg")}
+                    source={{uri:place.imgURL}}
                         imageStyle={{ borderRadius: 20 }} >
                         <View style={Styles.suggestTextWrapper}>
 
@@ -24,50 +59,17 @@ const Popularplace = () => {
 
                             <View style={[Styles.suggestplace, Styles.suggestBottom]}>
                                 <Entypo name="location-pin" size={24} color="#19B4BF" />
-                                <Text style={Styles.suggestplaceText}>Kandy</Text>
+                                    <Text style={Styles.suggestplaceText}>{ place.d_name}</Text>
                             </View>
 
                         </View>
-                </ImageBackground> 
-                </View>
-                
+                            </ImageBackground>
+                       
+                        
+                    </View>
+                    </TouchableOpacity>
 
-                <View style={{ marginBottom:10}}>
-                <ImageBackground style={Styles.suggestImg} 
-                    source={require("../../assets/Ella.jpeg")}
-                        imageStyle={{ borderRadius: 20 }} >
-                        <View style={Styles.suggestTextWrapper}>
-
-                            <Text></Text>
-
-                            <View style={[Styles.suggestplace, Styles.suggestBottom]}>
-                                <Entypo name="location-pin" size={24} color="#19B4BF" />
-                                <Text style={Styles.suggestplaceText}>Badulla</Text>
-                            </View>
-                            
-                        </View>
-                </ImageBackground> 
-                </View>
-                
-
-                <View style={{ marginBottom:10}}>
-                <ImageBackground style={Styles.suggestImg} 
-                    source={require("../../assets/suggest-kandy.jpg")}
-                        imageStyle={{ borderRadius: 20 }} >
-                        <View style={Styles.suggestTextWrapper}>
-
-                            <Text></Text>
-
-                            <View style={[Styles.suggestplace, Styles.suggestBottom]}>
-                                <Entypo name="location-pin" size={24} color="#19B4BF" />
-                                <Text style={Styles.suggestplaceText}>Kandy</Text>
-                            </View>
-                            
-                        </View>
-                </ImageBackground> 
-            </View>
-
-               
+                ))}                
              
                 </ScrollView>
             
@@ -93,7 +95,7 @@ const Styles = StyleSheet.create({
     suggestImg: {
         width: 160,
         height: 200,
-        marginRight:10
+        marginRight:0
         
     },
     suggestTextWrapper: {

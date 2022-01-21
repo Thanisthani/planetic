@@ -1,18 +1,33 @@
 import React from 'react'
 import { View, Image, Text, ImageBackground, StatusBar, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
+import { auth } from '../../firebase';
+import { signOut } from "firebase/auth"
 
 
 const Header = () => {
+
+    const handleSignOut = () => {
+        signOut(auth).then(() => {
+            console.log("User sign out")
+        }).catch((error) => {
+            console.log(error)
+        })
+    }
+
     return (
         <View style={Styles.container}>
             <ImageBackground style={Styles.img}
                 imageStyle={{ borderBottomRightRadius: 30, borderBottomLeftRadius: 30, }}
                 source={require("../../assets/heading3.jpg")} resizeMode="cover" >
                 
+                
                 <View style={Styles.imgWrapper}>
-                    <Image style={Styles.profile} source={require("../../assets/profile-pic.jpg")} /> 
 
+                    <TouchableOpacity onPress={() => handleSignOut()}>
+                    <Image style={Styles.profile} source={require("../../assets/profile-pic.jpg")} /> 
+                    </TouchableOpacity>
+                
                     <TouchableOpacity>
                         <Text style={Styles.getTrip}>+ Get trip plan</Text>
                     </TouchableOpacity> 

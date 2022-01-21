@@ -5,14 +5,14 @@ import Header from '../component/home/Header'
 import Popularplace from '../component/home/Popularplace'
 import Suggestion from '../component/home/Suggestion'
 
-const HomeScreen = () => {
+const HomeScreen = ({ navigation }) => {
     return (
         <View style={Styles.container}>
             
             <ScrollView>
             <Header />
             <Suggestion />
-            <Popularplace />
+            <Popularplace navigation={ navigation }/>
 
             </ScrollView>
             <BottomTabs />
