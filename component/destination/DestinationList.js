@@ -19,7 +19,7 @@ const DestinationList = ({ navigation}) => {
 
         onSnapshot(q, (snapshot) =>
         {
-            setPPlace((snapshot.docs.map((place) => (place.data() ))))
+            setPPlace((snapshot.docs.map((place) => ({id: place.id, ...place.data()} ))))
       
         })
 
@@ -39,7 +39,7 @@ const DestinationList = ({ navigation}) => {
 
           <View style={Styles.headerWrapper}>
               <Text style={[Styles.heading, { fontWeight: "bold" }]}>Explore </Text> 
-              <Text style={Styles.heading}>{pPlace.d_name}</Text>
+              <Text style={Styles.heading}>{ place_name}</Text>
           </View>
 
           <View style={Styles.destination}>
@@ -47,7 +47,17 @@ const DestinationList = ({ navigation}) => {
               <ScrollView >
                   {pPlace.map((place,index) => (
                       
-                      <ImageBackground key={index} style={Styles.suggestImg}              
+                      <TouchableOpacity key={index} onPress={() => {
+                          navigation.navigate('TripPlanScreen',
+                              {
+                                  place_id: place.id,
+                                  imgURL: place.imgURL
+                          })
+                              
+                      }
+                      }   >
+
+                      <ImageBackground  style={Styles.suggestImg}              
                     source={{uri:place.imgURL}}
                   imageStyle={{ borderRadius: 20 }} >
                   
@@ -76,7 +86,9 @@ const DestinationList = ({ navigation}) => {
 
                   </View>
                   
-                  </ImageBackground>
+                          </ImageBackground>
+                      </TouchableOpacity>
+                      
 
                    ) )}
 
@@ -100,7 +112,8 @@ const Styles = StyleSheet.create(
         
         headerWrapper: {
             flexDirection: "row",
-            marginHorizontal:10
+            marginHorizontal: 10,
+            marginBottom:10
         },
         heading: {
             paddingTop:5,
@@ -111,9 +124,9 @@ const Styles = StyleSheet.create(
             
         },
         suggestImg: {
-            width:360,
+            width:380,
             height: 220,
-            marginTop:20,
+            marginTop:10,
            
             
         },
@@ -122,7 +135,7 @@ const Styles = StyleSheet.create(
             flex:1,
             justifyContent: "flex-end",
             borderRadius: 20,
-            width:360,
+            width:380,
         },
         catogaryWrapper: {
             flexDirection: "row",

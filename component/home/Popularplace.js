@@ -44,8 +44,7 @@ const Popularplace = ({ navigation }) => {
                         onPress={() => {
                             navigation.navigate('DestinationScreen', {
                                 place_name: place.d_name,
-                                 
-                                })   
+                                 })   
                           }}>
                       
                     <View  style={{ marginLeft: 10, marginBottom: 10 }}>
