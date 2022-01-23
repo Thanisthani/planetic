@@ -37,7 +37,7 @@ const Header = ({navigation,imgURL}) => {
 
 const Styles = StyleSheet.create({
     container: {
-        marginTop:StatusBar.currentHeight
+        
     },
     img: {
         height:160,
