@@ -1,49 +1,68 @@
-import { View, Text, TextInput, StyleSheet, TouchableOpacity,Pressable,ScrollView ,Platform} from 'react-native';
-import React,{useState,useCallback} from 'react';
-import * as Yup from 'yup';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity ,Platform} from 'react-native';
+import React,{useState,useEffect} from 'react';
 import { Formik } from 'formik';
 import { FontAwesome5 } from '@expo/vector-icons';
 import DateRangePicker from "react-native-daterange-picker";
 import Moment from 'moment';
-import RangeSlider from 'rn-range-slider';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
-import { Ionicons, Entypo, AntDesign } from '@expo/vector-icons'; 
 import DropDownPicker from 'react-native-dropdown-picker';
 import RadioForm from 'react-native-simple-radio-button';
-import { collection, getDocs, collectionGroup, onSnapshot,query,where } from "firebase/firestore";
-import { db } from "../../firebase"
+import { collection, getDocs,setDoc,doc, serverTimestamp,query,where } from "firebase/firestore";
+import { db,auth } from "../../firebase"
 import { extendMoment } from 'moment-range';
+import { onAuthStateChanged } from "firebase/auth";
 
 
 const FormGetTrip = ({ navigation }) => {
+
+// current user
+    const [currentUser, setCurrentUser] = useState(null)
+
+    const userHandler = (user) => {
+        user ? setCurrentUser(user) : setCurrentUser(null);
+    }
+   
+    useEffect(() => 
+         onAuthStateChanged(auth, user => userHandler(user))
+      
+        , [])
+    
+    // date range
     const moments = extendMoment(Moment);
 
-    const [pPlace, setPPlace] = useState([])
+    // get values from firestore
+    const [pPlace, setPPlace] = useState(null)
     
     // Date
     const [startdate, setStartDate] = useState()
     const[enddate,setEnddate] = useState()
     const [displayDates, setDisplayDates] = useState(Moment())
     
-    
+    // budget slider
     const [multiSliderValue, setMultiSliderValue] = useState([0, 100])
+
+    // dropdown
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
     const [items, setItems] = useState([
       {label: 'Mountain', value: 'Mountain'},
         { label: 'Heritage', value: 'Heritage' },
         { label: 'Sea', value: 'Sea' },
-        // { label: 'Adventurous', value: 'adventurous' },
-        // {label: 'NightOut', value: 'nightout'},
+        { label: 'Adventurous', value: 'adventurous' },
+        {label: 'NightOut', value: 'nightout'},
     ]);
 
+    // visibility radio
+    const[visibility,setVisibility] = useState('public')
     var radio_props = [
         { label: 'Public', value: 'public' },
         {label:'Private', value:'private'}
       ];
 
+    // budget slider value
     const multiSliderValuesChange = (values) => setMultiSliderValue(values)
-    
+
+    // calender date value
     const onChangeDates = (dates) => {
 
         if (dates.displayedDate) {
@@ -57,9 +76,7 @@ const FormGetTrip = ({ navigation }) => {
         if (dates.endDate)
         {
             setEnddate(dates.endDate)
-            }
-
-        
+            }  
     }
 
 
@@ -70,8 +87,6 @@ const FormGetTrip = ({ navigation }) => {
     
         const newStartdate = Moment(startdate).format().toString().slice(0, 10);
         const newEnddate = Moment(enddate).format().toString().slice(0, 10);
-        
-        const duration = new Date(newEnddate) - new Date(newStartdate)
         const range = moments.range(new Date(newStartdate),new Date(newEnddate)).diff('days')+1;
         
         const places = collection(db, 'Destination')
@@ -83,34 +98,53 @@ const FormGetTrip = ({ navigation }) => {
             where("duration", "==", range)
         )
 
-        // onSnapshot(q, (snapshot) => {
-        //     setPPlace((snapshot.docs.map((place) => ({ id: place.id, ...place.data() }))))
-      
-        // })
-
         const docSnap = await getDocs(q);
         setPPlace(docSnap.docs.map((doc) =>( {
             id: doc.id, ...doc.data()
             
         })))
 
-        if (pPlace) {
-            console.log(pPlace)
+
+        if (docSnap) {
             pPlace.map((place, index) => {
-                      
-                navigation.navigate('TripPlanScreen',
-                    {
-                        place_id: place.id,
-                        imgURL: place.imgURL,
-                        place_name: place.d_name,
-                        budget: place.budget
-                    })
-                    console.log( "kumar " +place.d_name)
-            })
-            
+                      uploadPlan(place.id,place.d_name,place.imgURL,place.budget,newStartdate,newEnddate)
+            })  
         }
     }
-    
+
+    // upload plan
+    const uploadPlan = async (place_id,place_name,imgURL,budget,startdate,enddate) =>
+    {
+        const userRef = collection(db, "users", currentUser.uid, "user_plan")
+        
+        await setDoc(doc(userRef),
+            { 
+                userId: currentUser.uid,
+                placeId: place_id,
+                placeName: place_name,
+                createAt: serverTimestamp(),
+                startDate: startdate,
+                endDate: enddate,
+                budget: budget,
+                visible:visibility
+                
+        
+            }).then(() => 
+            {
+                
+                console.log("Sucesssfully plan posted")
+                navigation.navigate('TripPlanScreen',
+                    {
+                        place_id: place_id,
+                        imgURL: imgURL,
+                        place_name: place_name,
+                        budget:budget
+                    })
+                }
+            
+        )
+
+    }   
 
 
 
@@ -330,7 +364,7 @@ const FormGetTrip = ({ navigation }) => {
                                           style={Styles.radionIcon}
                                           radio_props={radio_props}
                                           initial={0}
-                                          onPress={(value) => { console.log(value) }}
+                                          onPress={(value) => { setVisibility(value) }}
                                           buttonColor={'#19B4BF'}
                                           animation={true}
                                           buttonInnerColor={'#19B4BF'}
