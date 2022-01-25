@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native';
+import { View, Text,Animated,TouchableOpacity } from 'react-native';
 import React,{useEffect,useState} from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import ExampleScreen from '../../Screen/ExampleScreen';
@@ -7,7 +7,6 @@ import { useRoute } from '@react-navigation/native'
 import { collection, onSnapshot,query,orderBy } from '@firebase/firestore'
 import { db } from "../../firebase"
 import TripPlanlist from './TripPlanlist';
-
 
 
 const Tab = createMaterialTopTabNavigator();
@@ -57,7 +56,7 @@ const TopTabNavigation = ({placeId}) => {
     })
   
   const tabOptions={
-    activeTintColor: '#19B4BF',
+    activeTintColor: 'white',
     inactiveTintColor: '#637175',
     showIcon: true,
     pressColor: '#9BC9E2',
@@ -65,26 +64,27 @@ const TopTabNavigation = ({placeId}) => {
     tabStyle: {
       borderRadius: 0,
       margin: 0,
-      alignContent: 'center'
+      alignContent: 'center',
+      width:90
     },
     
     indicatorStyle: {
-      borderColor: "#19B4BF",
-      borderWidth:2,
+      borderColor: "#19bfbc",
+      borderWidth:0,
       height: 40,
       borderRadius: 20,
       marginBottom: 10,
       marginTop: 10,
-      marginLeft:30,
-      width: 100,
+      marginLeft:15,
+      width: 80,
       alignContent: 'center',
-      backgroundColor:"transparent"
+      backgroundColor:"#00ebe8"
     },
 
     style: {
-      backgroundColor: 'rgba(	203,245,248,0.8)',
+      backgroundColor: 'white',
       height: 60,
-      paddingLeft: 0,
+      paddingLeft: 10,
       margin: 0,
       width: '100%',
       alignContent: 'center',
@@ -96,8 +96,10 @@ const TopTabNavigation = ({placeId}) => {
       justifyContent: 'center',
       alignContent: 'center',
       margin: 0,
-      padding:0
+      padding: 0,
+      fontWeight:"bold"
     },
+    
 
 }
   
@@ -108,9 +110,27 @@ const TopTabNavigation = ({placeId}) => {
     
     return (
      
-      <Tab.Navigator initialRouteName="DAY 01"  >
-        {/* tabBarOption={tabOptions} */}
+      <Tab.Navigator initialRouteName="DAY 01" tabBarOptions={tabOptions }
+      //   screenOptions={{
+      //     tabBarActiveTintColor: '#1cc4d0',
+      //   tabBarIndicatorStyle: {
+      //     backgroundColor: '#1cc4d0',
+      //     height: 2,
+
+      //     },
+         
+      //   tabBarScrollEnabled: true,
+      //   tabBarLabelStyle: {fontSize: 20},
+      //   tabBarItemStyle: { width: 90, },
+      //   tabBarStyle: {
+      //     height: 80,
+      //     backgroundColor: 'white',
+      //   },
+      // }} 
+      >
+        
         <Tab.Screen name="DAY 01" children={() => <TripPlanlist day="01" placeId={placeId} />} />
+       
         {rendrScreen()}
             </Tab.Navigator>
      

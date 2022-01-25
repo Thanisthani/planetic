@@ -5,7 +5,7 @@ import { auth } from '../../firebase';
 import { signOut } from "firebase/auth"
 
 
-const Header = () => {
+const Header = ({navigation}) => {
 
     const handleSignOut = () => {
         signOut(auth).then(() => {
@@ -28,7 +28,7 @@ const Header = () => {
                     <Image style={Styles.profile} source={require("../../assets/profile-pic.jpg")} /> 
                     </TouchableOpacity>
                 
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.push("GetTripScreen")}>
                         <Text style={Styles.getTrip}>+ Get trip plan</Text>
                     </TouchableOpacity> 
                 </View>

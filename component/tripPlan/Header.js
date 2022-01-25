@@ -2,7 +2,7 @@ import { View, Text, StyleSheet, StatusBar,ImageBackground,TouchableOpacity } fr
 import React from 'react';
 import { Ionicons} from '@expo/vector-icons'; 
 
-const Header = ({navigation,imgURL}) => {
+const Header = ({navigation,imgURL,placeName,budget}) => {
   return (
       <View style={Styles.container} >
           
@@ -18,11 +18,13 @@ const Header = ({navigation,imgURL}) => {
                       <Ionicons style={{ paddingTop: 10 }} name="chevron-back" size={30} color="white" />
                   </TouchableOpacity>
                   
-                  <Text style={Styles.heading}>Trip to Kandy</Text>
+                 
 
                   <Text></Text>
                   
                   </View>
+                  <Text style={Styles.heading}>Trip to {placeName}</Text>
+                  <Text style={Styles.budgetText}>Budget ${ budget}</Text>
               </View>       
                     
           </ImageBackground>
@@ -58,7 +60,7 @@ const Styles = StyleSheet.create({
     },
     headingWrapper: {
         flexDirection: "row",
-        paddingTop: 20,
+        paddingTop: 10,
         justifyContent: "space-between",
         alignItems:"center",
         paddingHorizontal: 10,
@@ -67,7 +69,8 @@ const Styles = StyleSheet.create({
     heading: {
         color: "white",
         fontSize: 26,
-        fontWeight:"700"
+        fontWeight: "700",
+        padding:10
     },
     bottomContainer: {
         height: 40,
@@ -76,6 +79,16 @@ const Styles = StyleSheet.create({
         backgroundColor: "red",
         position: 'absolute',
         top:0
+    },
+    budgetText: {
+        color: "white",
+        backgroundColor: "rgba(	123, 157, 159,0.8)",
+        width: 120,
+        fontSize: 17,
+        borderRadius: 30,
+        marginLeft: 20,
+        paddingHorizontal: 10,
+        paddingVertical:7
     }
 })
 

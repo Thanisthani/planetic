@@ -51,7 +51,9 @@ const DestinationList = ({ navigation}) => {
                           navigation.navigate('TripPlanScreen',
                               {
                                   place_id: place.id,
-                                  imgURL: place.imgURL
+                                  imgURL: place.imgURL,
+                                  place_name: place.d_name,
+                                  budget:place.budget
                           })
                               
                       }

@@ -10,7 +10,7 @@ const HomeScreen = ({ navigation }) => {
         <View style={Styles.container}>
             
             <ScrollView>
-            <Header />
+            <Header navigation={ navigation }/>
             <Suggestion />
             <Popularplace navigation={ navigation }/>
 

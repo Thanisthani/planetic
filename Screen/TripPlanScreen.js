@@ -11,13 +11,13 @@ const TripPlanScreen = ({ navigation }) => {
  
     
     const route = useRoute();
-    const { place_id ,imgURL} = route.params;
+    const { place_id ,imgURL,place_name,budget} = route.params;
 
     
 
   return (
       <>
-          <Header imgURL={imgURL} navigation={navigation} />
+          <Header imgURL={imgURL} placeName={place_name} budget={budget} navigation={navigation} />
           <TopTabNavigation placeId={place_id} />
     </>
           
