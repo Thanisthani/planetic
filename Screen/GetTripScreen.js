@@ -7,7 +7,7 @@ const GetTripScreen = ({navigation}) => {
   return (
     <View >
           <Header navigation={navigation} />
-          <FormGetTrip />
+          <FormGetTrip navigation={navigation}/>
     </View>
   );
 };

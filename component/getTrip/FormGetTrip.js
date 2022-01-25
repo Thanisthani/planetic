@@ -4,44 +4,43 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 import { FontAwesome5 } from '@expo/vector-icons';
 import DateRangePicker from "react-native-daterange-picker";
-import moment from 'moment';
+import Moment from 'moment';
 import RangeSlider from 'rn-range-slider';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import { Ionicons, Entypo, AntDesign } from '@expo/vector-icons'; 
 import DropDownPicker from 'react-native-dropdown-picker';
-import RadioForm, {RadioButton, RadioButtonInput, RadioButtonLabel} from 'react-native-simple-radio-button';
+import RadioForm from 'react-native-simple-radio-button';
+import { collection, getDocs, collectionGroup, onSnapshot,query,where } from "firebase/firestore";
+import { db } from "../../firebase"
+import { extendMoment } from 'moment-range';
 
 
-const FormGetTrip = () => {
+const FormGetTrip = ({ navigation }) => {
+    const moments = extendMoment(Moment);
+
+    const [pPlace, setPPlace] = useState([])
     
     // Date
     const [startdate, setStartDate] = useState()
     const[enddate,setEnddate] = useState()
-    const [displayDates, setDisplayDates] = useState(moment())
-    const [rangeValue, setRangeValue] = useState({ rangeLow: 1, rangeHigh: 10 })
+    const [displayDates, setDisplayDates] = useState(Moment())
+    
     
     const [multiSliderValue, setMultiSliderValue] = useState([0, 100])
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
     const [items, setItems] = useState([
-      {label: 'Mountain', value: 'mountain'},
-        { label: 'Heritage', value: 'heritage' },
-        { label: 'Sea', value: 'sea' },
-        { label: 'Adventurous', value: 'adventurous' },
-        {label: 'NightOut', value: 'nightout'},
+      {label: 'Mountain', value: 'Mountain'},
+        { label: 'Heritage', value: 'Heritage' },
+        { label: 'Sea', value: 'Sea' },
+        // { label: 'Adventurous', value: 'adventurous' },
+        // {label: 'NightOut', value: 'nightout'},
     ]);
 
     var radio_props = [
         { label: 'Public', value: 'public' },
         {label:'Private', value:'private'}
       ];
-
-    const [visibleOpen, setVisibleOpen] = useState()
-    const [visibleValue, setVisibleValue] = useState()
-    const [visibleItems, setVisibleItems] = useState([
-        { label: 'Public', value: 'public' },
-        {label:'Private', value:'private'}
-    ])
 
     const multiSliderValuesChange = (values) => setMultiSliderValue(values)
     
@@ -60,13 +59,66 @@ const FormGetTrip = () => {
             setEnddate(dates.endDate)
             }
 
-        console.log(startdate)
+        
     }
+
+
+// firestore
+    
+    
+    const gettrip = async (place_name) => {
+    
+        const newStartdate = Moment(startdate).format().toString().slice(0, 10);
+        const newEnddate = Moment(enddate).format().toString().slice(0, 10);
+        
+        const duration = new Date(newEnddate) - new Date(newStartdate)
+        const range = moments.range(new Date(newStartdate),new Date(newEnddate)).diff('days')+1;
+        
+        const places = collection(db, 'Destination')
+        const q = query(places,
+            where("d_name", "==", place_name),
+            where("budget", "<=", multiSliderValue[1]),
+            where("budget", ">=", multiSliderValue[0]),
+            where("category", "==", value),
+            where("duration", "==", range)
+        )
+
+        // onSnapshot(q, (snapshot) => {
+        //     setPPlace((snapshot.docs.map((place) => ({ id: place.id, ...place.data() }))))
+      
+        // })
+
+        const docSnap = await getDocs(q);
+        setPPlace(docSnap.docs.map((doc) =>( {
+            id: doc.id, ...doc.data()
+            
+        })))
+
+        if (pPlace) {
+            console.log(pPlace)
+            pPlace.map((place, index) => {
+                      
+                navigation.navigate('TripPlanScreen',
+                    {
+                        place_id: place.id,
+                        imgURL: place.imgURL,
+                        place_name: place.d_name,
+                        budget: place.budget
+                    })
+                    console.log( "kumar " +place.d_name)
+            })
+            
+        }
+    }
+    
+
+
+
   return (
     <View>
           <Formik
-           initialValues={{ place:"", endDate:null }}
-        //    onSubmit={values =>{ uploadPic(values.caption,values.imageUrl)}}
+           initialValues={{ place:""}}
+           onSubmit={values =>{ gettrip(values.place)}}
         //    validationSchema={uploadPostSchema}
               validateOnMount={true}>
               
@@ -80,8 +132,9 @@ const FormGetTrip = () => {
               }) =>
               (
                   <>
-                      <ScrollView>
-                          <View style={Styles.formInput}>
+                  
+                      <View style={Styles.formInput}>
+                          {/* <ScrollView> */}
                               
                               {/* Enter place */}
                           <View style={Styles.placeInput}>
@@ -192,7 +245,7 @@ const FormGetTrip = () => {
                                             sliderLength={260}
                                             onValuesChange={multiSliderValuesChange}
                                             min={0}
-                                            max={100}
+                                            max={200}
                                             allowOverlap={false}
                                             minMarkerOverlapDistance={10}
                                   />
@@ -208,7 +261,9 @@ const FormGetTrip = () => {
                          
                               {/* set catogary */}
                               
-                          <View style={Styles.catogary}> 
+                          <View
+                            //   style={Styles.catogary}
+                          > 
                               
                               <DropDownPicker
                               open={open}         
@@ -217,8 +272,17 @@ const FormGetTrip = () => {
                               setOpen={setOpen}
                               setValue={setValue}
                                   setItems={setItems}
+                                  
                                   onChangeValue={(value) => {
                                     console.log(value);
+                                  }}
+                                  closeAfterSelecting={true}
+                              
+                                  selectedItemContainerStyle={{
+                                    backgroundColor: "#19B4BF"
+                                  }}
+                                  selectedItemLabelStyle={{
+                                      color:"white"
                                   }}
                                   translation={{
                                     PLACEHOLDER: "Select a category"
@@ -230,20 +294,36 @@ const FormGetTrip = () => {
             
                                   }}
 
+                                  listMode="SCROLLVIEW"
+                                  
                                   style={{
                                       height: 70,
                                       borderRadius: 10,
+                                      width: 330,
+                                      marginTop:20
                                   }}
                                   textStyle={{
                                     fontSize: 18
                                   }}
+                                //   onSelectItem={(item) => {
+                                //     console.log(item);
+                                //   }}
+                                //   labelProps={{
+                                //       color: "#19B4BF",
+                                      
+                                //       fontWeight:"bold"
+                                //   }}
+                                //   disabled={false}
+                                  autoScroll={true}
+                                //   onPress={(value) => console.log('was the picker open?', value)}
                                   />
                                   
                               </View> 
                               
                               {/* set visibility */}
                           
-                              <View style={Styles.visiblity}>
+                              <View style={[Styles.visiblity,
+                                  { paddingTop: open ? 100 : 0}]}>
                                   <Text style={Styles.placeInputText}>Visible</Text>
                                   <View >
                                       <RadioForm
@@ -262,13 +342,13 @@ const FormGetTrip = () => {
                               
                               {/* submit btn */}
                               
-                              <TouchableOpacity style={Styles.button} >
+                              <TouchableOpacity style={Styles.button} onPress={handleSubmit}>
                                   <Text style={Styles.buttonText}>Get plan</Text>
                               </TouchableOpacity>
+
+                              {/* </ScrollView> */}
                           </View>
                           
-                      </ScrollView>
-                      
                   </>
               )}
 
