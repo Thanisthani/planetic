@@ -48,12 +48,6 @@ const Styles = StyleSheet.create({
         // borderBottomRightRadius:5
 
     },
-    imgWrapper: {
-        marginTop: StatusBar.currentHeight+10,
-        flexDirection: "row",
-        justifyContent: "space-between",
-        marginRight:20
-    },
     headerContainer: {
         backgroundColor: 'rgba(52, 52, 52, 0.2)',
         flex:1

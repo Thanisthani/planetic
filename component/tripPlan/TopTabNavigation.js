@@ -39,7 +39,11 @@ const TopTabNavigation = ({placeId}) => {
       // console.log("render Screen")
     const result = newdays.map((day, index) => {
       if (day != 1) {
-        return <Tab.Screen key={index} name={"Day " + day} children={() => <TripPlanlist day={day} placeId={placeId} />} />
+        return <Tab.Screen key={index} name={"Day " + day}
+          // children={() => <TripPlanlist day={day} placeId={placeId} />}
+          initialParams={{ day:day ,placeId:placeId }} 
+          component={TripPlanlist}
+        />
         }
         
 
@@ -129,7 +133,11 @@ const TopTabNavigation = ({placeId}) => {
       // }} 
       >
         
-        <Tab.Screen name="DAY 01" children={() => <TripPlanlist day="01" placeId={placeId} />} />
+        <Tab.Screen name="DAY 01"
+          // children={() => <TripPlanlist day="01" placeId={placeId} />}
+          initialParams={{ day:"01" ,placeId:placeId }} 
+          component={TripPlanlist}
+        />
        
         {rendrScreen()}
             </Tab.Navigator>

@@ -1,14 +1,14 @@
 import { View, Text,StyleSheet,Image, ScrollView, TouchableOpacity } from 'react-native';
 import React, { useEffect,useState}from 'react';
-import { useRoute } from '@react-navigation/native'
 import Dash from 'react-native-dash';
 import { AntDesign,Fontisto } from '@expo/vector-icons'; 
 import { collection, onSnapshot,query,orderBy,where } from '@firebase/firestore'
 import { db } from "../../firebase"
+import {useRoute} from '@react-navigation/native'
 
-const TripPlanlist = ({ navigation,day,placeId }) => {
-    // const route = useRoute();
-    // const { day } = route.params;
+const TripPlanlist = ({navigation}) => {
+    const route = useRoute();
+    const { day,placeId } = route.params;
   
   const [tplace, setTplace] = useState([])
 
@@ -46,6 +46,7 @@ const TripPlanlist = ({ navigation,day,placeId }) => {
                dashColor="#19B4BF" dashThickness={2} dashLength={8} dashGap={8} />
            </View>
    
+            <TouchableOpacity onPress={() => {navigation.navigate('PlaceDetailsScreen')}}>
            <View style={Styles.descriptionWrapper}>
     
              <Image style={Styles.placeimg} source={require("../../assets/Ella.jpeg")} />
@@ -54,7 +55,9 @@ const TripPlanlist = ({ navigation,day,placeId }) => {
                 <Text style={Styles.descriptionText} adjustsFontSizeToFit={true} numberOfLines={3}>{ place.p_name}</Text>            
              </View>
              
-           </View>
+            </View>
+            </TouchableOpacity>
+
          </View>
 
         ))}
