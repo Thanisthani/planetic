@@ -1,9 +1,5 @@
-import { View, Text,Animated,TouchableOpacity } from 'react-native';
 import React,{useEffect,useState} from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import ExampleScreen from '../../Screen/ExampleScreen';
-import OverViewScreen from '../../Screen/OverViewScreen';
-import { useRoute } from '@react-navigation/native'
 import { collection, onSnapshot,query,orderBy } from '@firebase/firestore'
 import { db } from "../../firebase"
 import TripPlanlist from './TripPlanlist';
@@ -34,8 +30,6 @@ const TopTabNavigation = ({placeId}) => {
     var newdays = days.filter(function(elem, pos) {
       return days.indexOf(elem) == pos;
     });
-    
-    
       // console.log("render Screen")
     const result = newdays.map((day, index) => {
       if (day != 1) {
@@ -45,15 +39,12 @@ const TopTabNavigation = ({placeId}) => {
           component={TripPlanlist}
         />
         }
-        
-
       })
   
       return result
  
  }
-    
-
+  
     useEffect(() => {
       getplan();
       
@@ -107,11 +98,6 @@ const TopTabNavigation = ({placeId}) => {
 
 }
   
-  
-  
-  
-  
-    
     return (
      
       <Tab.Navigator initialRouteName="DAY 01" tabBarOptions={tabOptions }
