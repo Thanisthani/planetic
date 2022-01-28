@@ -2,12 +2,12 @@ import { View, Text, StatusBar,StyleSheet,ImageBackground,TouchableOpacity } fro
 import React from 'react';
 import { Ionicons} from '@expo/vector-icons'; 
 
-const Header = ({navigation}) => {
+const Header = ({navigation,imgURL,place_name,amount,category}) => {
   return (
     <View>
        <ImageBackground style={Styles.img}
                 imageStyle={{ borderBottomRightRadius: 0, borderBottomLeftRadius: 0, }}
-              source={require("../../assets/Ella.jpeg")} resizeMode="cover" >
+              source={{uri:imgURL}} resizeMode="cover" >
                 
               <View style={Styles.headerContainer}>
                   
@@ -20,9 +20,9 @@ const Header = ({navigation}) => {
                   <Text></Text>
                   
           </View>
-          <Text style={Styles.cat}>Heritage</Text>
-          <Text style={Styles.heading}>Temple of Tooth</Text>
-          <Text style={Styles.price}>$10/person</Text>
+          <Text style={Styles.cat}>{category}</Text>
+          <Text style={Styles.heading}>{ place_name}</Text>
+          <Text style={Styles.price}>{ amount}/person</Text>
                  
               </View>       
                     

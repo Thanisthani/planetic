@@ -4,6 +4,7 @@ import { Foundation,FontAwesome ,MaterialCommunityIcons ,Ionicons} from '@expo/v
 
 const BottomTabs = () => {
     return (
+        <View style={Styles.wrapper}>
         <View style={Styles.container}>
             <TouchableOpacity style={Styles.iconWrapper}>
                 <Foundation name="home" size={30} color="#19B4BF" />
@@ -26,16 +27,21 @@ const BottomTabs = () => {
                 <Text style={Styles.bottomText}>Notification</Text>
             </TouchableOpacity>
             
-        </View>
+            </View>
+            </View>
     )
 }
 
 const Styles = StyleSheet.create({
+    wrapper: {
+        
+    },
     container: {
         flexDirection: "row",
         justifyContent: "space-evenly",
         borderTopWidth: 0.5,
-        alignItems:"baseline"
+        alignItems: "baseline",
+        
     },
     iconWrapper: {
         padding: 5,

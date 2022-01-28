@@ -39,7 +39,7 @@ const FormGetTrip = ({ navigation }) => {
     const [displayDates, setDisplayDates] = useState(Moment())
     
     // budget slider
-    const [multiSliderValue, setMultiSliderValue] = useState([0, 100])
+    const [multiSliderValue, setMultiSliderValue] = useState([100, 300])
 
     // dropdown
     const [open, setOpen] = useState(false);
@@ -206,26 +206,14 @@ const FormGetTrip = ({ navigation }) => {
                                       <View style={Styles.dateWrapper}>
                                           <View style={Styles.date}>
                                               <FontAwesome5 name="calendar-alt" size={24} color="black" />
-                                              <Text> Start Date
-                                              </Text>
-                                              {/* <Text>
-                                                  {startdate
-                                                      
-                                                      ? `${startdate}`
-                                                      
-                                                      : "Start Date"}
-             
-                                                  
-                                              </Text> */}
-                                              
-                                              
+                                                  {startdate ? <Text> {Moment(startdate).format().toString().slice(0, 10)}</Text>
+                                                      : <Text> Start Date</Text>}
                                           </View>
 
                                           <View style={Styles.date}>
                                               <FontAwesome5 name="calendar-alt" size={24} color="black" />
-                                              <Text> End Date
-                                              {/* {enddate} */}
-                                              </Text>
+                                              {enddate ? <Text> {Moment(enddate).format().toString().slice(0, 10)}</Text>
+                                                      : <Text> End Date</Text>}
                                           </View>
                                           
                                   
@@ -239,7 +227,11 @@ const FormGetTrip = ({ navigation }) => {
                           <View style={Styles.budgetwrapper}>
                               <Text style={Styles.placeInputText}>Budget</Text>
 
-                              <View style={Styles.slider}>   
+                              <View style={Styles.slider}>  
+                              <View style={Styles.sliderValue}>
+                                      <Text>$ {multiSliderValue[0]}</Text>
+                                      <Text>$ {multiSliderValue[1]}</Text>
+                                  </View>    
                                   
                                   <MultiSlider
                                       markerStyle={{
@@ -249,7 +241,9 @@ const FormGetTrip = ({ navigation }) => {
                                                     height: 20,
                                                     width: 20,
                                                     borderRadius: 50,
-                                                    backgroundColor: '#19B4BF'
+                                                  backgroundColor: 'white',
+                                                  borderColor: "#19B4BF",
+                                                  borderWidth:3
                                                 }
                                                 })
                                             }}
@@ -259,7 +253,8 @@ const FormGetTrip = ({ navigation }) => {
                                                     height: 20,
                                                     width: 20,
                                                     borderRadius: 20,
-                                                    backgroundColor: '#19B4BF'
+                                                        // backgroundColor: '#19B4BF',
+                                                       
                                                 }
                                                 })
                                             }}
@@ -279,14 +274,11 @@ const FormGetTrip = ({ navigation }) => {
                                             sliderLength={260}
                                             onValuesChange={multiSliderValuesChange}
                                             min={0}
-                                            max={200}
+                                            max={500}
                                             allowOverlap={false}
                                             minMarkerOverlapDistance={10}
                                   />
-                                   <View style={Styles.sliderValue}>
-                                      <Text>$ {multiSliderValue[0]}</Text>
-                                      <Text>$ {multiSliderValue[1]}</Text>
-                                  </View>
+                                   
                                   
                                   </View>
                                   
@@ -334,19 +326,26 @@ const FormGetTrip = ({ navigation }) => {
                                       height: 70,
                                       borderRadius: 10,
                                       width: 330,
-                                      marginTop:20
+                                      marginTop: 20,
+                                      borderColor: "#00009d",
+                                      borderWidth: 2,
                                   }}
                                   textStyle={{
                                     fontSize: 18
                                   }}
+                                  dropDownContainerStyle={{
+                                      backgroundColor: "white",
+                                      borderColor: "#00009d",
+                                      borderWidth: 1,
+                                      width:330
+                                  }}
                                 //   onSelectItem={(item) => {
                                 //     console.log(item);
                                 //   }}
-                                //   labelProps={{
-                                //       color: "#19B4BF",
-                                      
-                                //       fontWeight:"bold"
-                                //   }}
+                                  labelProps={{
+                                    borderColor: "#00009d",
+                                    borderWidth: 2,
+                                  }}
                                 //   disabled={false}
                                   autoScroll={true}
                                 //   onPress={(value) => console.log('was the picker open?', value)}
@@ -397,12 +396,13 @@ const Styles = StyleSheet.create(
     {
         placeInput: {
             flexDirection: "row",
-            borderWidth: 1,
+            borderWidth: 2,
             borderRadius: 10,
             padding: 20,
             alignItems: "center",
             marginBottom: 20,
             width: 330,
+            borderColor:"#00009d"
         },
         formInput: {
             // paddingHorizontal: 30,
@@ -418,10 +418,11 @@ const Styles = StyleSheet.create(
         },
         calenderWrapper: {
             borderRadius: 10,
-            borderWidth: 1,
+            borderWidth: 2,
             width: 330,
             paddingVertical: 7,
-            paddingLeft:20
+            paddingLeft: 20,
+            borderColor:"#00009d"
             
         },
         dateWrapper: {
@@ -441,23 +442,27 @@ const Styles = StyleSheet.create(
             flexDirection: "row",
             justifyContent: "space-between",
             paddingRight: 28,
-            paddingTop:0
+            paddingTop: 10,
+            marginBottom: 0,
+            paddingBottom:0
         },
         slider: {
             paddingLeft:20
         },
         budgetwrapper: {
-            borderWidth: 1,
+            borderWidth: 2,
             borderRadius: 10,
             marginTop: 20,
             paddingVertical: 7,
             paddingLeft: 20,
             width: 330,
+            borderColor:"#00009d"
         },
         catogary: {
             marginTop: 20,
             width: 330,
-            zIndex:100
+            zIndex: 100,
+           
         },
         visiblity: {
             marginTop: 20,

@@ -107,6 +107,7 @@ const Suggestion = () => {
 const Styles = StyleSheet.create({
     container: {
         marginTop: 20,
+        zIndex:-1
         // paddingHorizontal: 20,
        
     },

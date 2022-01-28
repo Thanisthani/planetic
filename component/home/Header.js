@@ -1,11 +1,33 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View, Image, Text, ImageBackground, StatusBar, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
 import { auth } from '../../firebase';
 import { signOut } from "firebase/auth"
+import { FlatList } from 'react-native-gesture-handler';
 
 
-const Header = ({navigation}) => {
+const Header = ({ navigation }) => {
+
+    const DATA = [
+        {
+          id: "1",
+          title: "Kandy",
+        },
+        {
+          id: "2",
+          title: "Colombo",
+        },
+        {
+          id: "3",
+          title: "Ella",
+        },
+      ];
+      
+    
+    const [enter, setEnter] = useState(null);
+    const [masterArray, setMasterArrary] = useState(DATA)
+    const [filterArray, setFilterArray] = useState(DATA)
+    const [search,setSearch] = useState()
 
     const handleSignOut = () => {
         signOut(auth).then(() => {
@@ -14,6 +36,44 @@ const Header = ({navigation}) => {
             console.log(error)
         })
     }
+
+// search filter
+    const SearchFilter = (text) => {
+        if (text)
+        {
+            const newData = masterArray.filter((item) => {
+                const itemData = item.title ? item.title.toUpperCase()
+                    : "".toUpperCase();
+                const textData = text.toUpperCase()
+                return itemData.indexOf(textData) > -1
+            });
+            setFilterArray(newData)
+            setSearch(text)
+        }
+        else {
+            setFilterArray(masterArray)
+            setSearch(text)
+        }
+    }
+
+    // display list
+    const ItemView = ({ item }) => {
+        return (
+            <TouchableOpacity  onPress={() => {
+                navigation.navigate('DestinationScreen', {
+                    place_name: item.title,
+                     })   
+              }}>
+                <Text style={Styles.listText}>{item.title}</Text>
+                
+            </TouchableOpacity>
+            
+        )
+        
+    
+    }
+    
+   
 
     return (
         <View style={Styles.container}>
@@ -37,15 +97,39 @@ const Header = ({navigation}) => {
                         <Text style={[Styles.heading, { fontWeight:'bold'}]}>Explore</Text>
                         <Text style={Styles.heading}>new places</Text>
                     </View>
-                    <View style={Styles.searchWrapper}>
+                <View style={Styles.searchWrapper}>
+                   
                     <View style={Styles.search}>
-                    <AntDesign name="search1" size={20} color="black" />
-                    <TextInput style={Styles.searchtext} placeholder=' Where do you want to go?' />   
-                        </View>
-                        </View>
+                        <AntDesign name="search1" size={20} color="black" />
+                            <TextInput pointerEvents="none"
+                                style={Styles.searchtext} placeholder=' Where do you want to go?'
+                            value={search}
+                            underlineColorAndroid={"transparent"}
+                            onTouchStart={() => setEnter("hi")}
+                            onChangeText={(value) => SearchFilter(value)}
+                            // onFocus={(value) => console.log(value)}
+                            onEndEditing={() => setEnter(null)}
+                        />
+                       
+                        
+                    </View>
+                    
+
+                        
+                </View>
+                
                     
                     
             </ImageBackground>
+
+            {enter ? <View style={Styles.searchList}>
+                <FlatList
+                    data={filterArray}
+                    keyExtractor={(item,index) => index.toString()}
+                    renderItem={ItemView}
+                    // ItemSeparatorComponent={ItemSpearatorView}
+                />
+            </View> : null}
         
         </View>
     )
@@ -116,6 +200,18 @@ const Styles = StyleSheet.create({
    
         
         
+    },
+    searchList: {
+        backgroundColor: "#eff7fa",
+        width: "80%",
+        marginTop: 13,
+        paddingLeft:25,
+      marginLeft:40,
+        zIndex:500
+    },
+    listText: {
+        fontSize: 18,
+        paddingBottom:5
     }
 })
 

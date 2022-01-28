@@ -1,26 +1,29 @@
 import { View, Text,ScrollView,StyleSheet } from 'react-native';
 import React from 'react';
-import MapView,{ Marker } from 'react-native-maps';
+import MapView, { Marker } from 'react-native-maps';
+import { useRoute } from '@react-navigation/native'
 
 
-const PlaceOverview = () => {
+const PlaceOverview = ({navigation}) => {
+    const route = useRoute();
+    const { type,phone,open,lat,long,about } = route.params;
   return (
     <View style={Styles.container}>
           <ScrollView showsVerticalScrollIndicator={false}>
 
               <View style={Styles.wrapper}>
                   <Text style={Styles.leftText}>Type</Text>
-                  <Text style={Styles.rightText}>Temple</Text>
+                  <Text style={Styles.rightText}>{type}</Text>
               </View>
 
               <View style={Styles.wrapper}>
                   <Text style={Styles.leftText}>Open</Text>
-                  <Text style={Styles.rightText}>5.30 AM - 6.00 PM</Text>
+                  <Text style={Styles.rightText}>{ open}</Text>
               </View>
 
               <View style={Styles.wrapper}>
                   <Text style={Styles.leftText}>Phone</Text>
-                  <Text style={Styles.rightText}>+94 77 711 1223</Text>
+                  <Text style={Styles.rightText}>{ phone}</Text>
               </View>
 
               <View style={{marginBottom:20}}>
@@ -30,8 +33,8 @@ const PlaceOverview = () => {
                   <MapView style={Styles.map} 
                       initialRegion={{
                           /*Kandy 7.2906° N, 80.6337° E - Dambulla 7.903092	80.670837*/
-                          latitude: 7.95,
-                          longitude: 80.670837,
+                          latitude: lat,
+                          longitude:long,
                           latitudeDelta:  0.2,
                           longitudeDelta:  0.205,
                           }}    
@@ -39,8 +42,8 @@ const PlaceOverview = () => {
                   >
                    <Marker
                           coordinate={{
-                              latitude: 7.95,
-                              longitude: 80.670837,
+                              latitude: lat,
+                              longitude: long,
                           }}
                       />
                       
@@ -56,11 +59,7 @@ const PlaceOverview = () => {
                   <Text style={Styles.leftText}>About</Text>
                   
               </View>
-              <Text style={Styles.aboutText}>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                      Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                  when an unknown printer took a galley of type and scrambled it to make
-                  a type specimen book. It has survived not only five centuries, but also the leap into
-                  electronic typesetting, remaining essentially unchanged. </Text>
+              <Text style={Styles.aboutText}>{ about}</Text>
 
 
           </ScrollView>
@@ -73,11 +72,12 @@ const Styles = StyleSheet.create(
     {
         container: {
             paddingHorizontal: 20,
-            paddingTop: 20,
+            
             backgroundColor: "#feffff",
             flex:1
         },
         wrapper: {
+            paddingTop: 20,
             flexDirection: "row",
             justifyContent: "space-between",
             marginBottom:20

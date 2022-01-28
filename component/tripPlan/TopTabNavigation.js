@@ -73,7 +73,7 @@ const TopTabNavigation = ({placeId}) => {
       marginLeft:15,
       width: 80,
       alignContent: 'center',
-      backgroundColor:"#00ebe8"
+      backgroundColor:"#00d7d5"
     },
 
     style: {

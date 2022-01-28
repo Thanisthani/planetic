@@ -1,7 +1,7 @@
 import { View, Text,StyleSheet,Image, ScrollView, TouchableOpacity } from 'react-native';
 import React, { useEffect,useState}from 'react';
 import Dash from 'react-native-dash';
-import { AntDesign,Fontisto } from '@expo/vector-icons'; 
+import {Entypo,Fontisto } from '@expo/vector-icons'; 
 import { collection, onSnapshot,query,orderBy,where } from '@firebase/firestore'
 import { db } from "../../firebase"
 import {useRoute} from '@react-navigation/native'
@@ -35,21 +35,27 @@ const TripPlanlist = ({navigation}) => {
   return (
     <View style={Styles.container}>
 
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
         {tplace.map((place) => (
            <View key={place.id} style={Styles.wrapper}>
             <Text style={Styles.time}>{place.time }</Text>
    
            <View style={Styles.iconWrapper}>
-             <AntDesign name="clockcircle" size={17} color="#19B4BF" />
+           <Entypo name="circle" size={20} color="#19B4BF" />
              <Dash style={{ width: 1, height: 85, flexDirection: 'column' }}
                dashColor="#19B4BF" dashThickness={2} dashLength={8} dashGap={8} />
            </View>
    
-            <TouchableOpacity onPress={() => {navigation.navigate('PlaceDetailsScreen')}}>
+            <TouchableOpacity onPress={() => {
+              navigation.navigate('PlaceDetailsScreen',
+                {
+                  place_name: place.p_name,
+                  imgURL:place.image
+            })
+            }}>
            <View style={Styles.descriptionWrapper}>
     
-             <Image style={Styles.placeimg} source={require("../../assets/Ella.jpeg")} />
+             <Image style={Styles.placeimg} source={{uri:place.image}} />
    
              <View style={Styles.description}>
                 <Text style={Styles.descriptionText} adjustsFontSizeToFit={true} numberOfLines={3}>{ place.p_name}</Text>            
@@ -108,10 +114,11 @@ const Styles = StyleSheet.create({
   descriptionWrapper: {
     flexDirection: "row",
     justifyContent: "space-between",
-    // backgroundColor: "white",
-    borderRadius: 20,
+    backgroundColor: "#ece7f5",
+    borderRadius: 10,
     paddingHorizontal: 10,
-    paddingTop: 0,
+    paddingTop: 10,
+    paddingBottom:10,
     marginBottom: 10,
     marginRight: 10,
     
@@ -135,7 +142,7 @@ const Styles = StyleSheet.create({
   placeimg: {
     width: 80,
     height: 80,
-    borderRadius:15
+    borderRadius:10
   },
   mapIcon: {
     backgroundColor:"#19B4BF",

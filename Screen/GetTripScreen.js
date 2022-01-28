@@ -5,7 +5,7 @@ import FormGetTrip from '../component/getTrip/FormGetTrip';
 
 const GetTripScreen = ({navigation}) => {
   return (
-    <View >
+    <View style={{backgroundColor:"white", flex:1}}>
           <Header navigation={navigation} />
           <FormGetTrip navigation={navigation}/>
     </View>

@@ -6,7 +6,7 @@ import Feedback from './Feedback';
 
 const Tab = createMaterialTopTabNavigator();
 
-const TopTabPlace = () => {
+const TopTabPlace = ({type,phone,open,lat,long,about}) => {
     const tabOptions={
         activeTintColor: 'white',
         inactiveTintColor: '#637175',
@@ -59,7 +59,8 @@ const TopTabPlace = () => {
       <Tab.Navigator initialRouteName="Overview"
         //   tabBarOptions={tabOptions}
       >
-          <Tab.Screen name="Overview" component={PlaceOverview} />
+      <Tab.Screen name="Overview" initialParams={{ type:type,phone:phone,open:open,lat:lat,long:long,about:about }}
+        component={PlaceOverview} />
           <Tab.Screen name="Photo" component={PlacePhoto} />
           <Tab.Screen name="Review" component={Feedback}/>
       </Tab.Navigator>
