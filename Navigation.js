@@ -9,6 +9,7 @@ import DestinationScreen from './Screen/DestinationScreen';
 import TripPlanScreen from './Screen/TripPlanScreen';
 import GetTripScreen from './Screen/GetTripScreen';
 import PlaceDetailsScreen from './Screen/PlaceDetailsScreen';
+import MapMarkerScreen from './Screen/MapMarkerScreen'
 
 const Stack = createNativeStackNavigator()
 
@@ -26,6 +27,7 @@ export const SignedInStack = () => (
             <Stack.Screen name="TripPlanScreen" component={TripPlanScreen} />
             <Stack.Screen name="GetTripScreen" component={GetTripScreen} />
             <Stack.Screen name="PlaceDetailsScreen" component={PlaceDetailsScreen} />
+            <Stack.Screen name="MapMarkerScreen" component={MapMarkerScreen} />
            
         </Stack.Navigator>
     </NavigationContainer>

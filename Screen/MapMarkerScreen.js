@@ -1,11 +1,13 @@
 import { View, Text } from 'react-native';
 import React from 'react';
 import Header from '../component/mapMarker/Header';
+import TopTabMap from '../component/mapMarker/TopTabMap';
 
-const MapMarkerScreen = () => {
+const MapMarkerScreen = ({navigation}) => {
   return (
       <>
-      <Header />
+      <Header navigation={navigation} />
+      <TopTabMap />
       </>
   );
 };

@@ -72,8 +72,16 @@ const TripPlanlist = ({navigation}) => {
 
     </ScrollView>
 
-      <TouchableOpacity>
-      <Fontisto style={Styles.mapIcon } name="map" size={30} color="white" />
+      <TouchableOpacity style={Styles.mapWrapper} onPress={() => {
+        navigation.navigate('MapMarkerScreen',
+          {
+        placeId:placeId
+      })
+      }}>
+        <View >
+        <Fontisto style={Styles.mapIcon } name="map" size={30} color="white" />
+        </View>
+     
       </TouchableOpacity>
       
      
@@ -121,10 +129,7 @@ const Styles = StyleSheet.create({
     paddingBottom:10,
     marginBottom: 10,
     marginRight: 10,
-    
-    
-    
-    
+    // zIndex:100
   },
   description: {
     width:120,
@@ -150,10 +155,14 @@ const Styles = StyleSheet.create({
     // width: 63,
     // height: 63,
     padding: 15,
+   
+    // zIndex:300
+    
+  },
+  mapWrapper: {
     position: "absolute",
     right: 30,
-    bottom:30
-    
+    bottom: 30,
   }
 })
 
