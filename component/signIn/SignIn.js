@@ -5,6 +5,7 @@ import { Formik } from 'formik';
 import * as EmailValidator from 'email-validator';
 import { auth } from '../../firebase'
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 const LoginSchema = Yup.object().shape(
     {
@@ -39,7 +40,17 @@ const SignIn = ({ navigation }) => {
        // }
     }
     return (
-        <View style={Styles.wrapper}>
+    //     <View style={Styles.wrapper}>
+    //           <KeyboardAvoidingView
+    // //   style={styles.container}
+    //   behavior="padding"
+    // >
+    <KeyboardAwareScrollView
+    style={{  }}
+    resetScrollToCoords={{ x: 0, y: 0 }}
+    contentContainerStyle={Styles.wrapper}
+    scrollEnabled={true}
+  >
             <View style={Styles.headerwrapper}>
                 <Text style={[Styles.header,{fontWeight:"bold"}]}>Welcome</Text>
                 <Text style={Styles.header}>Back !</Text>
@@ -74,7 +85,7 @@ const SignIn = ({ navigation }) => {
                     placeholderTextColor='#c3c3c4'
                     keyboardType='email-address'
                     textContentType='emailAddress'
-                    autoFocus={true}
+                    // autoFocus={true}
                                 onChangeText={handleChange('email')}
                                 onblur={handleChange('email')}
                                 value={values.email}
@@ -107,8 +118,11 @@ const SignIn = ({ navigation }) => {
                         
                     </>
                     )}
-                </Formik>
-        </View>
+            </Formik>
+            </KeyboardAwareScrollView>
+
+        //         {/* </KeyboardAvoidingView>
+        // </View> */}
     )
 }
 
