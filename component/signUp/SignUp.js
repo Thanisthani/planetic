@@ -1,11 +1,12 @@
 import React from 'react'
-import { View, TextInput,Text, StyleSheet, Pressable, TouchableOpacity,Alert } from 'react-native'
+import { View, TextInput,Text, StyleSheet,KeyboardAvoidingView, Pressable, TouchableOpacity,Alert } from 'react-native'
 import * as Yup from 'yup';
 import { Formik } from 'formik';
 import * as EmailValidator from 'email-validator';
 import { auth,db } from '../../firebase'
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc } from 'firebase/firestore';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 
 const SignupSchema = Yup.object().shape(
@@ -33,7 +34,19 @@ const SignUp = ({ navigation }) => {
         })
     }
     return (
-        <View style={Styles.wrapper}>
+        // <View style={Styles.wrapper}>
+    //                 <KeyboardAvoidingView
+    // //   style={styles.container}
+    // style={Styles.wrapper}
+    //   behavior="height"
+    // >
+        
+    <KeyboardAwareScrollView
+    style={{  }}
+    resetScrollToCoords={{ x: 0, y: 0 }}
+    contentContainerStyle={Styles.wrapper}
+    scrollEnabled={true}
+  >
             <View style={Styles.headerwrapper}>
                 <Text style={[Styles.header,{fontWeight:"bold"}]}>Join Us To Start </Text>
                 <Text style={Styles.header}>planning your trip</Text>
@@ -63,7 +76,7 @@ const SignUp = ({ navigation }) => {
                     placeholderTextColor='#c3c3c4'
                     keyboardType='email-address'
                     textContentType='emailAddress'
-                    autoFocus={true}
+                    // autoFocus={true}
                                 onChangeText={handleChange('email')}
                                 onblur={handleChange('email')}
                                 value={values.email}
@@ -109,8 +122,8 @@ const SignUp = ({ navigation }) => {
                     </>
                     )}
                 </Formik>
-            
-        </View>
+                </KeyboardAwareScrollView>
+        // </View>
     )
 }
 

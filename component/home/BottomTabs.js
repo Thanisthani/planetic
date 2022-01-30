@@ -34,7 +34,8 @@ const BottomTabs = () => {
 
 const Styles = StyleSheet.create({
     wrapper: {
-        
+        // position: "absolute",
+        // bottom:0
     },
     container: {
         flexDirection: "row",
@@ -42,7 +43,7 @@ const Styles = StyleSheet.create({
         borderTopWidth: 0.5,
         alignItems: "baseline",
         
-    },
+    }, 
     iconWrapper: {
         padding: 5,
         alignItems: "center",

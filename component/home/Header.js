@@ -59,11 +59,11 @@ const Header = ({ navigation }) => {
     // display list
     const ItemView = ({ item }) => {
         return (
-            <TouchableOpacity  onPress={() => {
-                navigation.navigate('DestinationScreen', {
-                    place_name: item.title,
-                     })   
-              }}>
+            <TouchableOpacity onPress={() => {
+                    navigation.navigate('DestinationScreen', {
+                        place_name: item.title,
+                         })   
+                }}>
                 <Text style={Styles.listText}>{item.title}</Text>
                 
             </TouchableOpacity>

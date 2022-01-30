@@ -8,6 +8,7 @@ import Suggestion from '../component/home/Suggestion'
 const HomeScreen = ({ navigation }) => {
     return (
         <View style={Styles.container}>
+            
              <Header navigation={ navigation }/>
             <ScrollView showsVerticalScrollIndicator={false}>
            
@@ -15,8 +16,8 @@ const HomeScreen = ({ navigation }) => {
             <Popularplace navigation={ navigation }/>
 
             </ScrollView>
-            <BottomTabs />
-         
+            <BottomTabs/>
+       
         </View>
     )
 }
