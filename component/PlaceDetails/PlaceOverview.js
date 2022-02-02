@@ -3,7 +3,7 @@ import React from 'react';
 import MapView, { Marker } from 'react-native-maps';
 import { useRoute } from '@react-navigation/native'
 
-
+ 
 const PlaceOverview = ({navigation}) => {
     const route = useRoute();
     const { type,phone,open,lat,long,about } = route.params;

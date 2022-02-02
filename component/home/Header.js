@@ -21,6 +21,26 @@ const Header = ({ navigation }) => {
           id: "3",
           title: "Ella",
         },
+        {
+            id: "4",
+            title: "Badulla",
+        },
+        {
+            id: "5",
+            title: "Matale",
+        },
+        {
+            id: "6",
+            title: "Batticalo",
+        },
+        {
+            id: "7",
+            title: "Trincomale",
+        },
+        {
+            id: "8",
+            title: "KegalleK",
+          },
       ];
       
     
@@ -108,7 +128,7 @@ const Header = ({ navigation }) => {
                             onTouchStart={() => setEnter("hi")}
                             onChangeText={(value) => SearchFilter(value)}
                             // onFocus={(value) => console.log(value)}
-                            onEndEditing={() => setEnter(null)}
+                            // onEndEditing={() => setEnter(null)}
                         />
                        
                         

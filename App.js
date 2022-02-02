@@ -7,10 +7,10 @@ import SignUpScreen from './Screen/SignUpScreen';
 import WelcomeScreen from './Screen/WelcomeScreen';
 import { LogBox } from 'react-native';
 
-LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by messageLogBox.ignoreAllLogs();
+// LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by messageLogBox.ignoreAllLogs();
 
 export default function App() {
-  console.disableYellowBox = true;
+  // console.disableYellowBox = true;
   return (
     // <WelcomeScreen />
     // <SignInScreen />

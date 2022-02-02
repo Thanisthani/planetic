@@ -7,12 +7,12 @@ const PlacePhoto = () => {
     <View>
       <ScrollView>
       <View style={Styles.imgWrapper}>
-        <Image style={Styles.img} source={require("../../assets/bg-img.jpg")} />
-        <Image style={Styles.img} source={require("../../assets/Ella.jpeg")} />
+        <Image style={Styles.img} source={require("../../assets/thalatha2.jpg")} />
+        <Image style={Styles.img} source={require("../../assets/thalatha4.jpg")} />
       </View>
       <View style={Styles.imgWrapper}>
-        <Image style={Styles.img} source={require("../../assets/suggest-kandy.jpg")} />
-        <Image style={Styles.img} source={require("../../assets/heading5.jpg")} />
+        <Image style={Styles.img} source={require("../../assets/thalatha5.jpg")} />
+        <Image style={Styles.img} source={require("../../assets/thalatha3.jpg")} />
         </View>
         <View style={Styles.imgWrapper}>
         <Image style={Styles.img} source={require("../../assets/profile-pic.jpg")} />

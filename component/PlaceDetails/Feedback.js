@@ -1,10 +1,41 @@
 import { View, Text, TouchableOpacity,StyleSheet, Image } from 'react-native';
-import React from 'react';
+import React, { useEffect,useState } from 'react';
 import { AntDesign } from '@expo/vector-icons';
+import { useRoute } from '@react-navigation/native'
+import { collection, onSnapshot,query,orderBy,where } from '@firebase/firestore'
+import { db } from "../../firebase"
+import { ScrollView } from 'react-native-gesture-handler';
+import Moment from 'moment';
+import { extendMoment } from 'moment-range';
 
 const Feedback = () => {
+  const route = useRoute();
+  const { place_name } = route.params;
+
+  const [treview, setTreview] = useState([])
+
+  const getReview = async () => {
+    const reviews = collection(db, "Tourists_places", place_name, 'reviews')
+    const q = query(reviews,orderBy("createAt", "desc"))
+    await onSnapshot(q, (snapshot) =>
+    {
+        setTreview((snapshot.docs.map((review) => ({ id: review.id, ...review.data() }))))
+    })
+
+  }
+
+  // // const updateReview = async () => {
+ 
+  // }
+
+  useEffect(() => {
+    getReview();
+  },[db])
+  
+  
   return (
     <View style={Styles.container}>
+ <ScrollView showsVerticalScrollIndicator={false}>
       <TouchableOpacity style={Styles.btnWrapper}>
         <Text style={Styles.btn}>Give feedback</Text>
       </TouchableOpacity>
@@ -26,32 +57,42 @@ const Feedback = () => {
       </View>
 
       {/* Review profile */}
-      <View>
-        <View style={Styles.reviewHeader}>
+     
+      {treview.map((review) => (
 
-          <Image style={Styles.pic} source={require("../../assets/profile-pic.jpg")} />
-       
-          <View>
-            <Text style={Styles.username}>John William</Text>
-        <View style={Styles.star}>
-            <AntDesign name="star" size={15} color="#ffcb82" />
-            <AntDesign name="star" size={15} color="#ffcb82" />
-            <AntDesign name="star" size={15} color="#ffcb82" />
-            <AntDesign name="star" size={15} color="#ffebd1" />
-            <AntDesign name="star" size={15} color="#ffebd1" />
-          </View>
-          
-          </View>
-          <Text>                </Text>
-          <Text style={Styles.reviewDate}>1 week ago</Text>
-          
-        </View>
+<View key={review.id}>
+<View>
+  <View style={Styles.reviewHeader}>
 
-      </View>
-      {/* review */}
-      <Text style={Styles.review}>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                      Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                  when an unknown printer took a galley of type and scrambled it to make</Text>
+    <Image style={Styles.pic} source={require("../../assets/profile-pic.jpg")} />
+ 
+    <View>
+                <Text style={Styles.username}>{ review.u_name}</Text>
+  <View style={Styles.star}>
+      <AntDesign name="star" size={15} color="#ffcb82" />
+      <AntDesign name="star" size={15} color="#ffcb82" />
+      <AntDesign name="star" size={15} color="#ffcb82" />
+      <AntDesign name="star" size={15} color="#ffebd1" />
+      <AntDesign name="star" size={15} color="#ffebd1" />
+    </View>
+    
+    </View>
+    <Text>                </Text>
+              <Text style={Styles.reviewDate}>{ Moment(review.createAt.Date).format().toString().slice(0, 10)}</Text>
+    
+  </View>
+
+</View>
+{/* review */}
+          <Text style={Styles.review}>{review.review }</Text>
+
+</View>
+
+      ))}
+        
+        </ScrollView>
+
+      
 
     </View>
   );

@@ -51,7 +51,7 @@ const PlaceDetailsScreen = ({ navigation }) => {
         <>
           <Header navigation={navigation} imgURL={imgURL}
         place_name={place_name} category={tplace.category} amount={tplace.amount }/>
-         <TopTabPlace type={tplace.type} phone={tplace.phone} open={tplace.open}
+         <TopTabPlace type={tplace.type} place_name={place_name} phone={tplace.phone} open={tplace.open}
       lat={tplace.latitude} long={tplace.longitude} about={tplace.about} />
         </>
         
