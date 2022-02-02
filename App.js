@@ -6,6 +6,8 @@ import SignInScreen from './Screen/SignInScreen';
 import SignUpScreen from './Screen/SignUpScreen';
 import WelcomeScreen from './Screen/WelcomeScreen';
 import { LogBox } from 'react-native';
+import { store } from './Redux/store'
+import { Provider } from 'react-redux';
 
 // LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by messageLogBox.ignoreAllLogs();
 
@@ -16,7 +18,11 @@ export default function App() {
     // <SignInScreen />
     // <SignUpScreen />
     // <SignedInStack />
-    <AuthNavigation />
+    <Provider store={store}>
+      <AuthNavigation />
+      
+    </Provider>
+    
   );
 }
 
