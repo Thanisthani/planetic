@@ -2,25 +2,41 @@ import { View, Text, TouchableOpacity,StyleSheet, Image } from 'react-native';
 import React, { useEffect,useState } from 'react';
 import { AntDesign } from '@expo/vector-icons';
 import { useRoute } from '@react-navigation/native'
-import { collection, onSnapshot,query,orderBy,where } from '@firebase/firestore'
+import { collection, onSnapshot,query,orderBy } from '@firebase/firestore'
 import { db } from "../../firebase"
 import { ScrollView } from 'react-native-gesture-handler';
 import Moment from 'moment';
-import { extendMoment } from 'moment-range';
 
-const Feedback = () => {
+
+const Feedback = ({navigation}) => {
   const route = useRoute();
   const { place_name } = route.params;
 
+  const [userRating, setUserRating] = useState(0)
+
   const [treview, setTreview] = useState([])
+  const [rating, setRating] = useState([1, 2, 3, 4, 5])
 
   const getReview = async () => {
     const reviews = collection(db, "Tourists_places", place_name, 'reviews')
     const q = query(reviews,orderBy("createAt", "desc"))
-    await onSnapshot(q, (snapshot) =>
+   const snap= await onSnapshot(q, (snapshot) =>
+   {
+   
+     setTreview((snapshot.docs.map((review) => ({ id: review.id, ...review.data() }))))
+     
+   })
+    
+    if (!snap)
     {
-        setTreview((snapshot.docs.map((review) => ({ id: review.id, ...review.data() }))))
-    })
+      console.log("treview not store")
+    }
+    else {
+      setUserRating((treview.reduce((a,v) =>  a += v.rating ,  0 ))/treview.length)
+      
+    }
+    
+   
 
   }
 
@@ -30,29 +46,35 @@ const Feedback = () => {
 
   useEffect(() => {
     getReview();
-  },[db])
+  },[])
   
   
   return (
     <View style={Styles.container}>
  <ScrollView showsVerticalScrollIndicator={false}>
-      <TouchableOpacity style={Styles.btnWrapper}>
+      <TouchableOpacity style={Styles.btnWrapper} onPress={() => {
+        navigation.navigate('GiveFeedbackScreen',
+          {
+            place_name:place_name
+      })
+      }} >
         <Text style={Styles.btn}>Give feedback</Text>
       </TouchableOpacity>
 
       {/* rating */}
       <View style={Styles.rating}>
 
-        <Text style={Styles.rate}>3.9</Text>
+          <Text style={Styles.rate}>{ userRating.toString().slice(0,3)}</Text>
         <View>
-          <View style={Styles.star}>
-            <AntDesign name="star" size={24} color="#ffcb82" />
-            <AntDesign name="star" size={24} color="#ffcb82" />
-            <AntDesign name="star" size={24} color="#ffcb82" />
-            <AntDesign name="star" size={24} color="#ffcb82" />
-            <AntDesign name="star" size={24} color="#ffebd1" />
-          </View>
-          <Text style={Styles.reviewNo}>10 reviews</Text>
+        <View style={Styles.star}>
+                  {rating.map((item, index) =>
+                  (
+                    <AntDesign key={index} name="star" size={24} color={item <= userRating ? "#ffcb82" : "#ffe2bd"} />
+      
+                  ))}
+                  
+                </View>
+            <Text style={Styles.reviewNo}>{  treview.length} reviews</Text>
         </View>
       </View>
 
@@ -68,17 +90,19 @@ const Feedback = () => {
  
     <View>
                 <Text style={Styles.username}>{ review.u_name}</Text>
-  <View style={Styles.star}>
-      <AntDesign name="star" size={15} color="#ffcb82" />
-      <AntDesign name="star" size={15} color="#ffcb82" />
-      <AntDesign name="star" size={15} color="#ffcb82" />
-      <AntDesign name="star" size={15} color="#ffebd1" />
-      <AntDesign name="star" size={15} color="#ffebd1" />
-    </View>
-    
+                <View style={Styles.star}>
+                  {rating.map((item, index) =>
+                  (
+                    <AntDesign key={index} name="star" size={15} color={item <= review.rating ? "#ffcb82" : "#ffe2bd"} />
+      
+                  ))}
+                  
+                </View>
     </View>
     <Text>                </Text>
-              <Text style={Styles.reviewDate}>{ Moment(review.createAt.Date).format().toString().slice(0, 10)}</Text>
+              <Text style={Styles.reviewDate}>
+                { review.createAt ? Moment(review.createAt.Date).format().toString().slice(0, 10): null }
+              </Text>
     
   </View>
 
@@ -106,22 +130,17 @@ const Styles = StyleSheet.create(
       backgroundColor:"white"
     },
     btn: {
-      
-     
       paddingHorizontal: 20,
       paddingVertical: 10,
- 
       color: "white",
       fontSize: 18,
-     
-      
     },
     btnWrapper: {
       backgroundColor: "#0690ce",
       borderRadius: 10,
       // width:"90%",
       alignItems: "center",
-      marginTop:10,
+      marginTop:25,
     },
     rating: {
       flexDirection: "row",
