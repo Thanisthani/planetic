@@ -11,6 +11,8 @@ import GetTripScreen from './Screen/GetTripScreen';
 import PlaceDetailsScreen from './Screen/PlaceDetailsScreen';
 import MapMarkerScreen from './Screen/MapMarkerScreen'
 import GiveFeedbackScreen from "./Screen/GiveFeedbackScreen"
+import BottomNavigation from './Screen/BottomNavigation';
+
 
 const Stack = createNativeStackNavigator()
 
@@ -18,12 +20,12 @@ const Stack = createNativeStackNavigator()
 export const SignedInStack = () => (
     <NavigationContainer>
         <Stack.Navigator
-            initialRouteName='HomeScreen'
+            initialRouteName='Bottom'
             screenOptions={{
                 headerShown: false
               }}>
     
-            <Stack.Screen name="HomeScreen" component={HomeScreen} />
+            <Stack.Screen name="Bottom" component={BottomNavigation} />
             <Stack.Screen name="DestinationScreen" component={DestinationScreen} />
             <Stack.Screen name="TripPlanScreen" component={TripPlanScreen} />
             <Stack.Screen name="GetTripScreen" component={GetTripScreen} />

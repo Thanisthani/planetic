@@ -39,7 +39,7 @@ const HomeScreen = ({ navigation }) => {
             <Popularplace navigation={ navigation }/>
 
             </ScrollView>
-            <BottomTabs/>
+            {/* <BottomTabs/> */}
        
         </View>
     )
