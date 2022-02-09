@@ -1,7 +1,7 @@
 import { View, Text, StatusBar,StyleSheet, TouchableOpacity,ImageBackground,ScrollView } from 'react-native';
 import React,{useEffect,useState} from 'react';
-import { Ionicons, Entypo, AntDesign } from '@expo/vector-icons'; 
-import { collection,doc, onSnapshot,query ,where} from '@firebase/firestore'
+import { Ionicons, AntDesign } from '@expo/vector-icons'; 
+import { collection, onSnapshot,query ,where} from '@firebase/firestore'
 import { db } from '../../firebase'
 import {useRoute} from '@react-navigation/native'
 

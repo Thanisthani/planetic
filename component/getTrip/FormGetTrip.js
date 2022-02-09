@@ -115,6 +115,10 @@ const FormGetTrip = ({ navigation }) => {
     // upload plan
     const uploadPlan = async (place_id,place_name,imgURL,budget,startdate,enddate) =>
     {
+        const newStartdate = Moment(startdate).format().toString().slice(0, 10);
+        const newEnddate = Moment(enddate).format().toString().slice(0, 10);
+        const range = moments.range(new Date(newStartdate), new Date(newEnddate)).diff('days') + 1;
+        
         const userRef = collection(db, "users", currentUser.uid, "user_plan")
         
         await setDoc(doc(userRef),
@@ -126,7 +130,9 @@ const FormGetTrip = ({ navigation }) => {
                 startDate: startdate,
                 endDate: enddate,
                 budget: budget,
-                visible:visibility
+                visible: visibility,
+                duration: range,
+                imgURL:imgURL
                 
         
             }).then(() => 
