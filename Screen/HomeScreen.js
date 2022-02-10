@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react'
-import { View, Text,StyleSheet, StatusBar, ScrollView } from 'react-native'
-import BottomTabs from '../component/home/BottomTabs'
+import { View,StyleSheet, ScrollView } from 'react-native'
 import Header from '../component/home/Header'
 import Popularplace from '../component/home/Popularplace'
 import Suggestion from '../component/home/Suggestion'
-import { collection, onSnapshot,doc, query, where } from 'firebase/firestore';
+import { onSnapshot,doc } from 'firebase/firestore';
 import { auth, db } from '../firebase';
 import { useDispatch } from 'react-redux';
 import { SetSignInUsers } from '../Redux/Reducer/UserSlicer'
@@ -32,12 +31,11 @@ const HomeScreen = ({ navigation }) => {
     return (
         <View style={Styles.container}>
             
-             <Header navigation={ navigation }/>
+            
             <ScrollView showsVerticalScrollIndicator={false}>
-           
-            <Suggestion />
-            <Popularplace navigation={ navigation }/>
-
+                <Header navigation={navigation} />
+                <Suggestion />
+                <Popularplace navigation={navigation} />
             </ScrollView>
             {/* <BottomTabs/> */}
        

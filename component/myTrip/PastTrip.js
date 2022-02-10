@@ -1,4 +1,4 @@
-import { View, Text,StyleSheet,TouchableOpacity,ImageBackground } from 'react-native';
+import { View, Text,StyleSheet,TouchableOpacity,ImageBackground, ScrollView } from 'react-native';
 import React,{useEffect,useState} from 'react';
 import { Entypo } from '@expo/vector-icons';
 import { db } from '../../firebase';
@@ -40,6 +40,7 @@ const PastTrip = ({navigation}) => {
 
             <View style={{ flexDirection: "row" }}>
 
+                <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                 {myPlan.map((plan) => (
 
                     <TouchableOpacity key={plan.id}
@@ -56,34 +57,35 @@ const PastTrip = ({navigation}) => {
                     >
                         
   
-<View  style={{ marginLeft: 10, marginBottom: 10 }}>
-    
-<ImageBackground style={Styles.suggestImg} 
-source={{uri:plan.imgURL}}
-    imageStyle={{ borderRadius: 20 }} >
-    <View style={Styles.suggestTextWrapper}>
+                        <View style={{ marginLeft: 10, marginBottom: 10 }}>
+                            
+                            <ImageBackground style={Styles.suggestImg}                                
+                                source={{ uri: plan.imgURL }}
+                                imageStyle={{ borderRadius: 20 }} >
+                                
+                                <View style={Styles.suggestTextWrapper}>
 
-        <Text></Text>
+                                    <Text></Text>
+            
+                                    <View style={[Styles.suggestPastplace, Styles.suggestPastBottom]}>
+                                        
+                                        <Entypo name="location-pin" size={24} color="#19B4BF" />
+                                        <Text style={Styles.suggestplaceText}>{plan.placeName}</Text>
+                                        
+                                    </View>
 
-        <View style={[Styles.suggestPastplace, Styles.suggestPastBottom]}>
-            <Entypo name="location-pin" size={24} color="#19B4BF" />
-                <Text style={Styles.suggestplaceText}>{plan.placeName}</Text>
-        </View>
-
-    </View>
-        </ImageBackground>
-   
-    
-</View>
-</TouchableOpacity>
+                                </View>
+                                
+                            </ImageBackground>
+                        
+                        </View>
+                        
+                    </TouchableOpacity>
 
                 ))}
-                
-     
-         
-
-         
+            </ScrollView>
             </View>
+
         </View>
         
   );
@@ -91,7 +93,7 @@ source={{uri:plan.imgURL}}
 
 const Styles = StyleSheet.create({
     container: {
-        paddingHorizontal:20
+        marginHorizontal:20
     },
     heading: {
         fontSize: 18,

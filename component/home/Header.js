@@ -108,9 +108,7 @@ const Header = ({ navigation }) => {
                     <Image style={Styles.profile} source={require("../../assets/profile-pic.jpg")} /> 
                     </TouchableOpacity>
                 
-                    <TouchableOpacity onPress={() => navigation.push("GetTripScreen")}>
-                        <Text style={Styles.getTrip}>+ Get trip plan</Text>
-                    </TouchableOpacity> 
+                     
                 </View>
                 
                     <View style={Styles.headingWrapper}>

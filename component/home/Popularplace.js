@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { View, Text, StyleSheet, Image, ImageBackground, ScrollView,TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, ImageBackground, ScrollView,TouchableOpacity } from 'react-native'
 import { Entypo } from '@expo/vector-icons';
 import { collection, onSnapshot } from '@firebase/firestore'
 import {db} from '../../firebase'
@@ -79,6 +79,7 @@ const Popularplace = ({ navigation }) => {
 const Styles = StyleSheet.create({
     container: {
         marginTop: 20,
+        marginBottom:20
         // paddingHorizontal:20
       
     },

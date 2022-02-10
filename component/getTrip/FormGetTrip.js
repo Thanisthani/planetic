@@ -483,7 +483,8 @@ const Styles = StyleSheet.create(
             alignItems: "center",
             justifyContent: "center",
             marginTop: 10,
-           marginLeft:20
+            marginLeft: 20,
+           marginBottom:35
         },
         buttonText: {
             color: "#fff",
