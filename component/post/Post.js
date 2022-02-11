@@ -1,11 +1,12 @@
-import { View, Text,StyleSheet,Image } from 'react-native'
+import { View, Text,StyleSheet,Image, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { AntDesign } from '@expo/vector-icons';
 
-const Post = () => {
+const Post = ({navigation}) => {
   return (
     <View style={Styles.container}>
           <View style={Styles.postWrapper}>
+              <TouchableOpacity onPress={() => navigation.navigate("PostDetailScreen")} >
               <View style={Styles.postContainer}>
                   <Image style={Styles.postImg} source={require("../../assets/Ella.jpeg")} />
                   <Text style={Styles.title}>How to trek</Text>
@@ -18,11 +19,15 @@ const Post = () => {
                       
                       <AntDesign name="hearto" size={24} color="black" />
 
+                      </View>
+                      
+                      <View>
+                          
+                      </View>
+                      
                   </View>
-                  <View>
-
-                  </View>
-              </View>
+              </TouchableOpacity>
+              
 
           </View>
           

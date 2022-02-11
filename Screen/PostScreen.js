@@ -3,11 +3,11 @@ import React from 'react';
 import Header from '../component/post/Header';
 import Post from '../component/post/Post';
 
-const PostScreen = () => {
+const PostScreen = ({navigation}) => {
   return (
     <View style={Styles.container}>
       <Header />
-      <Post />
+      <Post navigation={ navigation}/>
     </View>
   );
 };
