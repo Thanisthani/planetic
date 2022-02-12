@@ -34,7 +34,7 @@ const Post = ({ navigation }) => {
 
     // get follower post
     const getPost = async () => {
-        try {
+        try { 
             const ref = collectionGroup(db, 'post')
             const q = query(ref, where("email", "in",cUser.following))
             onSnapshot(q, (snapshot) =>
