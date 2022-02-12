@@ -1,10 +1,11 @@
 import { View, Text } from 'react-native'
 import React from 'react'
+import Header from '../component/followerProfile/Header'
 
-const FollowerProfileScreen = () => {
+const FollowerProfileScreen = ({navigation}) => {
   return (
-    <View>
-      <Text>FollowerProfileScreen</Text>
+    <View style={{flex:1,backgroundColor:"white"}}>
+          <Header navigation={ navigation}/>
     </View>
   )
 }

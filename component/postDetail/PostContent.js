@@ -1,20 +1,24 @@
 import { View, Text,StyleSheet,Image } from 'react-native'
 import React from 'react'
+import {useRoute} from '@react-navigation/native'
 
 const PostContent = () => {
+    const route = useRoute();
+    const { post } = route.params;
+
   return (
       <View>
           <View style={Styles.followWrapper}>
               <View style={Styles.profileWrapper}>
                   <Image style={Styles.logo} source={require("../../assets/profile-pic.jpg")} />
-                  <Text style={Styles.name}>Kumar</Text>
+                  <Text style={Styles.name}>{ post.username}</Text>
               </View>
               
               <Text style={Styles.followText}>Unfollow</Text>
           </View>
           <View>
               <Text style={Styles.paragh}>
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+             {post.description}
               </Text>
           </View>
       </View>

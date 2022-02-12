@@ -8,7 +8,7 @@ import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import { collection, getDocs, setDoc, doc, serverTimestamp, query, where } from "firebase/firestore";
 import { useSelector } from 'react-redux'
 import { SignInUser } from '../../Redux/Reducer/UserSlicer'
-
+ 
 const FormPost = ({navigation}) => {
 
     const user = useSelector(SignInUser);

@@ -1,22 +1,66 @@
-import { View, Text,StyleSheet,Image, TouchableOpacity } from 'react-native'
-import React from 'react'
+import { View, Text,StyleSheet,Image, TouchableOpacity, ScrollView } from 'react-native'
+import React,{useEffect,useState} from 'react'
 import { AntDesign } from '@expo/vector-icons';
+import { useSelector } from 'react-redux'
+import { SignInUser } from '../../Redux/Reducer/UserSlicer'
+import { db } from '../../firebase'
+import {  collectionGroup,onSnapshot, query, where } from 'firebase/firestore';
 
-const Post = ({navigation}) => {
+
+const Post = ({ navigation }) => {
+    const user = useSelector(SignInUser);
+    const [fPost,setFpost] = useState()
+
+    const getPost = async () => {
+        try {
+            const ref = collectionGroup(db, 'post')
+            const q = query(ref, where("email", "in",user.following))
+            onSnapshot(q, (snapshot) =>
+            { 
+                setFpost((snapshot.docs.map((post) => ({id: post.id, ...post.data()} ))))
+          
+            })
+
+            
+        }
+        catch (error) {
+
+            console.log(error)
+            let FollowingBlog = [];
+            setFpost(FollowingBlog)
+
+        }
+    }
+
+    useEffect(() => {
+        getPost()
+    },[])
   return (
-    <View style={Styles.container}>
-          <View style={Styles.postWrapper}>
-              <TouchableOpacity onPress={() => navigation.navigate("PostDetailScreen")} >
+      <View style={Styles.container}>
+          <ScrollView>
+              {fPost && fPost.map((post) => (
+
+              
+          <View key={post.id} style={Styles.postWrapper}>
+                      <TouchableOpacity onPress={() => navigation.navigate("PostDetailScreen",
+                          {
+                          post:post
+                      })} >
               <View style={Styles.postContainer}>
-                  <Image style={Styles.postImg} source={require("../../assets/Ella.jpeg")} />
-                  <Text style={Styles.title}>How to trek</Text>
-                  <Text style={Styles.content}>ougiufhosdhkgvvadsh ighaliudsdasuifd  giuadfgoo asfdhflidu igdsaiugsfa9hi</Text>
-                  <View style={Styles.postBottom}>
-                      <View style={{flexDirection:"row", alignItems:"center"}}>
-                          <Image style={Styles.profilePic} source={require("../../assets/profile-pic.jpg")} />
-                          <Text style={Styles.name}>Thanistas</Text>
-                      </View>
-                      
+                  <Image style={Styles.postImg} source={{uri:post.imgURL}} />
+                              <Text style={Styles.title}>{ post.caption}</Text>
+                              <Text style={Styles.content} numberOfLines={2}>{ post.description}</Text>
+                      <View style={Styles.postBottom}>
+                          <TouchableOpacity onPress={() => navigation.navigate("FollowerProfileScreen")}>
+                              <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                  <Image style={Styles.profilePic} source={require("../../assets/profile-pic.jpg")} />
+                                          <Text style={Styles.name}>{ post.username}</Text>
+                              </View>
+                              
+                          </TouchableOpacity>
+                          
+
+                          
                       <AntDesign name="hearto" size={24} color="black" />
 
                       </View>
@@ -27,9 +71,11 @@ const Post = ({navigation}) => {
                       
                   </View>
               </TouchableOpacity>
-              
+              </View>
 
-          </View>
+              ))}
+              
+              </ScrollView>
           
     </View>
   )

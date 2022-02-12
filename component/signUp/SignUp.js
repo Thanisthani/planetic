@@ -26,7 +26,9 @@ const SignUp = ({ navigation }) => {
                  setDoc(doc(db, "users", re.user.uid), {
                     uid: re.user.uid,
                     username: username,
-                    email:email
+                     email: email,
+                     follower: [],
+                    following:[]
                   });
             })
             .catch((re) => {

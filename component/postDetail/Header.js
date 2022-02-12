@@ -1,14 +1,20 @@
 import { View, Text ,StyleSheet,ImageBackground,TouchableOpacity, StatusBar} from 'react-native'
 import React from 'react'
 import { Ionicons } from '@expo/vector-icons';
+import {useRoute} from '@react-navigation/native'
 
 
-const Header = () => {
+
+
+const Header = ({ navigation }) => {
+  const route = useRoute();
+  const { post } = route.params;
+  
   return (
     <View>
        <ImageBackground style={Styles.img}
                 imageStyle={{ borderBottomRightRadius: 30, borderBottomLeftRadius: 30, }}
-        source={require("../../assets/Ella.jpeg")} resizeMode="cover" >
+        source={{uri:post.imgURL}} resizeMode="cover" >
         <View style={Styles.headerWrapper}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
             
@@ -16,7 +22,7 @@ const Header = () => {
             
           </TouchableOpacity>
           
-          <Text style={Styles.heading}>What are the different between trek & hike </Text>
+          <Text style={Styles.heading}>{ post.caption}</Text>
 
         </View>
         

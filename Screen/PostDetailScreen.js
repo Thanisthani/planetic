@@ -3,11 +3,13 @@ import React from 'react'
 import Header from '../component/postDetail/Header'
 import PostContent from '../component/postDetail/PostContent'
 
-const PostDetailScreen = ({navigation}) => {
+
+const PostDetailScreen = ({ navigation }) => {
+
   return (
     <View>
       <Header navigation={navigation} />
-      <PostContent />
+      <PostContent navigation={navigation}/>
     </View>
   )
 }
