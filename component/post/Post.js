@@ -4,7 +4,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { useSelector } from 'react-redux'
 import { SignInUser } from '../../Redux/Reducer/UserSlicer'
 import { db } from '../../firebase'
-import {  collectionGroup,onSnapshot, query,doc,getDoc, where } from 'firebase/firestore';
+import {  collectionGroup,onSnapshot,updateDoc,arrayUnion,arrayRemove, query,doc,getDoc, where } from 'firebase/firestore';
 
 
 const Post = ({ navigation }) => {
@@ -12,6 +12,7 @@ const Post = ({ navigation }) => {
     const [fPost, setFpost] = useState()
     const [cUser,setCuser] = useState()
     
+    // get current user
     const getUser = async () =>
     {
         try {
@@ -31,6 +32,7 @@ const Post = ({ navigation }) => {
         }
         }
 
+    // get follower post
     const getPost = async () => {
         try {
             const ref = collectionGroup(db, 'post')
@@ -53,6 +55,25 @@ const Post = ({ navigation }) => {
     }
 
 
+    // like
+
+    const handleClick = async (post) =>
+    {
+        const currentLikeStatus = !post.likes_by_users.includes(
+            cUser.email
+        )
+
+        await updateDoc(doc(db,'users', post.userId,'post', post.id), {
+            likes_by_users: currentLikeStatus ? arrayUnion(
+                cUser.email
+            ) : arrayRemove(
+                cUser.email
+            )
+
+        })
+    }
+    
+
     useEffect(() => {
         getUser()
         
@@ -61,7 +82,7 @@ const Post = ({ navigation }) => {
     useEffect(() => {
         
         getPost()
-    }, [cUser])
+    }, [])
     
 
   return (
@@ -90,9 +111,23 @@ const Post = ({ navigation }) => {
                               
                           </TouchableOpacity>
                           
+                                  {/* like btn */}
+                                  
+                                  <View style={{flexDirection:"row"}}>
+                                  <TouchableOpacity onPress={() => handleClick(post)}>
+                                      {post.likes_by_users.includes(cUser.email)?
+                                          <AntDesign name="heart" size={24} color="#900564" /> :
+                                          <AntDesign name="hearto" size={24} color="black" />
+                                          
+                                      }
+                                      
+                                  </TouchableOpacity>
 
-                          
-                      <AntDesign name="hearto" size={24} color="black" />
+                                      <Text style={Styles.likeText}>{post.likes_by_users.length} Likes</Text>
+                                  </View>
+                                  
+                                  
+                      
 
                       </View>
                       
@@ -158,5 +193,10 @@ const Styles = StyleSheet.create({
         fontWeight: "bold",
         paddingLeft:10
     },
+    likeText: {
+        marginLeft: 10,
+        fontSize: 15,
+        fontWeight:"bold"
+    }
 })
 export default Post

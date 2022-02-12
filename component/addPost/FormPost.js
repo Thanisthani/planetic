@@ -56,7 +56,10 @@ const FormPost = ({navigation}) => {
             createAt: serverTimestamp(),
             caption: caption,
             description: description,
-            imgURL: ImgUrl
+            imgURL: ImgUrl,
+            likes_by_users: [],
+            username: user.username,
+            email:user.email
            
         }).then(() => {
             Alert.alert('Successfully Added');
