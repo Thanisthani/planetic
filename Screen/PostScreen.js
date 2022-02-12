@@ -6,7 +6,7 @@ import Post from '../component/post/Post';
 const PostScreen = ({navigation}) => {
   return (
     <View style={Styles.container}>
-      <Header />
+      <Header navigation={ navigation}/>
       <Post navigation={ navigation}/>
     </View>
   );

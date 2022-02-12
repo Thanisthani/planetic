@@ -109,9 +109,11 @@ const SignUp = ({ navigation }) => {
                            
             </View>
            
-            <Pressable style={Styles.button(isValid)} onPress={handleSubmit}>
-                <Text style={Styles.buttonText}>Sign Up</Text>
-            </Pressable>
+                        <Pressable style={Styles.button(isValid)} onPress={handleSubmit}>
+                            <Text style={Styles.buttonText}>Sign Up</Text>
+                        </Pressable>
+
+                        
             <View style={Styles.wrapperSignup}>
                             <Text style={Styles.signUP}>Already do you have an account ? </Text>
                             <TouchableOpacity onPress={() => navigation.push("SignInScreen")}>

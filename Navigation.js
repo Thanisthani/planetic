@@ -13,6 +13,7 @@ import MapMarkerScreen from './Screen/MapMarkerScreen'
 import GiveFeedbackScreen from "./Screen/GiveFeedbackScreen"
 import BottomNavigation from './Screen/BottomNavigation';
 import PostDetailScreen from "./Screen/PostDetailScreen"
+import AddPostScreen from './Screen/AddPostScreen'
 
 
 const Stack = createNativeStackNavigator()
@@ -34,6 +35,7 @@ export const SignedInStack = () => (
             <Stack.Screen name="MapMarkerScreen" component={MapMarkerScreen} />
             <Stack.Screen name="GiveFeedbackScreen" component={GiveFeedbackScreen} />
             <Stack.Screen name="PostDetailScreen" component={PostDetailScreen} />
+            <Stack.Screen name="AddPostScreen" component={AddPostScreen} />
 
         </Stack.Navigator>
     </NavigationContainer>
