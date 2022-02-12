@@ -4,37 +4,66 @@ import { AntDesign } from '@expo/vector-icons';
 import { useSelector } from 'react-redux'
 import { SignInUser } from '../../Redux/Reducer/UserSlicer'
 import { db } from '../../firebase'
-import {  collectionGroup,onSnapshot, query, where } from 'firebase/firestore';
+import {  collectionGroup,onSnapshot, query,doc,getDoc, where } from 'firebase/firestore';
 
 
 const Post = ({ navigation }) => {
     const user = useSelector(SignInUser);
-    const [fPost,setFpost] = useState()
+    const [fPost, setFpost] = useState()
+    const [cUser,setCuser] = useState()
+    
+    const getUser = async () =>
+    {
+        try {
+
+            const ref = doc(db, "users", user.uid)
+            onSnapshot(ref, (snapshot) => {
+                // console.log(snapshot.data())
+
+                setCuser(snapshot.data())
+                       
+                })
+            console.log(cUser)
+            
+        }
+        catch (error) {
+            console.log(error)
+        }
+        }
 
     const getPost = async () => {
         try {
             const ref = collectionGroup(db, 'post')
-            const q = query(ref, where("email", "in",user.following))
+            const q = query(ref, where("email", "in",cUser.following))
             onSnapshot(q, (snapshot) =>
             { 
                 setFpost((snapshot.docs.map((post) => ({id: post.id, ...post.data()} ))))
           
             })
-
+// console.log(fPost)
             
         }
         catch (error) {
 
-            console.log(error)
+            console.log("getpost error")
             let FollowingBlog = [];
             setFpost(FollowingBlog)
 
         }
     }
 
+
     useEffect(() => {
+        getUser()
+        
+    }, [])
+
+    useEffect(() => {
+        
         getPost()
-    },[])
+    }, [cUser])
+    
+
   return (
       <View style={Styles.container}>
           <ScrollView>
@@ -51,7 +80,9 @@ const Post = ({ navigation }) => {
                               <Text style={Styles.title}>{ post.caption}</Text>
                               <Text style={Styles.content} numberOfLines={2}>{ post.description}</Text>
                       <View style={Styles.postBottom}>
-                          <TouchableOpacity onPress={() => navigation.navigate("FollowerProfileScreen")}>
+                                  <TouchableOpacity onPress={() => navigation.navigate("FollowerProfileScreen", {
+                                    followerId:post.userId
+                                })}>
                               <View style={{ flexDirection: "row", alignItems: "center" }}>
                                   <Image style={Styles.profilePic} source={require("../../assets/profile-pic.jpg")} />
                                           <Text style={Styles.name}>{ post.username}</Text>

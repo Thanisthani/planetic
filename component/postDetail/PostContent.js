@@ -1,10 +1,76 @@
-import { View, Text,StyleSheet,Image } from 'react-native'
-import React from 'react'
-import {useRoute} from '@react-navigation/native'
+import { View, Text,StyleSheet,Image,TouchableOpacity } from 'react-native'
+import React,{useEffect,useState} from 'react'
+import { useRoute } from '@react-navigation/native'
+import { updateDoc,doc,onSnapshot,arrayUnion,arrayRemove} from '@firebase/firestore'
+import { db } from '../../firebase'
+import { useSelector } from 'react-redux'
+import { SignInUser } from '../../Redux/Reducer/UserSlicer'
+
 
 const PostContent = () => {
+    const user = useSelector(SignInUser);
     const route = useRoute();
     const { post } = route.params;
+    const [follower,setFollower] = useState()
+
+
+    // getfolower details
+
+    const getFollower = async () => {
+        try {
+            const ref = doc(db, "users", post.userId)
+            onSnapshot(ref, (snapshot) => {
+                // console.log(snapshot.data())
+
+                setFollower(snapshot.data())
+                       
+                })
+            
+        }
+        catch (error)
+        {
+            let follow = []
+            // setFollower(follow)
+            console.log(error)
+        }
+            
+       
+    }
+
+     // update follow
+
+     const handleClick = async () =>
+     {
+         const currentFollowStatus = !follower.follower.includes(
+             user.email
+         )
+ 
+         await updateDoc(doc(db,'users',follower.uid), {
+             follower: currentFollowStatus ? arrayUnion(
+                 user.email
+             ) : arrayRemove(
+                 user.email
+             )
+ 
+         }).then(
+             await updateDoc(doc(db,'users',user.uid), {
+                 following: currentFollowStatus ? arrayUnion(
+                     follower.email
+                 ) : arrayRemove(
+                     follower.email
+                 )
+     
+             })
+         )
+    }
+    
+
+    useEffect(() => {
+    
+        getFollower()
+  
+    }, [user])
+    
 
   return (
       <View>
@@ -14,7 +80,16 @@ const PostContent = () => {
                   <Text style={Styles.name}>{ post.username}</Text>
               </View>
               
-              <Text style={Styles.followText}>Unfollow</Text>
+              {/* follow btn */}
+              <TouchableOpacity onPress={() => handleClick()}>
+
+                  {follower && follower.follower.includes(user.email) ?
+                      <Text style={Styles.unfollowText}>Unfollow</Text> :
+                      <Text style={Styles.followText}>Follow</Text>
+                  }
+                  
+              </TouchableOpacity>
+              
           </View>
           <View>
               <Text style={Styles.paragh}>
@@ -41,14 +116,38 @@ const Styles = StyleSheet.create({
         justifyContent: "space-between",
         marginHorizontal:30
     },
+    // followText: {
+    //     fontSize: 18,
+    //     borderColor: "#b6067f",
+    //     borderWidth: 2,
+    //     borderRadius: 30,
+    //     paddingHorizontal: 13,
+    //     paddingVertical: 3,
+    //     color:"#900564"
+    // },
+
     followText: {
-        fontSize: 18,
+        fontSize: 20,
         borderColor: "#b6067f",
         borderWidth: 2,
         borderRadius: 30,
-        paddingHorizontal: 13,
-        paddingVertical: 3,
-        color:"#900564"
+        paddingHorizontal: 23,
+        paddingVertical: 8,
+        color: "white",
+        fontWeight: "bold",
+        letterSpacing: 2,
+        backgroundColor:"#b6067f"
+    },
+    unfollowText: {
+        fontSize: 20,
+        borderColor: "#b6067f",
+        borderWidth: 2,
+        borderRadius: 30,
+        paddingHorizontal: 23,
+        paddingVertical: 8,
+        color: "#900564",
+        fontWeight: "bold",
+        letterSpacing: 2,
     },
     profileWrapper: {
         flexDirection: "row",

@@ -4,8 +4,6 @@ import { Ionicons } from '@expo/vector-icons';
 import {useRoute} from '@react-navigation/native'
 
 
-
-
 const Header = ({ navigation }) => {
   const route = useRoute();
   const { post } = route.params;
