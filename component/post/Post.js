@@ -46,7 +46,7 @@ const Post = ({ navigation }) => {
             
         }
         catch (error) {
-
+            console.log(cUser)
             console.log("getpost error")
             let FollowingBlog = [];
             setFpost(FollowingBlog)
@@ -82,7 +82,7 @@ const Post = ({ navigation }) => {
     useEffect(() => {
         
         getPost()
-    }, [])
+    }, [cUser])
     
 
   return (

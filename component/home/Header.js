@@ -49,6 +49,7 @@ const Header = ({ navigation }) => {
     const [filterArray, setFilterArray] = useState(DATA)
     const [search,setSearch] = useState()
 
+    // sign out
     const handleSignOut = () => {
         signOut(auth).then(() => {
             console.log("User sign out")
@@ -114,7 +115,9 @@ const Header = ({ navigation }) => {
                     <View style={Styles.headingWrapper}>
                         <Text style={[Styles.heading, { fontWeight:'bold'}]}>Explore</Text>
                         <Text style={Styles.heading}>new places</Text>
-                    </View>
+                </View>
+                
+                {/* search  */}
                 <View style={Styles.searchWrapper}>
                    
                     <View style={Styles.search}>
@@ -132,12 +135,8 @@ const Header = ({ navigation }) => {
                         
                     </View>
                     
-
-                        
                 </View>
-                
-                    
-                    
+                  
             </ImageBackground>
 
             {enter ? <View style={Styles.searchList}>

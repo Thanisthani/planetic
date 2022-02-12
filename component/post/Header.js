@@ -1,25 +1,151 @@
-import { View,TextInput, StyleSheet, StatusBar, Image, TouchableOpacity } from 'react-native'
+import { View,TextInput, StyleSheet, StatusBar, Image,Text, TouchableOpacity } from 'react-native'
 import { AntDesign ,Feather} from '@expo/vector-icons';
-import React from 'react'
+import React,{useEffect,useState} from 'react'
+import { collection, onSnapshot } from '@firebase/firestore'
+import { db } from '../../firebase'
+import { FlatList } from 'react-native-gesture-handler';
 
 
-const Header = ({navigation}) => {
+const Header = ({ navigation }) => {
+    const [users, setUsers] = useState()
+
+    // const users = [
+    //     {
+    //         uid: 1,
+    //         username: "kumar",
+            
+    //     },
+    //     {
+    //         uid: 2,
+    //         username: "Thanistas",
+            
+    //     },
+    //     {
+    //         uid: 3,
+    //         username: "Dei",
+            
+    //     }
+    // ]
+
+    // search
+
+    const [enter, setEnter] = useState(null);
+    const [masterArray, setMasterArrary] = useState(null)
+    const [filterArray, setFilterArray] = useState(null)
+    const [search,setSearch] = useState()
+    
+
+    // get users
+    const getUsers = async () => {
+        try {
+            const ref = collection(db, "users")
+            onSnapshot(ref, (snapshot) =>
+            {
+                setUsers((snapshot.docs.map((user) => ({ id: user.id, ...user.data() }))))
+                if (!masterArray)
+                {
+                    setMasterArrary((snapshot.docs.map((user) => ({ id: user.id, ...user.data() }))))
+                }
+                if (!filterArray)
+                {
+                    setFilterArray((snapshot.docs.map((user) => ({ id: user.id, ...user.data() }))))
+                    // console.log(users)
+                    }
+          
+            })
+            // console.log(masterArray)
+
+        
+        }
+        catch (error)
+        {
+
+            console.log("user not fetched")
+        }
+       
+    }
+    
+    // search filter
+    const SearchFilter = (text) => {
+        if (text)
+        {
+            const newData = masterArray.filter((item) => {
+                const itemData = item.username ? item.username.toUpperCase()
+                    : "".toUpperCase();
+                const textData = text.toUpperCase()
+                return itemData.indexOf(textData) > -1
+            });
+            setFilterArray(newData)
+            setSearch(text)
+        }
+        else {
+            setFilterArray(masterArray)
+            setSearch(text)
+        }
+    }
+
+        // display list
+        const ItemView = ({ item }) => {
+            return (
+                <TouchableOpacity onPress={() => {
+                        navigation.navigate('FollowerProfileScreen', {
+                            followerId: item.uid,
+                             })   
+                    }}>
+                    <Text style={Styles.listText}>{item.username}</Text>
+                    
+                </TouchableOpacity>
+                
+            )
+            
+        
+        }
+
+
+    useEffect(() => {
+        getUsers()
+        console.log("user wroking")
+        
+},[])
+
   return (
     <View style={Styles.container}>
           <Image style={Styles.logo} source={require("../../assets/profile-pic.jpg")} />
+
+          {/* search */}
           <View style={Styles.searchWrapper}>
-                   
+                    
               <View style={Styles.search}>
                   
                   <AntDesign name="search1" size={20} color="black" />
                   
                   <TextInput pointerEvents="none"
                       style={Styles.searchtext} placeholder='   Search traveler'
-                  />
+                      value={search}
+                      onTouchStart={() => setEnter("hi")}
+                      onChangeText={(value) => SearchFilter(value)}
+                      onEndEditing={() => setEnter(null)}
+                  >
 
-              </View>        
+                      </TextInput>
+                   
+              </View>
+              
+              {enter ? <View style={Styles.searchList}>
+                <FlatList
+                    data={filterArray}
+                    keyExtractor={(item,index) => index.toString()}
+                    renderItem={ItemView}
+                    // ItemSeparatorComponent={ItemSpearatorView}
+                />
+            </View> : null}
+              
           </View>
-          <TouchableOpacity onPress={() => navigation.navigate("AddPostScreen")}>
+          
+
+          {/* add post */}
+
+          <TouchableOpacity style={{ marginTop:10}} onPress={() => navigation.navigate("AddPostScreen")}>
               <Feather name="plus-square" size={33} color="black" />
               
           </TouchableOpacity>
@@ -32,7 +158,7 @@ const Styles = StyleSheet.create({
     container: {
         marginTop: StatusBar.currentHeight + 10,
         flexDirection: "row",
-        alignItems: "center",
+        // alignItems: "center",
         marginBottom:10
     },
     logo: {
@@ -46,7 +172,8 @@ const Styles = StyleSheet.create({
     },
     searchWrapper: {
         alignItems: "center",
-        marginRight:20
+        marginRight: 20,
+        marginTop:3
     },
     search: {
         alignItems: "center",
@@ -68,5 +195,18 @@ const Styles = StyleSheet.create({
         
         
     },
+    searchList: {
+        backgroundColor: "#eff7fa",
+        width: 250,
+        marginTop:0,
+        paddingLeft:25,
+    //   marginLeft:40,
+        zIndex:500
+    },
+    listText: {
+        fontSize: 18,
+        paddingBottom: 5,
+        color:"black"
+    }
 })
 export default Header
