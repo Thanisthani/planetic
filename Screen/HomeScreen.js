@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect,useState } from 'react'
 import { View,StyleSheet, ScrollView } from 'react-native'
 import Header from '../component/home/Header'
 import Popularplace from '../component/home/Popularplace'
@@ -10,12 +10,14 @@ import { SetSignInUsers } from '../Redux/Reducer/UserSlicer'
 
 const HomeScreen = ({ navigation }) => {
     const dispatch = useDispatch();
+    const [cUser, setCuser] = useState()
 
     useEffect(() => {
      
         const ref = doc(db, 'users',auth.currentUser.uid)
         onSnapshot(ref, (snapshot) => {
 
+            setCuser(snapshot.data())
         console.log(snapshot.data())
                
                 dispatch(SetSignInUsers({
@@ -33,7 +35,7 @@ const HomeScreen = ({ navigation }) => {
             
             
             <ScrollView showsVerticalScrollIndicator={false}>
-                <Header navigation={navigation} />
+                {cUser && <Header navigation={navigation} pic={ cUser.pic}/>}
                 <Suggestion />
                 <Popularplace navigation={navigation} />
             </ScrollView>

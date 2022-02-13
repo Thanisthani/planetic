@@ -79,6 +79,7 @@ const Header = ({ navigation }) => {
           <View style={Styles.profile}>
               <Image style={Styles.img} source={require("../../assets/profile-pic.jpg")} />
                 
+                <View style={{marginLeft:20, alignItems:"center"}}>
                 {follower? 
                 <Text style={Styles.followername}>
                     {follower.username}
@@ -93,7 +94,8 @@ const Header = ({ navigation }) => {
                         <Text style={Styles.unfollowText}>Unfollow</Text> :
                         <Text style={Styles.followText}>Follow</Text>
                 }
-                </TouchableOpacity>
+                    </TouchableOpacity>
+                    </View>
                
           </View>
             {/* count */}
@@ -150,7 +152,8 @@ const Styles = StyleSheet.create({
       
     },
     profile: {
-        alignItems:"center"
+        // alignItems:"center",
+        flexDirection:"row"
     },
 
     followername: {

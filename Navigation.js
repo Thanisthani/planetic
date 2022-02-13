@@ -15,6 +15,7 @@ import BottomNavigation from './Screen/BottomNavigation';
 import PostDetailScreen from "./Screen/PostDetailScreen"
 import AddPostScreen from './Screen/AddPostScreen'
 import FollowerProfileScreen from './Screen/FollowerProfileScreen'
+import ProfileScreen from './Screen/ProfileScreen'
 
 
 const Stack = createNativeStackNavigator()
@@ -38,6 +39,7 @@ export const SignedInStack = () => (
             <Stack.Screen name="PostDetailScreen" component={PostDetailScreen} />
             <Stack.Screen name="AddPostScreen" component={AddPostScreen} />
             <Stack.Screen name="FollowerProfileScreen" component={FollowerProfileScreen} />
+            <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
 
         </Stack.Navigator>
     </NavigationContainer>

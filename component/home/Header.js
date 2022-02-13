@@ -6,7 +6,7 @@ import { signOut } from "firebase/auth"
 import { FlatList } from 'react-native-gesture-handler';
 
 
-const Header = ({ navigation }) => {
+const Header = ({ navigation,pic }) => {
 
     const DATA = [
         {
@@ -105,8 +105,8 @@ const Header = ({ navigation }) => {
                 
                 <View style={Styles.imgWrapper}>
 
-                    <TouchableOpacity onPress={() => handleSignOut()}>
-                    <Image style={Styles.profile} source={require("../../assets/profile-pic.jpg")} /> 
+                    <TouchableOpacity onPress={() => navigation.navigate("ProfileScreen")}>
+                    <Image style={Styles.profile} source={{uri: pic}} /> 
                     </TouchableOpacity>
                 
                      

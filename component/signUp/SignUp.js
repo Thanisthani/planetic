@@ -28,7 +28,8 @@ const SignUp = ({ navigation }) => {
                     username: username,
                      email: email,
                      follower: [],
-                    following:[]
+                     following: [],
+                    pic:"https://firebasestorage.googleapis.com/v0/b/plannetic-sample.appspot.com/o/profile-img.jpg?alt=media&token=06f86d6b-fa96-41e9-a079-0a56f140768e"
                   });
             })
             .catch((re) => {

@@ -14,6 +14,7 @@ const FormPost = ({navigation}) => {
     const user = useSelector(SignInUser);
     const uploadImage = 'https://cdn.iconscout.com/icon/premium/png-256-thumb/image-gallery-1733269-1478308.png'
     const [image, setImage] = useState(uploadImage);
+    
     const pickImage = async () => {
       // No permissions request is necessary for launching the image library
       let result = await ImagePicker.launchImageLibraryAsync({
