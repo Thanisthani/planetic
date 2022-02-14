@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 import { View, Image, Text, ImageBackground, StatusBar, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
-import { auth } from '../../firebase';
-import { signOut } from "firebase/auth"
 import { FlatList } from 'react-native-gesture-handler';
 
 
@@ -49,14 +47,7 @@ const Header = ({ navigation,pic }) => {
     const [filterArray, setFilterArray] = useState(DATA)
     const [search,setSearch] = useState()
 
-    // sign out
-    const handleSignOut = () => {
-        signOut(auth).then(() => {
-            console.log("User sign out")
-        }).catch((error) => {
-            console.log(error)
-        })
-    }
+  
 
 // search filter
     const SearchFilter = (text) => {

@@ -1,8 +1,32 @@
 import { View, Text , StyleSheet,TouchableOpacity,StatusBar} from 'react-native'
-import React from 'react'
-import { Ionicons,Feather } from '@expo/vector-icons';
+import React,{useState} from 'react'
+import { Ionicons, Feather } from '@expo/vector-icons';
+import Modal from "react-native-modal";
+import { auth } from '../../firebase';
+import { signOut } from "firebase/auth"
 
-const Header = ({navigation}) => {
+const Header = ({ navigation }) => {
+    const [visible, setVisible] = useState(false)
+
+      // sign out
+      const handleSignOut = () => {
+        signOut(auth).then(() => {
+            console.log("User sign out")
+        }).catch((error) => {
+            console.log(error)
+        })
+    }
+    
+    const OutsideTouch = () => {
+        return (
+            <TouchableOpacity onPress={() => setVisible(false)}>
+                <View style={{flex:1,width:"100%"}}>
+                    
+</View>
+            </TouchableOpacity>
+        )
+    }
+
   return (
     <View style={Styles.container}>
     
@@ -11,7 +35,36 @@ const Header = ({navigation}) => {
                   <Ionicons style={Styles.icon} name="chevron-back" size={35} color="black" />
               </TouchableOpacity>
               
-              <Feather name="more-horizontal" size={35} color="black" />
+              <TouchableOpacity onPress={() => setVisible(true)}>
+                  <Feather name="more-horizontal" size={35} color="black" />
+              </TouchableOpacity>
+
+              {/* modal */}
+
+              <Modal transparent isVisible={visible}
+                  backdropOpacity={0.0}
+              onBackdropPress={() => setVisible(false)}
+              >
+                  {/* <View style={Styles.modalBackGround}> */}
+                      {/* <TouchableOpacity style={Styles.modalBackGround}
+                          onPressOut={ () => setVisible(false)}> */}
+                  <View style={Styles.modalWrapper}>
+                      <View style={Styles.modalContainer}>
+                          
+                          <TouchableOpacity onPress={() => handleSignOut()}>
+                              <Text style={Styles.modalText}>Log out</Text>
+                          </TouchableOpacity>
+
+                      </View>
+                  </View>
+                  
+                        
+                      {/* </TouchableOpacity> */}
+                  {/* </View> */}
+                  
+              </Modal>
+              
+              
 
           </View>
           <Text style={Styles.heading}>Profile</Text>
@@ -40,6 +93,30 @@ const Styles = StyleSheet.create({
         // color:"#4c4c4b"
         
     },
+    modalBackGround: {
+        flex: 1,
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    modalContainer: {
+        width:130,
+        backgroundColor: 'white',
+        paddingHorizontal: 20,
+        paddingVertical: 15,
+        // borderRadius: 20,
+        elevation: 10,
+    },
+    modalText: {
+        fontSize: 18,
+        fontWeight:"bold"
+    },
+    modalWrapper: {
+        alignItems: "flex-end",
+        justifyContent: "flex-start",
+        flex: 1,
+        marginTop:0
+    }
 
 }) 
 export default Header
