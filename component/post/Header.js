@@ -1,31 +1,29 @@
 import { View,TextInput, StyleSheet, StatusBar, Image,Text, TouchableOpacity } from 'react-native'
 import { AntDesign ,Feather} from '@expo/vector-icons';
 import React,{useEffect,useState} from 'react'
-import { collection, onSnapshot } from '@firebase/firestore'
+import { collection, doc,onSnapshot } from '@firebase/firestore'
 import { db } from '../../firebase'
 import { FlatList } from 'react-native-gesture-handler';
+import { useSelector } from 'react-redux'
+import { SignInUser } from '../../Redux/Reducer/UserSlicer'
 
 
 const Header = ({ navigation }) => {
     const [users, setUsers] = useState()
+    const user = useSelector(SignInUser);
+    const [cUser, setCuser] = useState()
 
-    // const users = [
-    //     {
-    //         uid: 1,
-    //         username: "kumar",
-            
-    //     },
-    //     {
-    //         uid: 2,
-    //         username: "Thanistas",
-            
-    //     },
-    //     {
-    //         uid: 3,
-    //         username: "Dei",
-            
-    //     }
-    // ]
+    // get Current user
+    const getCurrentuser = async () =>
+    {
+        const ref = doc(db, 'users',user.uid)
+        onSnapshot(ref, (snapshot) => {
+
+            setCuser(snapshot.data())
+        console.log(snapshot.data())
+               
+        })
+        }
 
     // search
 
@@ -103,6 +101,7 @@ const Header = ({ navigation }) => {
 
 
     useEffect(() => {
+        getCurrentuser()
         getUsers()
         console.log("user wroking")
         
@@ -110,7 +109,7 @@ const Header = ({ navigation }) => {
 
   return (
     <View style={Styles.container}>
-          <Image style={Styles.logo} source={require("../../assets/profile-pic.jpg")} />
+         {cUser && <Image style={Styles.logo} source={{uri:cUser.pic}} />}
 
           {/* search */}
           <View style={Styles.searchWrapper}>

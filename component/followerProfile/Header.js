@@ -77,7 +77,7 @@ const Header = ({ navigation }) => {
           </TouchableOpacity>
 
           <View style={Styles.profile}>
-              <Image style={Styles.img} source={require("../../assets/profile-pic.jpg")} />
+              <Image style={Styles.img} source={{uri:follower.pic}} />
                 
                 <View style={{marginLeft:20, alignItems:"center"}}>
                 {follower? 

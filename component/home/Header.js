@@ -101,7 +101,7 @@ const Header = ({ navigation,pic }) => {
             <ImageBackground style={Styles.img}
                 imageStyle={{ borderBottomRightRadius: 30, borderBottomLeftRadius: 30, }}
                 source={require("../../assets/heading3.jpg")} resizeMode="cover" >
-                
+                 
                 
                 <View style={Styles.imgWrapper}>
 

@@ -51,7 +51,7 @@ const Post = ({ navigation }) => {
             let FollowingBlog = [];
             setFpost(FollowingBlog)
 
-        }
+        } 
     }
 
 
@@ -105,7 +105,7 @@ const Post = ({ navigation }) => {
                                     followerId:post.userId
                                 })}>
                               <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                  <Image style={Styles.profilePic} source={require("../../assets/profile-pic.jpg")} />
+                                  <Image style={Styles.profilePic} source={{uri:post.pic}} />
                                           <Text style={Styles.name}>{ post.username}</Text>
                               </View>
                               

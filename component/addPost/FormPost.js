@@ -60,7 +60,8 @@ const FormPost = ({navigation}) => {
             imgURL: ImgUrl,
             likes_by_users: [],
             username: user.username,
-            email:user.email
+            email: user.email,
+            pic:user.pic
            
         }).then(() => {
             Alert.alert('Successfully Added');
