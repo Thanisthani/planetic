@@ -17,15 +17,7 @@ const Header = ({ navigation }) => {
         })
     }
     
-    const OutsideTouch = () => {
-        return (
-            <TouchableOpacity onPress={() => setVisible(false)}>
-                <View style={{flex:1,width:"100%"}}>
-                    
-</View>
-            </TouchableOpacity>
-        )
-    }
+
 
   return (
     <View style={Styles.container}>
@@ -35,6 +27,7 @@ const Header = ({ navigation }) => {
                   <Ionicons style={Styles.icon} name="chevron-back" size={35} color="black" />
               </TouchableOpacity>
               
+              <Text style={Styles.heading}>Profile</Text>
               <TouchableOpacity onPress={() => setVisible(true)}>
                   <Feather name="more-horizontal" size={35} color="black" />
               </TouchableOpacity>
@@ -67,7 +60,7 @@ const Header = ({ navigation }) => {
               
 
           </View>
-          <Text style={Styles.heading}>Profile</Text>
+          
     </View>
   )
 }
@@ -84,7 +77,7 @@ const Styles = StyleSheet.create({
         alignItems:"center"
     },
     heading: {
-        paddingTop:20,
+        // paddingTop:20,
         fontSize: 28,
         fontWeight:'600',
         color: "black",

@@ -34,8 +34,10 @@ console.log("notFetch")
 
   return (
       <View style={Styles.container}>
-          <ScrollView>
-      {fPlan && fPlan.map((plan) => (
+          <ScrollView showsVerticalScrollIndicator={false}>
+
+              {fPlan && fPlan.map((plan) => (
+          
                       
                       <TouchableOpacity key={plan.id}
                       onPress={() => {
@@ -113,13 +115,16 @@ const Styles = StyleSheet.create({
     // },
     container: {
         alignItems: "center",
-        paddingTop:10
+        
+        backgroundColor: "white",
+        flex:1
     },
     
     suggestImg: {
         width: 350,
         height: 200,
-        marginRight:0
+        marginRight: 0,
+        marginTop:10
         
     },
     suggestTextWrapper: {

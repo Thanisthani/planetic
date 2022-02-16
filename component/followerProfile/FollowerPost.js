@@ -1,4 +1,4 @@
-import { View, Text ,StyleSheet,ScrollView,Image,TouchableOpacity} from 'react-native'
+import { View, Text ,StyleSheet,ScrollView,ImageBackground,TouchableOpacity} from 'react-native'
 import React,{useEffect,useState} from 'react'
 import { db } from '../../firebase';
 import { collection, onSnapshot, query, where } from '@firebase/firestore'
@@ -36,7 +36,7 @@ const FollowerPost = () => {
 
   return (
     <View style={Styles.container}>
-      <ScrollView>
+      <ScrollView showsVerticalScrollIndicator={false}>
               {fPost && fPost.map((post) => (
 
               
@@ -45,11 +45,25 @@ const FollowerPost = () => {
                           {
                           post:post
                       })} >
-              <View style={Styles.postContainer}>
-                  <Image style={Styles.postImg} source={{uri:post.imgURL}} />
-                              <Text style={Styles.title}>{ post.caption}</Text>
+
+                    <ImageBackground borderRadius={20} style={Styles.postImg} source={{ uri: post.imgURL }} >
+                      <View style={{ justifyContent:"space-between", flex:1}}>
+
+                        <Text> </Text>
+                        
+                        <View style={Styles.suggestPastBottom}>
+                          <Text style={Styles.title}>{post.caption}</Text>          
+                        </View>
+
+                      </View>
                       
-                  </View>
+                        
+                        
+                      </ImageBackground>
+                      
+                              
+                      
+                 
               </TouchableOpacity>
               </View>
 
@@ -62,7 +76,9 @@ const FollowerPost = () => {
 
 const Styles = StyleSheet.create({
   container: {
-    alignItems:"center"
+    alignItems: "center",
+    backgroundColor: "white",
+    flex:1
   },
   postContainer: {
     backgroundColor: "white",
@@ -81,7 +97,16 @@ postImg: {
     fontSize: 20,
     fontWeight: "bold",
     marginLeft: 20,
-    marginTop:10
+    marginTop: 10,
+    color: "white",
+    marginBottom:10
+  },
+  suggestPastBottom: {
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+    backgroundColor: 'rgba(52, 52, 52, 0.6)',
+    width: 350,
+    
 },
 })
 export default FollowerPost

@@ -1,4 +1,6 @@
-import { View, Text,Button,Image,TouchableOpacity,StyleSheet,Alert,TextInput,Pressable } from 'react-native'
+import {
+    View, Text ,Image, TouchableOpacity, StyleSheet, Alert, TextInput, Pressable, ScrollView
+} from 'react-native'
 import React , { useState, useEffect } from 'react'
 import * as ImagePicker from 'expo-image-picker';
 import { Formik } from 'formik'
@@ -64,7 +66,7 @@ const FormPost = ({navigation}) => {
             pic:user.pic
            
         }).then(() => {
-            Alert.alert('Successfully Added');
+            Alert.alert('Successfully Posted');
            navigation.goBack()
         })
 
@@ -72,8 +74,10 @@ const FormPost = ({navigation}) => {
 
     
   return (
-    <View style={Styles.container}>
-        <View  >
+      <View style={Styles.container}>
+          <ScrollView>
+          <View  >
+              
               <TouchableOpacity onPress={pickImage} style={{alignItems:"center"}}> 
                   
                   <Image source={{ uri: image }} style={Styles.img} />
@@ -116,7 +120,8 @@ const FormPost = ({navigation}) => {
                   )}
                   </Formik>
               
-    </View>
+          </View>
+          </ScrollView>
     </View>
   )
 }

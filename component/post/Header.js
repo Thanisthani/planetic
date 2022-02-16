@@ -27,7 +27,7 @@ const Header = ({ navigation }) => {
 
     // search
 
-    const [enter, setEnter] = useState(null);
+    const [enter, setEnter] = useState(false);
     const [masterArray, setMasterArrary] = useState(null)
     const [filterArray, setFilterArray] = useState(null)
     const [search,setSearch] = useState()
@@ -67,6 +67,7 @@ const Header = ({ navigation }) => {
     const SearchFilter = (text) => {
         if (text)
         {
+            setEnter(true)
             const newData = masterArray.filter((item) => {
                 const itemData = item.username ? item.username.toUpperCase()
                     : "".toUpperCase();
@@ -77,6 +78,7 @@ const Header = ({ navigation }) => {
             setSearch(text)
         }
         else {
+            setEnter(false)
             setFilterArray(masterArray)
             setSearch(text)
         }
@@ -108,8 +110,12 @@ const Header = ({ navigation }) => {
 },[])
 
   return (
-    <View style={Styles.container}>
-         {cUser && <Image style={Styles.logo} source={{uri:cUser.pic}} />}
+      <View style={Styles.container}>
+          {/* Profile pic */}
+          <TouchableOpacity onPress={() => navigation.navigate("ProfileScreen")}>
+              {cUser && <Image style={Styles.logo} source={{ uri: cUser.pic }} />}
+          </TouchableOpacity>
+          
 
           {/* search */}
           <View style={Styles.searchWrapper}>
@@ -121,9 +127,9 @@ const Header = ({ navigation }) => {
                   <TextInput pointerEvents="none"
                       style={Styles.searchtext} placeholder='   Search traveler'
                       value={search}
-                      onTouchStart={() => setEnter("hi")}
+                    //   onTouchStart={() => setEnter("hi")}
                       onChangeText={(value) => SearchFilter(value)}
-                      onEndEditing={() => setEnter(null)}
+                    //   onEndEditing={() => setEnter(null)}
                   >
 
                       </TextInput>

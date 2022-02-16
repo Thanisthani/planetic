@@ -2,9 +2,13 @@ import React, { useState } from 'react'
 import { View, Image, Text, ImageBackground, StatusBar, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
 import { FlatList } from 'react-native-gesture-handler';
+import Modal from "react-native-modal";
 
 
-const Header = ({ navigation,pic }) => {
+const Header = ({ navigation, pic }) => {
+    
+    // modal
+    const [visible, setVisible] = useState(false)
 
     const DATA = [
         {
@@ -42,7 +46,7 @@ const Header = ({ navigation,pic }) => {
       ];
       
     
-    const [enter, setEnter] = useState(null);
+    const [enter, setEnter] = useState(false);
     const [masterArray, setMasterArrary] = useState(DATA)
     const [filterArray, setFilterArray] = useState(DATA)
     const [search,setSearch] = useState()
@@ -53,6 +57,7 @@ const Header = ({ navigation,pic }) => {
     const SearchFilter = (text) => {
         if (text)
         {
+            setEnter(true)
             const newData = masterArray.filter((item) => {
                 const itemData = item.title ? item.title.toUpperCase()
                     : "".toUpperCase();
@@ -63,6 +68,7 @@ const Header = ({ navigation,pic }) => {
             setSearch(text)
         }
         else {
+            setEnter(false)
             setFilterArray(masterArray)
             setSearch(text)
         }
@@ -117,7 +123,7 @@ const Header = ({ navigation,pic }) => {
                                 style={Styles.searchtext} placeholder=' Where do you want to go?'
                             value={search}
                             underlineColorAndroid={"transparent"}
-                            onTouchStart={() => setEnter("hi")}
+                            // onTouchStart={() => setEnter("hi")}
                             onChangeText={(value) => SearchFilter(value)}
                             // onFocus={(value) => console.log(value)}
                             // onEndEditing={() => setEnter(null)}
@@ -130,7 +136,8 @@ const Header = ({ navigation,pic }) => {
                   
             </ImageBackground>
 
-            {enter ? <View style={Styles.searchList}>
+            {enter ?
+                <View style={Styles.searchList}>
                 <FlatList
                     data={filterArray}
                     keyExtractor={(item,index) => index.toString()}

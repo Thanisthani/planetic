@@ -9,10 +9,10 @@ import { LogBox } from 'react-native';
 import { store } from './Redux/store'
 import { Provider } from 'react-redux';
 
-// LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by messageLogBox.ignoreAllLogs();
+LogBox.ignoreLogs(['Warning: ...']); // Ignore log notification by messageLogBox.ignoreAllLogs();
 
 export default function App() {
-  // console.disableYellowBox = true;
+  console.disableYellowBox = true;
   return (
     // <WelcomeScreen />
     // <SignInScreen />

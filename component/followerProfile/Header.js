@@ -77,7 +77,7 @@ const Header = ({ navigation }) => {
           </TouchableOpacity>
 
           <View style={Styles.profile}>
-              <Image style={Styles.img} source={{uri:follower.pic}} />
+              {follower && <Image style={Styles.img} source={{uri:follower.pic}} />}
                 
                 <View style={{marginLeft:20, alignItems:"center"}}>
                 {follower? 
@@ -201,8 +201,9 @@ const Styles = StyleSheet.create({
         color:"#19B4BF"
     },
     countText: {
-        fontSize: 18,
-        color:"#9b9b9e"
+        fontSize: 16,
+        color: "#9b9b9e",
+        letterSpacing: 2,
         
     }
     

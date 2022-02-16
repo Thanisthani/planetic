@@ -50,7 +50,9 @@ const ProfileDetails = () => {
            { await updateDoc(doc(db,'users',user.uid), {
                 pic:ImgUrl
     
-            })}
+           })
+           
+           console.log("uploaded")}
 
         }
         catch(error) {
@@ -158,7 +160,8 @@ const Styles = StyleSheet.create({
         marginHorizontal:20
     },
     countWrapper: {
-        alignItems:"center"
+        alignItems: "center",
+        marginBottom:10
     },
     count: {
         fontSize: 25,
@@ -166,9 +169,10 @@ const Styles = StyleSheet.create({
         color:"#19B4BF"
     },
     countText: {
-        fontSize: 18,
+        fontSize: 16,
         color: "#9b9b9e",
-        letterSpacing:1
+        letterSpacing: 2,
+        
         
     }
 

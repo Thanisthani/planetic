@@ -14,7 +14,16 @@ const TopTabDetails = ({ navigation }) => {
 
   return (
     <Tab.Navigator initialRouteName="Trip"
-        //   tabBarOptions={tabOptions}
+      //   tabBarOptions={tabOptions}
+      screenOptions={{
+        tabBarLabelStyle: { fontSize: 15, fontWeight: "bold" },
+        // tabBarItemStyle: { width: 100 },
+        tabBarStyle: { backgroundColor: '#baf2f6' },
+        tabBarIndicatorStyle: {
+          backgroundColor: '#1bc5d1',
+          height: 3
+        }
+      }}
       >
       <Tab.Screen name="Trip"
               initialParams={{ followerId:followerId }}

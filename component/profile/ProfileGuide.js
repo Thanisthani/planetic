@@ -1,4 +1,4 @@
-import { View, Text,StyleSheet,TouchableOpacity,Image, ScrollView } from 'react-native'
+import { View, Text,StyleSheet,TouchableOpacity,ImageBackground, ScrollView } from 'react-native'
 import React,{useState,useEffect} from 'react'
 import { useSelector } from 'react-redux'
 import { SignInUser } from '../../Redux/Reducer/UserSlicer'
@@ -6,7 +6,7 @@ import { db } from '../../firebase';
 import { collection, onSnapshot } from '@firebase/firestore'
 import { Entypo, AntDesign } from '@expo/vector-icons';
 
-const ProfileGuide = () => {
+const ProfileGuide = ({navigation}) => {
     const user = useSelector(SignInUser);
 
     const [fPost, setFpost] = useState()
@@ -36,7 +36,7 @@ const ProfileGuide = () => {
     
   return (
     <View style={Styles.container}>
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
             {fPost && fPost.map((post) => (
 
             
@@ -45,11 +45,20 @@ const ProfileGuide = () => {
                         {
                         post:post
                     })} >
-            <View style={Styles.postContainer}>
-                <Image style={Styles.postImg} source={{uri:post.imgURL}} />
-                            <Text style={Styles.title}>{ post.caption}</Text>
+          
+                    <ImageBackground style={Styles.postImg} source={{ uri: post.imgURL }} borderRadius={15} >
+                    <View style={{ justifyContent: "space-between", flex: 1 }}>
+                      
+                      <Text>   </Text>
+                      <View style={Styles.suggestPastBottom}>
+                        <Text style={Styles.title}>{post.caption}</Text>
+                        </View>
+
+                      </View>
+                </ImageBackground>
+                           
                     
-                </View>
+       
             </TouchableOpacity>
             </View>
 
@@ -62,7 +71,9 @@ const ProfileGuide = () => {
 
 const Styles = StyleSheet.create({
     container: {
-        alignItems:"center"
+    alignItems: "center",
+    backgroundColor: "white",
+    flex:1
       },
       postContainer: {
         backgroundColor: "white",
@@ -73,15 +84,24 @@ const Styles = StyleSheet.create({
         marginTop:20
     },
     postImg: {
-        height: 230,
+        height: 200,
       width: 350,
-      borderRadius:10
-      },
+ 
+  },
+  suggestPastBottom: {
+    borderBottomLeftRadius: 20,
+    borderBottomRightRadius: 20,
+    backgroundColor: 'rgba(52, 52, 52, 0.6)',
+    width: 350,
+    
+},
       title: {
         fontSize: 20,
         fontWeight: "bold",
         marginLeft: 20,
-        marginTop:10
+        marginTop: 10,
+        color: "white",
+        marginBottom:10
     },
 })
 export default ProfileGuide

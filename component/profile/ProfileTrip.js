@@ -6,7 +6,7 @@ import { db } from '../../firebase';
 import { collection, onSnapshot } from '@firebase/firestore'
 import { Entypo, AntDesign } from '@expo/vector-icons';
 
-const ProfileTrip = () => {
+const ProfileTrip = ({navigation}) => {
     const user = useSelector(SignInUser);
     const [fPlan, setFPlan] = useState([])
 
@@ -34,7 +34,7 @@ const ProfileTrip = () => {
 
   return (
     <View style={Styles.container}>
-          <ScrollView>
+          <ScrollView showsVerticalScrollIndicator={false}>
       {fPlan && fPlan.map((plan) => (
                       
                       <TouchableOpacity key={plan.id}
@@ -51,7 +51,7 @@ const ProfileTrip = () => {
                   >
                       
 
-                      <View style={{ marginLeft: 10, marginBottom: 10 }}>
+                      <View style={{ marginLeft: 10, }}>
                           
                           <ImageBackground style={Styles.suggestImg}                                
                               source={{ uri: plan.imgURL }}
@@ -85,13 +85,16 @@ const ProfileTrip = () => {
 const Styles = StyleSheet.create({
     container: {
         alignItems: "center",
-        paddingTop:10
+        // paddingTop: 10,
+        backgroundColor: "white",
+        flex:1
     },
     
     suggestImg: {
         width: 350,
         height: 200,
-        marginRight:0
+        marginRight: 0,
+        marginTop:20
         
     },
     suggestTextWrapper: {
