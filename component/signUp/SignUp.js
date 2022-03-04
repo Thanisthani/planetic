@@ -21,7 +21,7 @@ const SignUp = ({ navigation }) => {
     const RegisterUser = (email,password,username) => {
         createUserWithEmailAndPassword(auth, email, password)
             .then((re) => {
-                console.log(re);
+                // console.log(re);
                 console.log("Sucessfully signed up");
                  setDoc(doc(db, "users", re.user.uid), {
                     uid: re.user.uid,

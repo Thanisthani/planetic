@@ -7,7 +7,7 @@ import Moment from 'moment';
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import DropDownPicker from 'react-native-dropdown-picker';
 import RadioForm from 'react-native-simple-radio-button';
-import { collection, getDocs,setDoc,doc, serverTimestamp,query,where } from "firebase/firestore";
+import { collection, getDocs,setDoc,doc, serverTimestamp,query,where, onSnapshot } from "firebase/firestore";
 import { db,auth } from "../../firebase"
 import { extendMoment } from 'moment-range';
 import { onAuthStateChanged } from "firebase/auth";
@@ -84,32 +84,40 @@ const FormGetTrip = ({ navigation }) => {
     
     
     const gettrip = async (place_name) => {
-    
-        const newStartdate = Moment(startdate).format().toString().slice(0, 10);
-        const newEnddate = Moment(enddate).format().toString().slice(0, 10);
-        const range = moments.range(new Date(newStartdate),new Date(newEnddate)).diff('days')+1;
+
+        try {
+            const newStartdate = Moment(startdate).format().toString().slice(0, 10);
+            const newEnddate = Moment(enddate).format().toString().slice(0, 10);
+            const range = moments.range(new Date(newStartdate), new Date(newEnddate)).diff('days') + 1;
         
-        const places = collection(db, 'Destination')
-        const q = query(places,
-            where("d_name", "==", place_name),
-            where("budget", "<=", multiSliderValue[1]),
-            where("budget", ">=", multiSliderValue[0]),
-            where("category", "==", value),
-            where("duration", "==", range)
-        )
+            const places = collection(db, 'Destination')
+            const q = query(places,
+                where("d_name", "==", place_name),
+                where("budget", "<=", multiSliderValue[1]),
+                where("budget", ">=", multiSliderValue[0]),
+                where("category", "==", value),
+                where("duration", "==", range)
+            )
+          await  onSnapshot(q, (snapshot) => {
+                setPPlace((snapshot.docs.map((post) => ({ id: post.id, ...post.data() }))))
+                console.log("data fecthed")
+            })
+       
+            if (pPlace) {
+                pPlace.map((place, index) => {
+                    uploadPlan(place.id, place.d_name, place.imgURL, place.budget, newStartdate, newEnddate)
+                })  
+                console.log("if clause")
+                
+            }
 
-        const docSnap = await getDocs(q);
-        setPPlace(docSnap.docs.map((doc) =>( {
-            id: doc.id, ...doc.data()
-            
-        })))
-
-
-        if (docSnap) {
-            pPlace.map((place, index) => {
-                      uploadPlan(place.id,place.d_name,place.imgURL,place.budget,newStartdate,newEnddate)
-            })  
         }
+        catch (error) {
+            console.log(error)
+        }
+    
+        
+
     }
 
     // upload plan
@@ -137,7 +145,7 @@ const FormGetTrip = ({ navigation }) => {
         
             }).then(() => 
             {
-                
+                setPPlace(null)
                 console.log("Sucesssfully plan posted")
                 navigation.navigate('TripPlanScreen',
                     {

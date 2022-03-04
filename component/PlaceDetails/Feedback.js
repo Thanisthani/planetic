@@ -20,23 +20,25 @@ const Feedback = ({navigation}) => {
   const getReview = async () => {
     const reviews = collection(db, "Tourists_places", place_name, 'reviews')
     const q = query(reviews,orderBy("createAt", "desc"))
-   const snap= await onSnapshot(q, (snapshot) =>
+
+    await onSnapshot(q, (snapshot) =>
    {
    
      setTreview((snapshot.docs.map((review) => ({ id: review.id, ...review.data() }))))
      
    })
     
-    if (!snap)
+    if (treview)
     {
-      console.log("treview not store")
+      
+      setUserRating((treview.reduce((a,v) =>  a += v.rating ,  0 ))/treview.length)
     }
     else {
-      setUserRating((treview.reduce((a,v) =>  a += v.rating ,  0 ))/treview.length)
       
+      console.log("treview not store")
     }
     
-   
+   console.log(userRating) 
 
   }
 
@@ -64,7 +66,9 @@ const Feedback = ({navigation}) => {
       {/* rating */}
       <View style={Styles.rating}>
 
-          <Text style={Styles.rate}>{ userRating.toString().slice(0,3)}</Text>
+          {userRating ?
+            <Text style={Styles.rate}>{userRating.toString().slice(0,3)}</Text>
+          : <Text style={Styles.rate}>3.2</Text>}
         <View>
         <View style={Styles.star}>
                   {rating.map((item, index) =>
@@ -72,15 +76,15 @@ const Feedback = ({navigation}) => {
                     <AntDesign key={index} name="star" size={24} color={item <= userRating ? "#ffcb82" : "#ffe2bd"} />
       
                   ))}
-                  
-                </View>
-            <Text style={Styles.reviewNo}>{  treview.length} reviews</Text>
+                   
+                </View> 
+                <Text style={Styles.reviewNo}>{  treview.length} reviews</Text>
         </View>
       </View>
 
       {/* Review profile */}
      
-      {treview.map((review) => (
+      { treview.map((review) => (
 
 <View key={review.id}>
 <View>
