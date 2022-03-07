@@ -100,10 +100,12 @@ const FormGetTrip = ({ navigation }) => {
             )
           await  onSnapshot(q, (snapshot) => {
                 setPPlace((snapshot.docs.map((post) => ({ id: post.id, ...post.data() }))))
-                console.log("data fecthed")
+              console.log("data fecthed")
+              getRecommendation(place_name)
             })
        
             if (pPlace) {
+                
                 pPlace.map((place, index) => {
                     uploadPlan(place.id, place.d_name, place.imgURL, place.budget, newStartdate, newEnddate)
                 })  
@@ -160,6 +162,24 @@ const FormGetTrip = ({ navigation }) => {
 
     }   
 
+
+
+    const getRecommendation = (placeName) => 
+    {
+            fetch('http://127.0.0.1:5000/recomend', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ user: currentUser.uid, place: placeName })
+            })
+                .then(resp => resp.json())
+                .then(() =>
+                    console.log("upload recommended"))
+                .catch(error => console.log("recomendation error" + error))
+        
+      
+        }
 
 
   return (

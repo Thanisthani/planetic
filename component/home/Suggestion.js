@@ -1,9 +1,66 @@
-import React from 'react'
+import React,{ useEffect,useState } from 'react'
 import { View, Text, StyleSheet, Image, ImageBackground, ScrollView } from 'react-native'
 import { Entypo, AntDesign } from '@expo/vector-icons';
+import { db ,auth} from '../../firebase';
+import { collection, onSnapshot,updateDoc,doc } from '@firebase/firestore'
+import { useSelector } from 'react-redux'
+import { SignInUser } from '../../Redux/Reducer/UserSlicer'
+
 
 
 const Suggestion = () => {
+    const user = useSelector(SignInUser);
+    
+
+const [myPlan, setMyPlan] = useState(null)
+
+const getPlace = async () =>
+    {
+        try{
+            const plans = collection(db, "users", auth.currentUser.uid, "user_plan")
+           
+          await  onSnapshot(plans, (snapshot) =>
+            setMyPlan((snapshot.docs.map((place) => ({id: place.id, ...place.data()} ))))
+            )
+            }
+            catch (error)
+            {
+                console.log(error)
+            }
+    }
+    
+    // update recommended places
+    const updatePlace = async () =>
+    {
+        
+        if (myPlan != null)
+        {
+            await updateDoc(doc(db,'Recommend_place',"one"), {
+                placeName:myPlan[0].placeName
+    
+           })
+        }
+        
+            
+        }
+        
+
+useEffect(() => {
+    fetch('http://127.0.0.1:5000/get', {
+       method:'GET'
+    })
+        .then(resp => resp.json())
+        .then(article => {
+        console.log(article)
+        })
+    .catch(error => {console.log("suggestion" + error)})
+    // getPlace()
+    // updatePlace()
+    // console.log("place details" + myPlan[0].placeName)
+    
+}, [])
+    
+    
     return (
         <View style={Styles.container}>
             

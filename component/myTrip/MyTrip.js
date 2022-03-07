@@ -1,15 +1,14 @@
 import { View, Text,StyleSheet,Image,TouchableOpacity,ImageBackground, ScrollView } from 'react-native';
-import React, { useEffect } from 'react';
+import React, { useEffect,useState } from 'react';
 import { Entypo, AntDesign } from '@expo/vector-icons';
-import { db } from '../../firebase';
+import { db ,auth} from '../../firebase';
 import { collection, onSnapshot,query,where } from '@firebase/firestore'
-import { useState } from 'react';
 import { useSelector } from 'react-redux'
 import { SignInUser } from '../../Redux/Reducer/UserSlicer'
 import Moment from 'moment';
 
 const MyTrip = ({navigation}) => {
-    const user = useSelector(SignInUser);
+    const user = useSelector(SignInUser); 
 
     const date = Moment().format('YYYY-MM-DD ')
 

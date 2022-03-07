@@ -3,7 +3,7 @@ import { View,StyleSheet, ScrollView } from 'react-native'
 import Header from '../component/home/Header'
 import Popularplace from '../component/home/Popularplace'
 import Suggestion from '../component/home/Suggestion'
-import { onSnapshot,doc } from 'firebase/firestore';
+import { onSnapshot,doc, collection,query,where } from 'firebase/firestore';
 import { auth, db } from '../firebase';
 import { useDispatch } from 'react-redux';
 import { SetSignInUsers } from '../Redux/Reducer/UserSlicer'
@@ -11,14 +11,15 @@ import { SetSignInUsers } from '../Redux/Reducer/UserSlicer'
 const HomeScreen = ({ navigation }) => {
     const dispatch = useDispatch();
     const [cUser, setCuser] = useState()
+ 
 
-    useEffect(() => {
-     
+    // current users details
+    const getCurrentUser = () => {
         const ref = doc(db, 'users',auth.currentUser.uid)
         onSnapshot(ref, (snapshot) => {
 
             setCuser(snapshot.data())
-        console.log(snapshot.data())
+        // console.log(snapshot.data())
                
                 dispatch(SetSignInUsers({
                     SignInUserDetail: snapshot.data()
@@ -27,8 +28,21 @@ const HomeScreen = ({ navigation }) => {
             
 
         })
+    
+    }
+    
+
+    // get trip plan
+    
+    
+
+    useEffect(() => {
+        getCurrentUser()
+       
+       
         
-    },[])
+    }, [])
+    
 
     return (
         <View style={Styles.container}>
