@@ -12,15 +12,15 @@ const Suggestion = () => {
     const user = useSelector(SignInUser);
     
 
-const [myPlan, setMyPlan] = useState(null)
+const [suggestPlace, setSuggestPlace] = useState(null)
 
 const getPlace = async () =>
     {
         try{
-            const plans = collection(db, "users", auth.currentUser.uid, "user_plan")
+            const plans = doc(db, "Suggested_place", auth.currentUser.uid)
            
           await  onSnapshot(plans, (snapshot) =>
-            setMyPlan((snapshot.docs.map((place) => ({id: place.id, ...place.data()} ))))
+            setSuggestPlace(snapshot.data())
             )
             }
             catch (error)
@@ -46,17 +46,17 @@ const getPlace = async () =>
         
 
 useEffect(() => {
-    fetch('http://127.0.0.1:5000/get', {
-       method:'GET'
-    })
-        .then(resp => resp.json())
-        .then(article => {
-        console.log(article)
-        })
-    .catch(error => {console.log("suggestion" + error)})
-    // getPlace()
+    // fetch('http://192.168.1.102:5000/', {
+    //    method:'GET'
+    // })   
+    //     .then(resp => resp.json())
+    //     .then(article =>
+    //         console.log("Hi recommend" +article["hello"] ) 
+    //      )
+    // .catch(error => {console.log("suggestion  " + error)})
+    getPlace()
     // updatePlace()
-    // console.log("place details" + myPlan[0].placeName)
+    // console.log("place details" + suggestPlace.TripPlace)
     
 }, [])
     
@@ -70,36 +70,45 @@ useEffect(() => {
             </View>
 
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                
-            <View style={{  marginLeft:20 }}>
-                <Image style={Styles.suggestplace}
-                        source={require("../../assets/Ella.jpeg")} />
-                    <View style={Styles.suggestBottom}>
+
+
+                {/* Suggest place map */}
+
+
+                {suggestPlace && suggestPlace.TripPlace.map((sPlace, index) =>
+                (
+                    <View key={index} style={{  marginLeft:20 }}>
+                    <Image style={Styles.suggestplace}
+                            source={require("../../assets/Ella.jpeg")} />
+                        <View style={Styles.suggestBottom}>
+        
+                            <View style={{ flexDirection: "row", justifyContent: "center" }}>
+                                <Text style={Styles.suggestText}>{ sPlace}</Text>
+                            </View>
+                            
+                            <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                                
+                                <View style={{ flexDirection: "row", alignItems: "center" }}>
+                                    <AntDesign name="clockcircle" size={13} color="#19B4BF" />
+                                    <Text style={[Styles.catogary]}>  04 Days</Text>
+                                </View>
     
-                        <View style={{ flexDirection: "row", justifyContent: "center" }}>
-                            <Text style={Styles.suggestText}>Ella</Text>
+                                <View style={{ flexDirection: "row" }}>
+                                    <Entypo name="location-pin" size={20} color="#19B4BF" />
+                                    <Text style={[Styles.catogary]}>Nature</Text>         
+                                </View>
+                                
+                            </View>
+    
                         </View>
                         
-                        <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
-                            
-                            <View style={{ flexDirection: "row", alignItems: "center" }}>
-                                <AntDesign name="clockcircle" size={13} color="#19B4BF" />
-                                <Text style={[Styles.catogary]}>  04 Days</Text>
-                            </View>
-
-                            <View style={{ flexDirection: "row" }}>
-                                <Entypo name="location-pin" size={20} color="#19B4BF" />
-                                <Text style={[Styles.catogary]}>Nature</Text>         
-                            </View>
-                            
-                        </View>
-
                     </View>
-                    
-                </View>
+
+                    ))} 
+      
 
 
-                <View style={{ marginBottom:10 }}>
+                {/* <View style={{ marginBottom:10 }}>
                 <Image style={Styles.suggestplace}
                         source={require("../../assets/suggest-kandy.jpg")} />
                     <View style={Styles.suggestBottom}>
@@ -152,7 +161,7 @@ useEffect(() => {
 
                     </View>
                     
-                </View>
+                </View> */}
 
 
             </ScrollView>

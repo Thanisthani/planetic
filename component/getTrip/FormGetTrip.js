@@ -166,7 +166,7 @@ const FormGetTrip = ({ navigation }) => {
 
     const getRecommendation = (placeName) => 
     {
-            fetch('http://127.0.0.1:5000/recomend', {
+            fetch('http://192.168.1.104:5000/recomend', {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
