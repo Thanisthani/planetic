@@ -30,55 +30,55 @@ const NotificationScreen = ({navigation}) => {
   const [notify, setNotify] = useState()
   
   // get notification from plan
-  const getPlan =  () =>
-  {
-      const plans = collection(db, "users", user.uid, "user_plan")
-      const q = query(plans, where("startDate", "==", tomorrow))
-      onSnapshot(q, (snapshot) =>
-      setMyPlan((snapshot.docs.map((place) => ({id: place.id, ...place.data()} ))))
-      )
+  // const getPlan =  () =>
+  // {
+  //     const plans = collection(db, "users", user.uid, "user_plan")
+  //     const q = query(plans, where("startDate", "==", tomorrow))
+  //     onSnapshot(q, (snapshot) =>
+  //     setMyPlan((snapshot.docs.map((place) => ({id: place.id, ...place.data()} ))))
+  //     )
 
-    if (myPlan[0] != null)
-      {  
-      console.log("fetched" + myPlan[0].placeName)
-      uploadNotification()
-          } 
-  }
+  //   if (myPlan[0] != null)
+  //     {  
+  //     console.log("fetched" + myPlan[0].placeName)
+  //     uploadNotification()
+  //         } 
+  // }
 
   // upload notification
 
-  const uploadNotification = async () =>
-  {
-    const userRef = collection(db, "users", user.uid, "notification")
-    await setDoc(doc(userRef),
-        { 
-          createAt: serverTimestamp(),
-          placeName: myPlan[0].placeName,
-          imgURL: myPlan[0].imgURL,
-          placeId: myPlan[0].placeId,
-          budget: myPlan[0].budget
+  // const uploadNotification = async () =>
+  // {
+  //   const userRef = collection(db, "users", user.uid, "notification")
+  //   await setDoc(doc(userRef),
+  //       { 
+  //         createAt: serverTimestamp(), 
+  //         placeName: myPlan[0].placeName,
+  //         imgURL: myPlan[0].imgURL,
+  //         placeId: myPlan[0].placeId,
+  //         budget: myPlan[0].budget
            
            
-        }).then(() => {
-            console.log("upload notification")
+  //       }).then(() => {
+  //           console.log("upload notification")
            
-        })
+  //       })
 
-        }
+  //       }
     
   
   // get notification
 
   const getNotify = async () => {
     const notifications = collection(db, "users", user.uid, "notification")
-    const q = query(notifications, orderBy('createAt', 'desc'))
+    const q = query(notifications,where("startdate", "<=", tomorrow), orderBy('startdate', 'desc') )
     onSnapshot(q, (snapshot) =>
    setNotify((snapshot.docs.map((not) => ({id: not.id, ...not.data()} ))))
     )
   }
   
   useEffect(() => {
-    getPlan()
+    
     getNotify()
       // console.log(tomorrow)
   }, [])
@@ -108,7 +108,8 @@ const NotificationScreen = ({navigation}) => {
       {/* <Button title={"Get notification"} onPress={handleNotification} /> */}
       {notify && notify.map((not) => (
         <NotifiCard key={not.id} navigation={navigation} image={not.imgURL}
-          place={not.placeName} placeId={not.placeId} budget={not.budget}/>
+          place={not.placeName} placeId={not.placeId} budget={not.budget}
+          startdate={ not.startdate} />
       ))}
       
     </View>

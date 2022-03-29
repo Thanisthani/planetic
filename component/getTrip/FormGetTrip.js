@@ -102,12 +102,14 @@ const FormGetTrip = ({ navigation }) => {
                 setPPlace((snapshot.docs.map((post) => ({ id: post.id, ...post.data() }))))
               console.log("data fecthed")
               getRecommendation(place_name)
+
             })
        
             if (pPlace) {
                 
                 pPlace.map((place, index) => {
                     uploadPlan(place.id, place.d_name, place.imgURL, place.budget, newStartdate, newEnddate)
+                    uploadNotification(place.id, place.d_name, place.imgURL, place.budget, newStartdate)
                 })  
                 console.log("if clause")
                 
@@ -160,13 +162,30 @@ const FormGetTrip = ({ navigation }) => {
             
         )
 
-    }   
+    }
+    
+
+    const uploadNotification = async (place_id, place_name, imgURL, budget, startdate) => {
+        const userRef = collection(db, "users", currentUser.uid, "notification")
+
+        await setDoc(doc(userRef),
+            { 
+            placeName: place_name,
+            imgURL: imgURL,
+            placeId: place_id,
+            budget: budget,
+            startdate: startdate
+          
+            }).then(() => {
+                console.log("upload notification")
+            })
+    }
 
 
-
+// Get recommendation 
     const getRecommendation = (placeName) => 
     {
-            fetch('http://192.168.1.101:5000/recomend', {
+            fetch('http://192.168.1.102:5000/recomend', {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'

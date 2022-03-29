@@ -1,7 +1,14 @@
 import { View, Text,StyleSheet,Image,TouchableOpacity } from 'react-native'
 import React from 'react'
+import DateRangePicker from "react-native-daterange-picker";
+import Moment from 'moment';
+import { extendMoment } from 'moment-range';
 
-const NotifiCard = ({image,place,placeId,budget,navigation}) => {
+const NotifiCard = ({ image, place, placeId, budget, startdate, navigation }) => {
+    const moments = extendMoment(Moment);
+    const date = new Date()
+    const today = Moment(date).format('YYYY-MM-DD'); 
+    const range = moments.range(new Date(startdate), new Date(today)).diff('days') + 1
   return (
       <TouchableOpacity style={Styles.container} onPress={() => {
           navigation.navigate('TripPlanScreen',
@@ -17,7 +24,7 @@ const NotifiCard = ({image,place,placeId,budget,navigation}) => {
               <Image style={Styles.img} source={{ uri:image}} />
               <View style={{ marginLeft: 10 ,marginTop:5, width:240}}>
                   <View style={Styles.ago}>
-                      <Text style={{color:"#9b9b9e"}}>21 min ago</Text>
+                      {range > 0 ? <Text style={{ color: "#9b9b9e" }}>{ range} day ago </Text>: <Text style={{ color: "#9b9b9e" }}>Today</Text> } 
                       
                   </View>
                   
