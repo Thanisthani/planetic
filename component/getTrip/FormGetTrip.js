@@ -11,6 +11,7 @@ import { collection, getDocs,setDoc,doc, serverTimestamp,query,where, onSnapshot
 import { db,auth } from "../../firebase"
 import { extendMoment } from 'moment-range';
 import { onAuthStateChanged } from "firebase/auth";
+import * as Notification from "expo-notifications"
 
 
 const FormGetTrip = ({ navigation }) => {
@@ -110,6 +111,7 @@ const FormGetTrip = ({ navigation }) => {
                 pPlace.map((place, index) => {
                     uploadPlan(place.id, place.d_name, place.imgURL, place.budget, newStartdate, newEnddate)
                     uploadNotification(place.id, place.d_name, place.imgURL, place.budget, newStartdate)
+                    handleNotification(place.d_name,newStartdate)
                 })  
                 console.log("if clause")
                 
@@ -185,7 +187,7 @@ const FormGetTrip = ({ navigation }) => {
 // Get recommendation 
     const getRecommendation = (placeName) => 
     {
-            fetch('http://192.168.1.102:5000/recomend', {
+            fetch('http://192.168.1.101:5000/recomend', {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -198,9 +200,48 @@ const FormGetTrip = ({ navigation }) => {
                 .catch(error => console.log("recomendation error" + error))
         
       
+    }
+    
+
+    // notification
+    Notification.setNotificationHandler({
+        handleNotification: async () => {
+          return {
+            shouldPlaySound: true,
+            shouldShowAlert: true
+          };
+        },
+      });
+
+    
+// Schedule notification
+    const handleNotification = (place_name, startDate) => {
+        const dayBefore = Moment(startdate).subtract(1, 'day').format('YYYY-MM-DD');
+
+        const trigger = new Date(dayBefore)
+        //   const day = date.getDate()
+        //   const month = date.getMonth()
+        try {
+            Notification.scheduleNotificationAsync(
+                {
+                    content: {
+                        title: 'You have one day more for your ' + place_name + ' trip',
+                        body: "This is my local notification"
+                    },
+                    trigger,
+                    //     trigger: {
+                    //         day: day,
+                    //         month: month,
+                    // }
+                }
+            ).then(console.log("function wroked"))
         }
-
-
+        catch (error) {
+            console.log("notification error" + error + dayBefore)
+        }
+  
+    }
+    
   return (
     <View>
           <Formik

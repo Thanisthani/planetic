@@ -1,4 +1,4 @@
-import { View, Text, Button, StatusBar,StyleSheet } from 'react-native';
+import { View, Text, StatusBar,StyleSheet } from 'react-native';
 import React,{useEffect,useState} from 'react';
 import * as Notification from "expo-notifications"
 import NotifiCard from '../component/notification/NotifiCard'
@@ -9,14 +9,7 @@ import { SignInUser } from '../Redux/Reducer/UserSlicer'
 import Moment from 'moment';
 
 
-// Notification.setNotificationHandler({
-//   handleNotification: async () => {
-//     return {
-//       shouldPlaySound: true,
-//       shouldShowAlert: true
-//     };
-//   },
-// });
+
 
 const NotificationScreen = ({navigation}) => {
 
@@ -84,22 +77,6 @@ const NotificationScreen = ({navigation}) => {
   }, [])
   
 
-// Schedule notification
-  // const handleNotification = () => 
-  // {
-  //   Notification.scheduleNotificationAsync(
-  //     {
-  //       content: {
-  //         title: "Testing local Notification",
-  //         body:"This is my local notification"
-  //       },
-  //       trigger: {
-  //         seconds: 10,
-  //       }
-  //     }
-  //   ).then(console.log("function wroked"))
-  //   }
-  
   return (
     <View style= {Styles.container}>
       <Text style = {Styles.heading}>Notification</Text>
