@@ -40,7 +40,7 @@ const NotifiCard = ({ image, place, placeId, budget, startdate, navigation }) =>
 
 const Styles = StyleSheet.create({
     container: {
-        marginTop:10,
+        marginTop:20,
         backgroundColor: "white",
         marginHorizontal: 20,
         paddingHorizontal: 0,
@@ -48,7 +48,7 @@ const Styles = StyleSheet.create({
         height: 90,
         // borderWidth: 0.4,
         borderColor: "#19B4BF",
-        elevation: 4,
+        elevation: 3,
     },
     img: {
         height: 90,

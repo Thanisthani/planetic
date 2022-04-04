@@ -1,19 +1,29 @@
-import { View, Text,ScrollView,StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text,ScrollView,StyleSheet, Linking,TouchableOpacity } from 'react-native';
 import React from 'react';
 import MapView, { Marker } from 'react-native-maps';
 import { useRoute } from '@react-navigation/native'
 import openMap from 'react-native-open-maps';
+import {MaterialIcons } from '@expo/vector-icons'; 
 
  
 const PlaceOverview = ({navigation}) => {
     const route = useRoute();
-    const { type, phone, open, lat, long, about } = route.params;
+    const { type, phone, open, lat, long, about,destination } = route.params;
     
     //open google map
+    const direct = () => {
+  console.log(destination)
+          Linking.openURL(`https://www.google.com/maps/dir/?api=1&destination=${destination}`)
+      .catch(err => console.error('An error occurred', err));
+        // geo:0,0?q=${lat},${long}
+    }
+    
 
     const openGmap = () => {
-        console.log("Open gmap")
-        openMap({ latitude: lat, longitude:long})
+        // console.log("Open gmap")
+        // openMap({ latitude: lat, longitude:long})
+        Linking.openURL(`geo:0,0?q=${lat},${long}`)
+        .catch(err => console.error('An error occurred', err));
         
     }
     
@@ -74,6 +84,15 @@ const PlaceOverview = ({navigation}) => {
 
           </ScrollView>
           
+
+          {/* Direction */}
+          <TouchableOpacity style={Styles.mapfloat} onPress={direct}>
+        <View >
+        <MaterialIcons style={Styles.mapIcon } name="directions" size={30} color="white" />
+        </View>
+     
+      </TouchableOpacity>
+
     </View>
   );
 };
@@ -120,7 +139,22 @@ const Styles = StyleSheet.create(
             textAlign: "justify",
             fontSize: 18,
             color:"#989898"
-        }
+        },
+        mapfloat: {
+            position: "absolute",
+            right: 30,
+            bottom: 30,
+        },
+        mapIcon: {
+            backgroundColor:"#19B4BF",
+            borderRadius: 50,
+            // width: 63,
+            // height: 63,
+            padding: 10,
+           
+            // zIndex:300
+            
+          },
     }
 )
 export default PlaceOverview;

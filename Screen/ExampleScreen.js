@@ -17,7 +17,7 @@ const openMaps = () => {
   
   const lat = 7.2906
   const long = 80.6337
-    Linking.openURL(`https://www.google.com/maps/dir/?api=1&origin=Sri%20Dalada%20Veediya%2C%20Kandy%2020000%2C%20Sri%20Lanka%0A%0A&destination=Embekka%20Pilimatalawa%20Road%2C%20Embekka%2C%20Sri%20Lanka%0A&travelmode=driving&waypoints=National%20Hospital%20-%20Kandy%0A%0A%0A%7COpen%20Rice%20Sri%20Lanka%0A%0A%7CRoyal%20Botanic%20Gardens%0A%0A%7CBhoomi%20Realty%20%28Pvt%29%20Ltd%0A%7CDistrict%20Hospital%20Kadugannawa%7CMatara%20Bath%20Kade%7CLion%27s%20Mouth%20Rock%20Kadugannawa%7CDilshan%20Stores%7CDidula%20Hotel%20%26%20SPA%20%28Pvt%29%20Ltd%7CHingula%20Bridge`)
+    Linking.openURL(`https://www.google.com/maps/dir/?api=1&origin=Sri%20Dalada%20Veediya%2C%20Kandy%2020000%2C%20Sri%20Lanka%0A%0A&destination=Embekka%20Pilimatalawa%20Road%2C%20Embekka%2C%20Sri%20Lanka%0A&travelmode=driving`)
 .catch(err => console.error('An error occurred', err));
   // geo:0,0?q=${lat},${long}
 }

@@ -51,7 +51,7 @@ const BottomNavigation = () => {
                 )
           }} />
           
-          <Tab.Screen name="My Trip" component={ExampleScreen} options={{
+          <Tab.Screen name="My Trip" component={MyTripScreen} options={{
               tabBarIcon: ({ color, size, focused }) => (
                   <View  style={Styles.iconWrapper}>
                       <Ionicons name="md-map" size={32}

@@ -1,4 +1,4 @@
-import { View, Text, StatusBar,StyleSheet } from 'react-native';
+import { View, Text, StatusBar,StyleSheet, ScrollView } from 'react-native';
 import React,{useEffect,useState} from 'react';
 import * as Notification from "expo-notifications"
 import NotifiCard from '../component/notification/NotifiCard'
@@ -81,14 +81,14 @@ const NotificationScreen = ({navigation}) => {
     <View style= {Styles.container}>
       <Text style = {Styles.heading}>Notification</Text>
       
-
+<ScrollView showsVerticalScrollIndicator={false}>
       {/* <Button title={"Get notification"} onPress={handleNotification} /> */}
       {notify && notify.map((not) => (
         <NotifiCard key={not.id} navigation={navigation} image={not.imgURL}
           place={not.placeName} placeId={not.placeId} budget={not.budget}
           startdate={ not.startdate} />
       ))}
-      
+      </ScrollView>
     </View>
   );
 };
@@ -96,7 +96,7 @@ const NotificationScreen = ({navigation}) => {
 const Styles = StyleSheet.create({
   container: {
     paddingTop: StatusBar.currentHeight + 10,
-    backgroundColor: '#f4f2fc',
+    backgroundColor: '#ffffff',
     flex:1
   },
   heading: {
