@@ -4,6 +4,7 @@ import { useRoute } from '@react-navigation/native'
 import MapView, { Marker } from 'react-native-maps';
 import { collection, onSnapshot,query,orderBy,where } from '@firebase/firestore'
 import { db } from "../../firebase"
+import MapViewDirections from 'react-native-maps-directions';
 
 const MapList = () => {
     const route = useRoute();
@@ -13,6 +14,7 @@ const MapList = () => {
 
   const [tday, setTday] = useState(day)
   const [tplaceId, setPlaceId] = useState(placeId)
+  const GOOGLE_MAPS_APIKEY= 'AIzaSyDManby2L9M12RO5yx1yp7k45AaU8Z7KU8'
   
     
   const getplan = () =>
@@ -46,7 +48,7 @@ const MapList = () => {
             >
                 
                 {tplace.map((place, index) => (
-                    
+                    <>
                     <Marker key={index}
                           coordinate={{
                               latitude:place.lat,
@@ -55,8 +57,14 @@ const MapList = () => {
                         title={place.p_name}
                         description={place.time}
                         
-                   />
-                        
+                  />
+                  
+                  {/* <MapViewDirections
+    origin={place.lat,place.long}
+    destination={}
+    apikey={GOOGLE_MAPS_APIKEY}
+  /> */}
+                  </>      
                 ))}
                    
                       

@@ -187,7 +187,7 @@ const FormGetTrip = ({ navigation }) => {
 // Get recommendation 
     const getRecommendation = (placeName) => 
     {
-            fetch('http://192.168.1.101:5000/recomend', {
+            fetch('http://192.168.1.102:5000/recomend', {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json'
@@ -215,33 +215,33 @@ const FormGetTrip = ({ navigation }) => {
 
     
 // Schedule notification
-    const handleNotification = (place_name, startDate) => {
-        const dayBefore = Moment(startdate).subtract(1, 'day').format('YYYY-MM-DD');
+  const handleNotification = (place_name,startDate) => 
+  {
+    const dayBefore = Moment(startdate).subtract(1, 'day').format('YYYY-MM-DD'); 
 
-        const trigger = new Date(dayBefore)
-        //   const day = date.getDate()
-        //   const month = date.getMonth()
-        try {
-            Notification.scheduleNotificationAsync(
-                {
-                    content: {
-                        title: 'You have one day more for your ' + place_name + ' trip',
-                        body: "This is my local notification"
-                    },
-                    trigger,
-                    //     trigger: {
-                    //         day: day,
-                    //         month: month,
-                    // }
-                }
-            ).then(console.log("function wroked"))
-        }
-        catch (error) {
-            console.log("notification error" + error + dayBefore)
-        }
+      const trigger = new Date(dayBefore)
+    //   const day = date.getDate()
+    //   const month = date.getMonth()
+      try{
+    Notification.scheduleNotificationAsync(
+      {
+        content: {
+          title: 'You have one day more for your ' +place_name +' trip',
+          body:"This is my local notification"
+            },
+          trigger,
+        //     trigger: {
+        //         day: day,
+        //         month: month,
+        // }
+      }
+    ).then(console.log("function wroked"))
+      }
+      catch (error) {
+          console.log("notification error" + error + dayBefore)
+      }
   
     }
-    
   return (
     <View>
           <Formik

@@ -16,6 +16,7 @@ import PostDetailScreen from "./Screen/PostDetailScreen"
 import AddPostScreen from './Screen/AddPostScreen'
 import FollowerProfileScreen from './Screen/FollowerProfileScreen'
 import ProfileScreen from './Screen/ProfileScreen'
+import ExampleScreen from './Screen/ExampleScreen';
 
 
 const Stack = createNativeStackNavigator()
@@ -40,6 +41,7 @@ export const SignedInStack = () => (
             <Stack.Screen name="AddPostScreen" component={AddPostScreen} />
             <Stack.Screen name="FollowerProfileScreen" component={FollowerProfileScreen} />
             <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+            <Stack.Screen name="ExampleScreen" component={ExampleScreen} />
 
         </Stack.Navigator>
     </NavigationContainer>

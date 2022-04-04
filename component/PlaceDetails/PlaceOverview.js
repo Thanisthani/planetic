@@ -1,12 +1,22 @@
-import { View, Text,ScrollView,StyleSheet } from 'react-native';
+import { View, Text,ScrollView,StyleSheet, TouchableOpacity } from 'react-native';
 import React from 'react';
 import MapView, { Marker } from 'react-native-maps';
 import { useRoute } from '@react-navigation/native'
+import openMap from 'react-native-open-maps';
 
  
 const PlaceOverview = ({navigation}) => {
     const route = useRoute();
-    const { type,phone,open,lat,long,about } = route.params;
+    const { type, phone, open, lat, long, about } = route.params;
+    
+    //open google map
+
+    const openGmap = () => {
+        console.log("Open gmap")
+        openMap({ latitude: lat, longitude:long})
+        
+    }
+    
   return (
     <View style={Styles.container}>
           <ScrollView showsVerticalScrollIndicator={false}>
@@ -29,7 +39,7 @@ const PlaceOverview = ({navigation}) => {
               <View style={{marginBottom:20}}>
                   <Text style={Styles.leftText}>Location</Text>
                   <View style={{alignItems:"center"}}>
-              <View style={Styles.mapWrapper} >
+              <TouchableOpacity onPress={openGmap} style={Styles.mapWrapper} >
                   <MapView style={Styles.map} 
                       initialRegion={{
                           /*Kandy 7.2906° N, 80.6337° E - Dambulla 7.903092	80.670837*/
@@ -49,7 +59,7 @@ const PlaceOverview = ({navigation}) => {
                       
                   </MapView>
                   
-                      </View>
+                      </TouchableOpacity>
                   </View>
                   
 

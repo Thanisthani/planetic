@@ -7,6 +7,7 @@ import GetTripScreen from './GetTripScreen';
 import NotificationScreen from './NotificationScreen'
 import PostScreen from "./PostScreen"
 import MyTripScreen from './MyTripScreen'
+import ExampleScreen from './ExampleScreen';
 
 
 const Tab = createBottomTabNavigator();
@@ -50,7 +51,7 @@ const BottomNavigation = () => {
                 )
           }} />
           
-          <Tab.Screen name="My Trip" component={MyTripScreen} options={{
+          <Tab.Screen name="My Trip" component={ExampleScreen} options={{
               tabBarIcon: ({ color, size, focused }) => (
                   <View  style={Styles.iconWrapper}>
                       <Ionicons name="md-map" size={32}
