@@ -1,8 +1,10 @@
-import { View, Text,StyleSheet,Pressable,TextInput, TouchableOpacity } from 'react-native'
+import { View, Text,StyleSheet,Pressable,TextInput, TouchableOpacity,Alert } from 'react-native'
 import React from 'react'
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import * as EmailValidator from 'email-validator';
+import { sendPasswordResetEmail } from 'firebase/auth';
+import { auth } from '../../firebase';
 
 const ForgotPassword = ({ navigation }) => {
   
@@ -14,7 +16,16 @@ const ForgotPassword = ({ navigation }) => {
   )
   
   const onReset = (email) => {
-    console.log(email)
+    sendPasswordResetEmail(auth, email)
+
+    .then((re) => { Alert.alert('Hey!!', "Email sent, Check your mail") },
+    )
+    .then((re) =>{navigation.push('SignInScreen')})
+  
+    .catch((error) => {
+        Alert.alert('Hey!!', "Email provided is incorrect")
+    })
+
   }
 
   return (
