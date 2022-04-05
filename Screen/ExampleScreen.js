@@ -11,7 +11,7 @@ const ExampleScreen = () => {
 
 // const origin = {latitude: 7.2906, longitude:80.6337};
 //   const destination = { latitude: 8.755926069762058, longitude: 80.50740118391202 };
-//   const GOOGLE_MAPS_APIKEY = 'AIzaSyDManby2L9M12RO5yx1yp7k45AaU8Z7KU8'
+//  
   
 const openMaps = () => {
   

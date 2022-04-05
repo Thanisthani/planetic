@@ -104,7 +104,10 @@ const SignIn = ({ navigation }) => {
                            
             </View>
             <View style={Styles.wrapperforgotpass}>
-            <Text style={Styles.forgotpass}>Forgot password ?</Text>
+                            <TouchableOpacity onPress={() => navigation.push('ForgotPasswordScreen')}>
+                                
+                                <Text style={Styles.forgotpass}>Forgot password ?</Text>
+                            </TouchableOpacity>
             </View>
             <Pressable style={Styles.button(isValid)} onPress={handleSubmit}>
                 <Text style={Styles.buttonText}>Log in</Text>

@@ -17,6 +17,7 @@ import AddPostScreen from './Screen/AddPostScreen'
 import FollowerProfileScreen from './Screen/FollowerProfileScreen'
 import ProfileScreen from './Screen/ProfileScreen'
 import ExampleScreen from './Screen/ExampleScreen';
+import ForgotPasswordScreen from './Screen/ForgotPasswordScreen';
 
 
 const Stack = createNativeStackNavigator()
@@ -42,6 +43,7 @@ export const SignedInStack = () => (
             <Stack.Screen name="FollowerProfileScreen" component={FollowerProfileScreen} />
             <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
             <Stack.Screen name="ExampleScreen" component={ExampleScreen} />
+         
 
         </Stack.Navigator>
     </NavigationContainer>
@@ -58,7 +60,7 @@ export const SignedOutStack = () =>
         <Stack.Screen name="WelcomeScreen" component={WelcomeScreen} />
         <Stack.Screen name="SignInScreen" component={SignInScreen} />
         <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
-        
+        <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen} />
        
     </Stack.Navigator>
 </NavigationContainer>

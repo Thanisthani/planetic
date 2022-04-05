@@ -69,7 +69,7 @@ const NotificationScreen = ({navigation}) => {
    setNotify((snapshot.docs.map((not) => ({id: not.id, ...not.data()} ))))
     )
   }
-  
+   
   useEffect(() => {
     
     getNotify()
@@ -105,7 +105,9 @@ const Styles = StyleSheet.create({
     fontWeight:'600',
     color: "black",
     fontWeight: "bold",
-    paddingLeft:20
+    paddingLeft: 20,
+    marginBottom: 20,
+    marginTop:20
     
     // color:"#4c4c4b"
     
