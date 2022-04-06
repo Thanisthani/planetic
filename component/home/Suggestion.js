@@ -5,10 +5,15 @@ import { db ,auth} from '../../firebase';
 import { collection, onSnapshot,updateDoc,doc } from '@firebase/firestore'
 import { useSelector } from 'react-redux'
 import { SignInUser } from '../../Redux/Reducer/UserSlicer'
+import {Roboto_400Regular_Italic} from '@expo-google-fonts/roboto';
+import * as Font from 'expo-font';
 
 
 
 const Suggestion = () => {
+
+
+    
     const user = useSelector(SignInUser);
     
 
@@ -28,6 +33,14 @@ const getPlace = async () =>
                 console.log(error)
             }
     }
+
+    const getFonts = () =>
+        Font.loadAsync({
+            'Roboto-Italic': require('../../assets/fonts/Roboto-Italic.ttf'),
+            'Roboto-BoldItalic': require('../../assets/fonts/Roboto-BoldItalic.ttf'),
+            'Roboto-ThinItalic': require('../../assets/fonts/Roboto-ThinItalic.ttf'),
+            
+  });
     
     // update recommended places
     const updatePlace = async () =>
@@ -45,7 +58,9 @@ const getPlace = async () =>
         }
         
 
-useEffect(() => {
+    useEffect(() => {
+    
+       getFonts()
     // fetch('http://192.168.1.102:5000/', {
     //    method:'GET'
     // })   
@@ -65,8 +80,9 @@ useEffect(() => {
         <View style={Styles.container}>
             
             <View style={Styles.headerWrapper}>
-                <Text style={[Styles.header,{fontWeight:"bold"}]}>Suggestion</Text> 
-                <Text style={Styles.header}> for You</Text>
+                <Text style={[Styles.header1]}>Suggestion</Text> 
+                {/* ,{fontWeight:"bold"} */}
+                <Text style={Styles.header2}> for You</Text>
             </View>
 
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
@@ -183,12 +199,19 @@ const Styles = StyleSheet.create({
         marginBottom: 20,
         marginLeft:20
     },
-    header: {
+    header1: {
         fontSize: 20,
-        color:"#4c4c4b"
+        color: "#4c4c4b",
+        fontFamily:"Roboto-BoldItalic"   
+    },
+    header2: {
+        fontSize: 20,
+        color: "#4c4c4b",
+        fontFamily:"Roboto-Italic",
+        fontWeight:'normal'
     },
     suggestplace: {
-        width: 250,
+        width: 250,  
         height: 130,
         borderTopLeftRadius: 10,
         borderTopRightRadius: 10,
