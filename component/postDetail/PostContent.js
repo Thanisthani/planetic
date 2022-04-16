@@ -114,7 +114,8 @@ const Styles = StyleSheet.create({
         alignItems: "center",
         marginTop: 20,
         justifyContent: "space-between",
-        marginHorizontal:30
+        marginHorizontal: 30,
+        backgroundColor:"#ffffff"
     },
     // followText: {
     //     fontSize: 18,
@@ -160,7 +161,7 @@ const Styles = StyleSheet.create({
     },
     paragh: {
         fontSize: 18,
-        color: "#afafb1",
+        color: "#565659",
         textAlign: 'justify',
         marginHorizontal: 20,
         marginTop:20

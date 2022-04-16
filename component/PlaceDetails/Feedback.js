@@ -100,7 +100,7 @@ const Feedback = ({navigation}) => {
                     <AntDesign key={index} name="star" size={15} color={item <= review.rating ? "#ffcb82" : "#ffe2bd"} />
       
                   ))}
-                  
+                   
                 </View>
     </View>
     <Text>                </Text>

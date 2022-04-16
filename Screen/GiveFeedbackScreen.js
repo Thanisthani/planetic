@@ -5,7 +5,7 @@ import Header from '../component/giveFeedback/Header';
 
 const GiveFeedbackScreen = ({navigation}) => {
   return (
-      <View>
+      <View style={Styles.container}>
           <Header navigation={ navigation}/>
      <GiveFeedback navigation={ navigation}  />
     </View>
@@ -15,7 +15,7 @@ const GiveFeedbackScreen = ({navigation}) => {
 const Styles = StyleSheet.create({
     container: {
         flex: 1,
-      backgroundColor:"white"
+      backgroundColor:"#ffffff"
     }
 })
 

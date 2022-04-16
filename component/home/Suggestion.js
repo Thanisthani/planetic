@@ -5,57 +5,59 @@ import { db ,auth} from '../../firebase';
 import { collection, onSnapshot,updateDoc,doc } from '@firebase/firestore'
 import { useSelector } from 'react-redux'
 import { SignInUser } from '../../Redux/Reducer/UserSlicer'
-import {Roboto_400Regular_Italic} from '@expo-google-fonts/roboto';
 import * as Font from 'expo-font';
+
 
 
 
 const Suggestion = () => {
 
-
+const [fontLoaded,setFontLoaded] = useState(false)
     
     const user = useSelector(SignInUser);
     
 
-const [suggestPlace, setSuggestPlace] = useState(null)
+    const [suggestPlace, setSuggestPlace] = useState(null)
 
-const getPlace = async () =>
-    {
-        try{
+    const getPlace = async () => {
+        try {
             const plans = doc(db, "Suggested_place", auth.currentUser.uid)
            
-          await  onSnapshot(plans, (snapshot) =>
-            setSuggestPlace(snapshot.data())
+            await onSnapshot(plans, (snapshot) =>
+                setSuggestPlace(snapshot.data())
             )
-            }
-            catch (error)
-            {
-                console.log(error)
-            }
+        }
+        catch (error) {
+            console.log(error)
+        }
     }
 
-    const getFonts = () =>
-        Font.loadAsync({
+    const getFonts = async () =>{
+        await Font.loadAsync({
             'Roboto-Italic': require('../../assets/fonts/Roboto-Italic.ttf'),
             'Roboto-BoldItalic': require('../../assets/fonts/Roboto-BoldItalic.ttf'),
             'Roboto-ThinItalic': require('../../assets/fonts/Roboto-ThinItalic.ttf'),
-            
-  });
+            'Roboto-Regular': require('../../assets/fonts/Roboto-Regular.ttf'),
+            'Roboto-Bold': require('../../assets/fonts/Roboto-Bold.ttf'),
+        })
+setFontLoaded(true)
+
+}
     
-    // update recommended places
-    const updatePlace = async () =>
-    {
+    // // update recommended places
+    // const updatePlace = async () =>
+    // {
         
-        if (myPlan != null)
-        {
-            await updateDoc(doc(db,'Recommend_place',"one"), {
-                placeName:myPlan[0].placeName
+    //     if (myPlan != null)
+    //     {
+    //         await updateDoc(doc(db,'Recommend_place',"one"), {
+    //             placeName:myPlan[0].placeName
     
-           })
-        }
+    //        })
+    //     }
         
             
-        }
+    //     }
         
 
     useEffect(() => {
@@ -72,6 +74,7 @@ const getPlace = async () =>
     getPlace()
     // updatePlace()
     // console.log("place details" + suggestPlace.TripPlace)
+        console.log(auth.currentUser.uid)
     
 }, [])
     
@@ -79,11 +82,11 @@ const getPlace = async () =>
     return (
         <View style={Styles.container}>
             
-            <View style={Styles.headerWrapper}>
+         { fontLoaded &&  <View style={Styles.headerWrapper}>
                 <Text style={[Styles.header1]}>Suggestion</Text> 
                 {/* ,{fontWeight:"bold"} */}
                 <Text style={Styles.header2}> for You</Text>
-            </View>
+            </View>}
 
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
 
@@ -121,16 +124,13 @@ const getPlace = async () =>
                     </View>
 
                     ))} 
-      
-
-
-                {/* <View style={{ marginBottom:10 }}>
+         {/* <View style={{ marginLeft:20 }}>
                 <Image style={Styles.suggestplace}
-                        source={require("../../assets/suggest-kandy.jpg")} />
+                        source={require("../../assets/jaffna2.jpg")} />
                     <View style={Styles.suggestBottom}>
-
+    
                         <View style={{ flexDirection: "row", justifyContent: "center" }}>
-                            <Text style={Styles.suggestText}>Kandy</Text>
+                            <Text style={Styles.suggestText}>Jaffna</Text>
                         </View>
                         
                         <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
@@ -142,7 +142,7 @@ const getPlace = async () =>
 
                             <View style={{ flexDirection: "row" }}>
                                 <Entypo name="location-pin" size={20} color="#19B4BF" />
-                                <Text style={[Styles.catogary]}>Heritage</Text>         
+                                <Text style={[Styles.catogary]}>Beach</Text>         
                             </View>
                             
                         </View>
@@ -151,26 +151,26 @@ const getPlace = async () =>
                     
                 </View>
 
-                
-                <View style={{  }}>
+
+                <View style={{ marginBottom:10,marginLeft:10 }}>
                 <Image style={Styles.suggestplace}
-                        source={require("../../assets/suggest-kandy.jpg")} />
+                        source={require("../../assets/Haputale.png")} />
                     <View style={Styles.suggestBottom}>
-    
+
                         <View style={{ flexDirection: "row", justifyContent: "center" }}>
-                            <Text style={Styles.suggestText}>Kandy</Text>
+                            <Text style={Styles.suggestText}>Haputale</Text>
                         </View>
                         
                         <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
                             
                             <View style={{ flexDirection: "row", alignItems: "center" }}>
                                 <AntDesign name="clockcircle" size={13} color="#19B4BF" />
-                                <Text style={[Styles.catogary]}>  05 Days</Text>
+                                <Text style={[Styles.catogary]}>  03 Days</Text>
                             </View>
 
                             <View style={{ flexDirection: "row" }}>
                                 <Entypo name="location-pin" size={20} color="#19B4BF" />
-                                <Text style={[Styles.catogary]}>Heritage</Text>         
+                                <Text style={[Styles.catogary]}>Mountain</Text>         
                             </View>
                             
                         </View>
@@ -178,6 +178,9 @@ const getPlace = async () =>
                     </View>
                     
                 </View> */}
+
+                
+             
 
 
             </ScrollView>
@@ -233,6 +236,7 @@ const Styles = StyleSheet.create({
         fontSize: 19,
         fontWeight: "bold",
         color: "#4c4c4b",
+      
     },
     catogary: {
         fontSize: 15,

@@ -1,57 +1,48 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Image, Text, ImageBackground, StatusBar, StyleSheet, TextInput, TouchableOpacity } from 'react-native'
 import { AntDesign } from '@expo/vector-icons';
 import { FlatList } from 'react-native-gesture-handler';
 import Modal from "react-native-modal";
+import { collection, doc,onSnapshot } from '@firebase/firestore'
+import { db } from '../../firebase'
 
 
 const Header = ({ navigation, pic }) => {
     
     // modal
     const [visible, setVisible] = useState(false)
-
-    const DATA = [
-        {
-          id: "1",
-          title: "Kandy",
-        },
-        {
-          id: "2",
-          title: "Colombo",
-        },
-        {
-          id: "3",
-          title: "Ella",
-        },
-        {
-            id: "4",
-            title: "Badulla",
-        },
-        {
-            id: "5",
-            title: "Matale",
-        },
-        {
-            id: "6",
-            title: "Batticalo",
-        },
-        {
-            id: "7",
-            title: "Trincomale",
-        },
-        {
-            id: "8",
-            title: "KegalleK",
-          },
-      ];
-      
-    
+    const [listPlace, setListplace] = useState()    
     const [enter, setEnter] = useState(false);
-    const [masterArray, setMasterArrary] = useState(DATA)
-    const [filterArray, setFilterArray] = useState(DATA)
+    const [masterArray, setMasterArrary] = useState(null)
+    const [filterArray, setFilterArray] = useState(null)
     const [search,setSearch] = useState()
 
   
+
+// fetch destinations from firebase
+  const getDestination = async () =>{  
+const places = collection(db, 'Destination')
+await onSnapshot(places, (snapshot) =>
+{
+    setListplace((snapshot.docs.map((place) => ({ id: place.id, ...place.data() }))))
+    if (!masterArray)
+    {
+        setMasterArrary((snapshot.docs.map((place) => ({ id: place.id, ...place.data() }))))
+    }
+    if (!filterArray)
+    {
+        setFilterArray((snapshot.docs.map((place) => ({ id: place.id, ...place.data() }))))
+        // console.log(users)
+        }
+
+})
+      
+    }
+    
+    useEffect(() => {
+        getDestination()
+    })
+
 
 // search filter
     const SearchFilter = (text) => {
@@ -59,7 +50,7 @@ const Header = ({ navigation, pic }) => {
         {
             setEnter(true)
             const newData = masterArray.filter((item) => {
-                const itemData = item.title ? item.title.toUpperCase()
+                const itemData = item.d_name ? item.d_name.toUpperCase()
                     : "".toUpperCase();
                 const textData = text.toUpperCase()
                 return itemData.indexOf(textData) > -1
@@ -79,10 +70,10 @@ const Header = ({ navigation, pic }) => {
         return (
             <TouchableOpacity onPress={() => {
                     navigation.navigate('DestinationScreen', {
-                        place_name: item.title,
+                        place_name: item.d_name,
                          })   
                 }}>
-                <Text style={Styles.listText}>{item.title}</Text>
+                <Text style={Styles.listText}>{item.d_name}</Text>
                 
             </TouchableOpacity>
             
@@ -114,7 +105,7 @@ const Header = ({ navigation, pic }) => {
                         <Text style={Styles.heading}>new places</Text>
                 </View>
                 
-                {/* search  */}
+                {/* search  */} 
                 <View style={Styles.searchWrapper}>
                    
                     <View style={Styles.search}>

@@ -109,7 +109,8 @@ const Styles = StyleSheet.create(
     {
         container: {
             marginTop: StatusBar.currentHeight,
-            marginHorizontal:10
+            marginHorizontal: 10,
+            
         },
         
         headerWrapper: {

@@ -13,7 +13,7 @@ const SignInScreen = ({navigation}) => {
 const Styles = StyleSheet.create({
     conatiner: {
         flex: 1,
-        backgroundColor: "white",
+        backgroundColor: "#ffffff",
         paddingTop:StatusBar.currentHeight,
     }
 })

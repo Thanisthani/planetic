@@ -23,14 +23,18 @@ const SignUp = ({ navigation }) => {
             .then((re) => {
                 // console.log(re);
                 console.log("Sucessfully signed up");
-                 setDoc(doc(db, "users", re.user.uid), {
+                setDoc(doc(db, "users", re.user.uid), {
                     uid: re.user.uid,
                     username: username,
-                     email: email,
-                     follower: [],
-                     following: [],
-                    pic:"https://firebasestorage.googleapis.com/v0/b/plannetic-sample.appspot.com/o/profile-img.jpg?alt=media&token=06f86d6b-fa96-41e9-a079-0a56f140768e"
-                  });
+                    email: email,
+                    follower: [],
+                    following: [],
+                    pic: "https://firebasestorage.googleapis.com/v0/b/plannetic-sample.appspot.com/o/profile-img.jpg?alt=media&token=06f86d6b-fa96-41e9-a079-0a56f140768e"
+                });
+                setDoc(doc(db, 'Suggested_place', re.user.uid), {
+                    TripPlace: ['Jaffna', 'Vavuniya', 'Kandy', 'Badulla', 'Batticalo', 'Matale']
+                });
+                
             })
             .catch((re) => {
                 console.log(re );

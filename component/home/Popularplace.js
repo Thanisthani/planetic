@@ -2,12 +2,28 @@ import React, { useEffect, useState } from 'react'
 import { View, Text, StyleSheet, ImageBackground, ScrollView,TouchableOpacity } from 'react-native'
 import { Entypo } from '@expo/vector-icons';
 import { collection, onSnapshot } from '@firebase/firestore'
-import {db} from '../../firebase'
+import { db } from '../../firebase'
+import * as Font from 'expo-font';
 
 
 const Popularplace = ({ navigation }) => {
 
+    const [fontLoaded,setFontLoaded] = useState(false)
+
     const [pPlace,setPPlace] = useState([])
+
+
+    const getFonts = async () =>{
+        await Font.loadAsync({
+            'Roboto-Italic': require('../../assets/fonts/Roboto-Italic.ttf'),
+            'Roboto-BoldItalic': require('../../assets/fonts/Roboto-BoldItalic.ttf'),
+            'Roboto-ThinItalic': require('../../assets/fonts/Roboto-ThinItalic.ttf'),
+            
+        })
+setFontLoaded(true)
+
+    }
+    
 
     const getPopularplace = () =>
     {
@@ -26,16 +42,17 @@ const Popularplace = ({ navigation }) => {
         }
     
     useEffect(() => {
+        getFonts()
         getPopularplace();
     })
 
     return (
         <View style={Styles.container}>
             
-            <View style={Styles.headerWrapper}>
-                <Text style={[Styles.header,{fontWeight:"bold"}]}>Popular</Text> 
-                <Text style={Styles.header}> places</Text>
-            </View>
+            {fontLoaded &&<View style={Styles.headerWrapper}>
+                <Text style={[Styles.header1]}>Popular</Text> 
+                <Text style={Styles.header2}> places</Text>
+            </View>}
 
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
 
@@ -88,9 +105,16 @@ const Styles = StyleSheet.create({
         marginBottom: 20,
         marginLeft:20
     },
-    header: {
+    header1: {
         fontSize: 20,
-        color:"#4c4c4b"
+        color: "#4c4c4b",
+        fontFamily:"Roboto-BoldItalic"   
+    },
+    header2: {
+        fontSize: 20,
+        color: "#4c4c4b",
+        fontFamily:"Roboto-Italic",
+        fontWeight:'normal'
     },
     suggestImg: {
         width: 160,
