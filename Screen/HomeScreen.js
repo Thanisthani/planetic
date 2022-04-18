@@ -50,7 +50,7 @@ const HomeScreen = ({ navigation }) => {
             
             <ScrollView showsVerticalScrollIndicator={false}>
                 {cUser && <Header navigation={navigation} pic={ cUser.pic}/>}
-                <Suggestion />
+                <Suggestion navigation={navigation} />
                 <Popularplace navigation={navigation} />
             </ScrollView>
             {/* <BottomTabs/> */}

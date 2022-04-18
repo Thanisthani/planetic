@@ -1,5 +1,5 @@
 import React,{ useEffect,useState } from 'react'
-import { View, Text, StyleSheet, Image, ImageBackground, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, Image, ImageBackground, ScrollView, TouchableOpacity } from 'react-native'
 import { Entypo, AntDesign } from '@expo/vector-icons';
 import { db ,auth} from '../../firebase';
 import { collection, onSnapshot,updateDoc,doc,query,where,limit } from '@firebase/firestore'
@@ -10,7 +10,7 @@ import * as Font from 'expo-font';
 
 
 
-const Suggestion = () => {
+const Suggestion = ({navigation}) => {
 
 const [fontLoaded,setFontLoaded] = useState(false)
     
@@ -18,7 +18,7 @@ const [fontLoaded,setFontLoaded] = useState(false)
     
 
     const [suggestPlace, setSuggestPlace] = useState(null)
-    const [fPlace,setFplace] = useState([])
+    const [fPlace,setFplace] = useState(null)
 
     const getPlace = async () => {
         try {
@@ -28,9 +28,7 @@ const [fontLoaded,setFontLoaded] = useState(false)
                 setSuggestPlace(snapshot.data())
             )
 
-            if (suggestPlace && fPlace.length == 0) {
-                getSuggested()
-            }
+           
         }
         catch (error) {
             console.log(error)
@@ -80,12 +78,20 @@ setFontLoaded(true)
     //         console.log("Hi recommend" +article["hello"] ) 
     //      )
     // .catch(error => {console.log("suggestion  " + error)})
-    getPlace()
+        getPlace()
+        
     // updatePlace()
     // console.log("place details" + suggestPlace.TripPlace)
-        console.log(fPlace[2])
+        // console.log(fPlace[2])
     
-}, [])
+    }, [])
+    
+    useEffect(() => {
+        if (suggestPlace) {
+            setFplace([])
+            getSuggested()
+        }
+    },[suggestPlace])
     
     
     return (
@@ -105,7 +111,15 @@ setFontLoaded(true)
 
                 {fPlace && fPlace.map((sPlace, index) =>
                 (
-                    <View key={index} style={{  marginLeft:20 }}>
+                    <TouchableOpacity key={index} style={{  marginLeft:10 }} onPress={() => {
+                        navigation.navigate('TripPlanScreen',
+                              {
+                                  place_id:sPlace[0].id,
+                                  imgURL:sPlace[0].imgURL,
+                                  place_name: sPlace[0].d_name,
+                                  budget:sPlace[0].budget
+                          })  
+                      }}>
                     <Image style={Styles.suggestplace}
                             source={{uri:sPlace[0].imgURL}} />
                         <View style={Styles.suggestBottom}>
@@ -130,7 +144,7 @@ setFontLoaded(true)
     
                         </View>
                         
-                    </View>
+                    </TouchableOpacity>
 
                     ))} 
          {/* <View style={{ marginLeft:20 }}>
