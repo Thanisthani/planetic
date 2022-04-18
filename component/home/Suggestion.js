@@ -2,7 +2,7 @@ import React,{ useEffect,useState } from 'react'
 import { View, Text, StyleSheet, Image, ImageBackground, ScrollView } from 'react-native'
 import { Entypo, AntDesign } from '@expo/vector-icons';
 import { db ,auth} from '../../firebase';
-import { collection, onSnapshot,updateDoc,doc } from '@firebase/firestore'
+import { collection, onSnapshot,updateDoc,doc,query,where,limit } from '@firebase/firestore'
 import { useSelector } from 'react-redux'
 import { SignInUser } from '../../Redux/Reducer/UserSlicer'
 import * as Font from 'expo-font';
@@ -18,6 +18,7 @@ const [fontLoaded,setFontLoaded] = useState(false)
     
 
     const [suggestPlace, setSuggestPlace] = useState(null)
+    const [fPlace,setFplace] = useState([])
 
     const getPlace = async () => {
         try {
@@ -26,12 +27,35 @@ const [fontLoaded,setFontLoaded] = useState(false)
             await onSnapshot(plans, (snapshot) =>
                 setSuggestPlace(snapshot.data())
             )
+
+            if (suggestPlace && fPlace.length == 0) {
+                getSuggested()
+            }
         }
         catch (error) {
             console.log(error)
         }
     }
 
+
+    // Get details
+
+    const getSuggested = async () =>
+    {
+        await suggestPlace.TripPlace.map((sPlace, index) => {
+            const details = collection(db, 'Destination')
+            const q = query(details, where("d_name", "==", sPlace),limit(1))
+
+             onSnapshot(q, (snapshot) =>
+            
+                setFplace(old => [...old,(snapshot.docs.map((place) => ({ id: place.id, ...place.data() })))])
+            )
+        }
+        )
+
+        }
+
+    // font
     const getFonts = async () =>{
         await Font.loadAsync({
             'Roboto-Italic': require('../../assets/fonts/Roboto-Italic.ttf'),
@@ -44,21 +68,6 @@ setFontLoaded(true)
 
 }
     
-    // // update recommended places
-    // const updatePlace = async () =>
-    // {
-        
-    //     if (myPlan != null)
-    //     {
-    //         await updateDoc(doc(db,'Recommend_place',"one"), {
-    //             placeName:myPlan[0].placeName
-    
-    //        })
-    //     }
-        
-            
-    //     }
-        
 
     useEffect(() => {
     
@@ -74,7 +83,7 @@ setFontLoaded(true)
     getPlace()
     // updatePlace()
     // console.log("place details" + suggestPlace.TripPlace)
-        console.log(auth.currentUser.uid)
+        console.log(fPlace[2])
     
 }, [])
     
@@ -94,27 +103,27 @@ setFontLoaded(true)
                 {/* Suggest place map */}
 
 
-                {suggestPlace && suggestPlace.TripPlace.map((sPlace, index) =>
+                {fPlace && fPlace.map((sPlace, index) =>
                 (
                     <View key={index} style={{  marginLeft:20 }}>
                     <Image style={Styles.suggestplace}
-                            source={require("../../assets/Ella.jpeg")} />
+                            source={{uri:sPlace[0].imgURL}} />
                         <View style={Styles.suggestBottom}>
         
                             <View style={{ flexDirection: "row", justifyContent: "center" }}>
-                                <Text style={Styles.suggestText}>{ sPlace}</Text>
+                                <Text style={Styles.suggestText}>{sPlace[0].d_name}</Text>
                             </View>
                             
                             <View style={{ flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
                                 
                                 <View style={{ flexDirection: "row", alignItems: "center" }}>
                                     <AntDesign name="clockcircle" size={13} color="#19B4BF" />
-                                    <Text style={[Styles.catogary]}>  04 Days</Text>
+                                    <Text style={[Styles.catogary]}> 0{sPlace[0].duration} Days</Text>
                                 </View>
     
                                 <View style={{ flexDirection: "row" }}>
                                     <Entypo name="location-pin" size={20} color="#19B4BF" />
-                                    <Text style={[Styles.catogary]}>Nature</Text>         
+                                    <Text style={[Styles.catogary]}>{sPlace[0].category}</Text>         
                                 </View>
                                 
                             </View>

@@ -62,7 +62,7 @@ const HomeScreen = ({ navigation }) => {
 const Styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: "white",
+        backgroundColor: "#ffffff",
         // marginTop:StatusBar.currentHeight
     }
 })
