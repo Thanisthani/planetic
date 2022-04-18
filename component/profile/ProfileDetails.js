@@ -3,7 +3,7 @@ import React,{ useState,useEffect }  from 'react'
 import { Entypo } from '@expo/vector-icons';
 import { useSelector } from 'react-redux'
 import { SignInUser } from '../../Redux/Reducer/UserSlicer'
-import { onSnapshot, updateDoc, doc, } from 'firebase/firestore';
+import { onSnapshot, updateDoc, doc, collection, } from 'firebase/firestore';
 import { db, storage } from '../../firebase'
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage'
 import * as ImagePicker from 'expo-image-picker';
@@ -13,6 +13,7 @@ import * as ImagePicker from 'expo-image-picker';
 const ProfileDetails = () => {
     const user = useSelector(SignInUser);
     const [cUser, setCuser] = useState()
+    const [tCount, setTcount] = useState()
     
     const [image, setImage] = useState(user.pic);
 
@@ -82,9 +83,25 @@ const ProfileDetails = () => {
             console.log(error)
         }
     }
+
+    const getCount = async () => {
+        try {
+            
+            const ref = collection(db, "users", user.uid, "user_plan")
+            onSnapshot(ref, (snapshot) =>
+            {
+                setTcount((snapshot.docs.map((place) => ({ id: place.id, ...place.data() }))))
+          
+            })
+        }
+        catch {
+            
+        }
+    }
     
     useEffect(() => {
         getUser()
+        getCount()
     },[])
 
   return (
@@ -120,7 +137,7 @@ const ProfileDetails = () => {
               </View>
 
               <View style={Styles.countWrapper}>
-                  <Text style={Styles.count}>45</Text>
+                  <Text style={Styles.count}>{tCount && tCount.length}</Text>
                   <Text style={Styles.countText}>Visited</Text>
                       <Text style={Styles.countText}>Places</Text>
 
