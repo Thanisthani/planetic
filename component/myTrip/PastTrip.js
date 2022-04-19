@@ -36,12 +36,14 @@ const PastTrip = ({navigation}) => {
     return (
   <View style={Styles.container}>
      {/* Past */}
-     <Text style={Styles.heading}>Past</Text>
-
+            { myPlan && myPlan.length > 0 ?
+                <Text style={Styles.heading}>Past</Text>
+                : null
+}
             <View style={{ flexDirection: "row" }}>
 
                 <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                {myPlan.map((plan) => (
+                {myPlan && myPlan.map((plan) => (
 
                     <TouchableOpacity key={plan.id}
                         onPress={() => {

@@ -12,7 +12,7 @@ const MyTrip = ({navigation}) => {
 
     const date = Moment().format('YYYY-MM-DD ')
 
-    const [myPlan, setMyPlan] = useState([])
+    const [myPlan, setMyPlan] = useState(null)
 
     
     const getPlan =  () =>
@@ -36,11 +36,13 @@ const MyTrip = ({navigation}) => {
   return (
       <View style={Styles.container}>
               <View>
-          <Text style={Styles.heading}>Upcoming</Text>
+              {myPlan && myPlan.length > 0 ?
+                  <Text style={Styles.heading}>Upcoming</Text>
+                : null}
           
                   {/* Upcoming */}
 
-                  {myPlan.map((plan) => (
+                  {myPlan && myPlan.map((plan) => (
                       
                       <TouchableOpacity key={ plan.id} onPress={() => {
                         navigation.navigate('TripPlanScreen',

@@ -48,7 +48,7 @@ const FormGetTrip = ({ navigation }) => {
     const [items, setItems] = useState([
       {label: 'Mountain', value: 'Mountain'},
         { label: 'Heritage', value: 'Heritage' },
-        { label: 'Sea', value: 'Sea' },
+        { label: 'Beach', value: 'Beach' },
         { label: 'Adventurous', value: 'adventurous' },
         {label: 'NightOut', value: 'nightout'},
     ]);
@@ -285,7 +285,8 @@ const FormGetTrip = ({ navigation }) => {
                               range={true}
                          
                               selectedStyle={{
-                                backgroundColor: "#19B4BF",
+                                  backgroundColor: "#19B4BF",
+                                  
                               }}
 
                               selectedTextStyle={{
@@ -293,6 +294,14 @@ const FormGetTrip = ({ navigation }) => {
                                   fontWeight:"bold"
                               }}
                              
+                              containerStyle={{
+                               
+                             
+                              }}
+                              backdropStyle={{
+                                  elevation: 20,
+                                  backgroundColor:"#a3a8a8"
+                              }}
                           >
             
                                   <View style={Styles.calenderWrapper}>
@@ -421,8 +430,10 @@ const FormGetTrip = ({ navigation }) => {
                                       borderRadius: 10,
                                       width: 330,
                                       marginTop: 20,
-                                      borderColor: "#00009d",
-                                      borderWidth: 2,
+                                      borderColor: "#eaebeb",
+                                      borderWidth: 0.4,
+                                      elevation: 6,
+                                      backgroundColor:"#ffffff"
                                   }}
                                   textStyle={{
                                     fontSize: 18
@@ -430,15 +441,17 @@ const FormGetTrip = ({ navigation }) => {
                                   dropDownContainerStyle={{
                                       backgroundColor: "white",
                                       borderColor: "#00009d",
-                                      borderWidth: 1,
-                                      width:330
+                                      borderWidth: 0.5,
+                                      width: 330,
+                                      paddingTop:30
                                   }}
                                 //   onSelectItem={(item) => {
                                 //     console.log(item);
                                 //   }}
                                   labelProps={{
                                     borderColor: "#00009d",
-                                    borderWidth: 2,
+                                      borderWidth: 0,
+                                     
                                   }}
                                 //   disabled={false}
                                   autoScroll={true}
@@ -490,13 +503,15 @@ const Styles = StyleSheet.create(
     {
         placeInput: {
             flexDirection: "row",
-            borderWidth: 2,
+            borderWidth: 0.4,
             borderRadius: 10,
             padding: 20,
             alignItems: "center",
             marginBottom: 20,
             width: 330,
-            borderColor:"#00009d"
+            borderColor: "#eaebeb",
+            elevation: 6,
+            backgroundColor:"#ffffff"
         },
         formInput: {
             // paddingHorizontal: 30,
@@ -512,11 +527,13 @@ const Styles = StyleSheet.create(
         },
         calenderWrapper: {
             borderRadius: 10,
-            borderWidth: 2,
+            borderWidth: 0.4,
             width: 330,
             paddingVertical: 7,
             paddingLeft: 20,
-            borderColor:"#00009d"
+            borderColor: "#eaebeb",
+            elevation: 6,
+            backgroundColor:"#ffffff"
             
         },
         dateWrapper: {
@@ -544,13 +561,16 @@ const Styles = StyleSheet.create(
             paddingLeft:20
         },
         budgetwrapper: {
-            borderWidth: 2,
+            borderWidth: 0.4,
             borderRadius: 10,
             marginTop: 20,
             paddingVertical: 7,
             paddingLeft: 20,
             width: 330,
-            borderColor:"#00009d"
+            borderColor: "#eaebeb",
+            elevation: 6,
+            backgroundColor: "#ffffff",
+            
         },
         catogary: {
             marginTop: 20,
