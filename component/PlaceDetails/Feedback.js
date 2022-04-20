@@ -28,17 +28,17 @@ const Feedback = ({navigation}) => {
      
    })
     
-    if (treview)
-    {
+  //   if (treview)
+  //   {
       
-      setUserRating((treview.reduce((a,v) =>  a += v.rating ,  0 ))/treview.length)
-    }
-    else {
+  //     setUserRating((treview.reduce((a,v) =>  a += v.rating ,  0 ))/treview.length)
+  //   }
+  //   else {
       
-      console.log("treview not store")
-    }
+  //     console.log("treview not store")
+  //   }
     
-   console.log(userRating) 
+  //  console.log(userRating) 
 
   }
 
@@ -46,9 +46,23 @@ const Feedback = ({navigation}) => {
  
   // }
 
+  const getRating = async () =>
+  {
+    await  setUserRating((treview.reduce((a,v) =>  a += v.rating ,  0 ))/treview.length)
+  }
+
   useEffect(() => {
     getReview();
-  },[])
+   
+   
+  }, [])
+
+  useEffect(() => {
+   
+      getRating()
+   
+   
+  },[treview])
   
   
   return (
@@ -67,11 +81,12 @@ const Feedback = ({navigation}) => {
       <View style={Styles.rating}>
 
           {userRating ?
-            <Text style={Styles.rate}>{userRating.toString().slice(0,3)}</Text>
-          : <Text style={Styles.rate}>3.2</Text>}
+            <Text style={Styles.rate}>{userRating.toString().slice(0, 3)}</Text>
+            : 
+            <Text style={Styles.rate}>0.0</Text>}
         <View>
         <View style={Styles.star}>
-                  {rating.map((item, index) =>
+                  { rating.map((item, index) =>
                   (
                     <AntDesign key={index} name="star" size={24} color={item <= userRating ? "#ffcb82" : "#ffe2bd"} />
       
@@ -86,11 +101,11 @@ const Feedback = ({navigation}) => {
      
       { treview.map((review) => (
 
-<View key={review.id}>
-<View>
-  <View style={Styles.reviewHeader}>
+        <View key={review.id} style={Styles.reviewContainer}>
+          <View>
+            <View style={Styles.reviewHeader}>
 
-    <Image style={Styles.pic} source={require("../../assets/profile-pic.jpg")} />
+    <Image style={Styles.pic} source={{uri:review.u_imgURL}} />
  
     <View>
                 <Text style={Styles.username}>{ review.u_name}</Text>
@@ -114,7 +129,16 @@ const Feedback = ({navigation}) => {
 {/* review */}
           <Text style={Styles.review}>{review.review }</Text>
 
-</View>
+          <View
+  style={{
+    borderBottomColor: 'black',
+              borderBottomWidth: 0,
+    marginHorizontal:30
+  }}
+/>
+        </View>
+
+        
 
       ))}
         
@@ -153,7 +177,8 @@ const Styles = StyleSheet.create(
       borderRadius: 10,
       marginTop: 10,
       alignItems: "center",
-      paddingHorizontal:20
+      paddingHorizontal: 20,
+      marginBottom:20
     },
     rate: {
       fontSize: 39,
@@ -192,7 +217,16 @@ const Styles = StyleSheet.create(
       textAlign: "justify",
       fontSize: 16,
       color: "#989898",
-      paddingHorizontal:30
+      paddingHorizontal: 30,
+      paddingBottom:20
+    },
+    reviewContainer: {
+      // elevation: 2,
+      backgroundColor: "#ffffff",
+      borderWidth: 0.6,
+      marginBottom: 15,
+      borderRadius: 20,
+      borderColor:"#0affff"
     }
   }
 )

@@ -84,6 +84,8 @@ const ProfileDetails = () => {
         }
     }
 
+
+    // visited place count
     const getCount = async () => {
         try {
             

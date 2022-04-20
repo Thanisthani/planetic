@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, TextInput,TouchableOpacity } from 'react-native';
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 import { AntDesign } from '@expo/vector-icons';
-import { collection, setDoc, doc,serverTimestamp} from 'firebase/firestore';
+import { collection, setDoc, doc,serverTimestamp,onSnapshot} from 'firebase/firestore';
 import { db } from '../../firebase';
 import { useRoute } from '@react-navigation/native'
 import { useSelector } from 'react-redux'
@@ -17,6 +17,34 @@ const GiveFeedback = ({navigation}) => {
   const [rating, setRating] = useState([1, 2, 3, 4, 5])
 
   const [review, setReview] = useState()
+  const [cUser, setCuser] = useState()
+
+// getuser
+  
+  const getcuser = async () =>
+{
+  try {
+
+    const ref = doc(db, "users", user.uid)
+    onSnapshot(ref, (snapshot) => {
+        // console.log(snapshot.data())
+
+        setCuser(snapshot.data())
+               
+        })
+    console.log(cUser)
+    
+  }
+  catch (error) {
+    console.log(error)
+  }
+  
+}
+  
+
+
+
+  // uploadFeedback
   
   const uploadFeedback = async () => {
    
@@ -28,6 +56,7 @@ const GiveFeedback = ({navigation}) => {
         review: review,
         rating: defaultRating,
         createAt: serverTimestamp(),
+        u_imgURL : cUser.pic
       }).then(
       navigation.goBack()
         
@@ -35,6 +64,11 @@ const GiveFeedback = ({navigation}) => {
         console.log(error))
     
   }
+  useEffect(() => {
+   getcuser()
+   
+   
+  }, [])
 
   return (
     <View style={Styles.container}>
