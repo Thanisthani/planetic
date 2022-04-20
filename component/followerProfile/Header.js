@@ -2,7 +2,7 @@ import { View, Text, StatusBar,StyleSheet,TouchableOpacity,Image } from 'react-n
 import React,{ useState,useEffect } from 'react'
 import { Ionicons } from '@expo/vector-icons';
 import { useRoute } from '@react-navigation/native'
-import { updateDoc,doc,onSnapshot,arrayUnion,arrayRemove} from '@firebase/firestore'
+import { updateDoc,doc,onSnapshot,collection,arrayUnion,arrayRemove} from '@firebase/firestore'
 import { db } from '../../firebase'
 import { useSelector } from 'react-redux'
 import { SignInUser } from '../../Redux/Reducer/UserSlicer'
@@ -11,7 +11,8 @@ const Header = ({ navigation }) => {
     const user = useSelector(SignInUser);
     const route = useRoute();
     const { followerId } = route.params;
-    const [follower,setFollower] = useState()
+    const [follower, setFollower] = useState()
+    const [fPlan, setFPlan] = useState([])
 
     // getfolower details
 
@@ -35,6 +36,22 @@ const Header = ({ navigation }) => {
             
        
     }
+    // get follower visited count
+    const getPlan =  () =>
+    {
+        try {
+            const plans = collection(db, "users", followerId, "user_plan")
+            onSnapshot(plans, (snapshot) =>
+            setFPlan((snapshot.docs.map((place) => ({id: place.id, ...place.data()} ))))
+            )
+            // console.log(fPlan)
+        } catch (error)
+        {
+console.log(error + "some")
+        }
+
+    }
+
 
     // update follow
 
@@ -65,7 +82,8 @@ const Header = ({ navigation }) => {
     
     useEffect(() => {
     
-            getFollower()
+        getFollower()
+        getPlan()
       
     },[user])
 
@@ -126,7 +144,7 @@ const Header = ({ navigation }) => {
               </View>
 
               <View style={Styles.countWrapper}>
-                  <Text style={Styles.count}>45</Text>
+                    <Text style={Styles.count}>{ fPlan && fPlan.length}</Text>
                   <Text style={Styles.countText}>Visited</Text>
                       <Text style={Styles.countText}>Places</Text>
 

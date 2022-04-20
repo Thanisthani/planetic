@@ -64,7 +64,7 @@ const NotificationScreen = ({navigation}) => {
 
   const getNotify = async () => {
     const notifications = collection(db, "users", user.uid, "notification")
-    const q = query(notifications,where("startdate", "<=", tomorrow), orderBy('startdate', 'desc') )
+    const q = query(notifications,where("startdate", "<=", tomorrow), orderBy('startdate', 'desc').limit(10) )
     onSnapshot(q, (snapshot) =>
    setNotify((snapshot.docs.map((not) => ({id: not.id, ...not.data()} ))))
     )

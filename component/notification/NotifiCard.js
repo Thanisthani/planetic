@@ -46,9 +46,9 @@ const Styles = StyleSheet.create({
         paddingHorizontal: 0,
         borderRadius: 25,
         height: 90,
-        // borderWidth: 0.4,
-        borderColor: "#19B4BF",
-        elevation: 3,
+        borderWidth: 0.4,
+        borderColor: "#eaebeb",
+        elevation: 5,
     },
     img: {
         height: 90,

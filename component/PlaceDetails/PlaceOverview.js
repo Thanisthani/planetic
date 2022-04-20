@@ -117,7 +117,7 @@ const Styles = StyleSheet.create(
         },
         rightText: {
             fontSize: 18,
-            color:"#989898"
+            color:"#707070"
         },
         map: {
           
@@ -138,7 +138,7 @@ const Styles = StyleSheet.create(
         aboutText: {
             textAlign: "justify",
             fontSize: 18,
-            color:"#989898"
+            color:"#707070"
         },
         mapfloat: {
             position: "absolute",
