@@ -15,7 +15,8 @@ const HomeScreen = ({ navigation }) => {
 
     // current users details
     const getCurrentUser = () => {
-        const ref = doc(db, 'users',auth.currentUser.uid)
+        const ref = doc(db, 'users', auth.currentUser.uid);
+        console.log(auth.currentUser.uid);
         onSnapshot(ref, (snapshot) => {
 
             setCuser(snapshot.data())
@@ -26,7 +27,7 @@ const HomeScreen = ({ navigation }) => {
                 }))
 
             
-
+            console.log(cUser);
         })
     
     }

@@ -111,7 +111,8 @@ await onSnapshot(places, (snapshot) =>
                     <View style={Styles.search}>
                         <AntDesign name="search1" size={20} color="black" />
                             <TextInput pointerEvents="none"
-                                style={Styles.searchtext} placeholder=' Where do you want to go?'
+                            style={Styles.searchtext} placeholder=' Where do you want to go?'
+
                             value={search}
                             underlineColorAndroid={"transparent"}
                             // onTouchStart={() => setEnter("hi")}

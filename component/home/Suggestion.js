@@ -1,8 +1,8 @@
 import React,{ useEffect,useState } from 'react'
-import { View, Text, StyleSheet, Image, ImageBackground, ScrollView, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, Image, ScrollView, TouchableOpacity } from 'react-native'
 import { Entypo, AntDesign } from '@expo/vector-icons';
 import { db ,auth} from '../../firebase';
-import { collection, onSnapshot,updateDoc,doc,query,where,limit } from '@firebase/firestore'
+import { collection, onSnapshot,doc,query,where,limit } from '@firebase/firestore'
 import { useSelector } from 'react-redux'
 import { SignInUser } from '../../Redux/Reducer/UserSlicer'
 import * as Font from 'expo-font';
@@ -12,13 +12,10 @@ import * as Font from 'expo-font';
 
 const Suggestion = ({navigation}) => {
 
-const [fontLoaded,setFontLoaded] = useState(false)
-    
-    const user = useSelector(SignInUser);
-    
+    const [fontLoaded, setFontLoaded] = useState(false);
 
-    const [suggestPlace, setSuggestPlace] = useState(null)
-    const [fPlace,setFplace] = useState(null)
+    const [suggestPlace, setSuggestPlace] = useState(null);
+    const [fPlace, setFplace] = useState(null);
 
     const getPlace = async () => {
         try {
@@ -27,6 +24,7 @@ const [fontLoaded,setFontLoaded] = useState(false)
             await onSnapshot(plans, (snapshot) =>
                 setSuggestPlace(snapshot.data())
             )
+            console.log(suggestPlace + "suggested place" + auth.currentUser.uid);
 
            
         }
@@ -40,18 +38,23 @@ const [fontLoaded,setFontLoaded] = useState(false)
 
     const getSuggested = async () =>
     {
-        await suggestPlace.TripPlace.map((sPlace, index) => {
+        try{
+        await suggestPlace.TripPlace.map( async (sPlace, index) => {
             const details = collection(db, 'Destination')
-            const q = query(details, where("d_name", "==", sPlace),limit(1))
+            const q =  query(details, where("d_name", "==", sPlace),limit(1))
 
-             onSnapshot(q, (snapshot) =>
+            onSnapshot(q, (snapshot) => setFplace(old => [...old, (snapshot.docs.map((place) => ({ id: place.id, ...place.data() })))]))
+
+        }
+            ) 
             
-                setFplace(old => [...old,(snapshot.docs.map((place) => ({ id: place.id, ...place.data() })))])
-            )
+        console.log(fPlace); 
         }
-        )
-
+        catch (error)
+        {
+            console.log(error + "ssss")
         }
+        } 
 
     // font
     const getFonts = async () =>{
@@ -78,7 +81,7 @@ setFontLoaded(true)
     //         console.log("Hi recommend" +article["hello"] ) 
     //      )
     // .catch(error => {console.log("suggestion  " + error)})
-        getPlace()
+        getPlace() 
         
     // updatePlace()
     // console.log("place details" + suggestPlace.TripPlace)
@@ -90,6 +93,7 @@ setFontLoaded(true)
         if (suggestPlace) {
             setFplace([])
             getSuggested()
+     
         }
     },[suggestPlace])
     
@@ -267,3 +271,7 @@ const Styles = StyleSheet.create({
     }
 })
 export default Suggestion
+
+
+
+

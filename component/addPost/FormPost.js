@@ -41,6 +41,8 @@ const FormPost = ({navigation}) => {
 
     const UploadPost = async (caption,description) =>
     {
+        console.log("Upload post");
+        
         let ImgUrl;
         
         if (image) {
@@ -68,7 +70,7 @@ const FormPost = ({navigation}) => {
         }).then(() => {
             Alert.alert('Successfully Posted');
            navigation.goBack()
-        })
+        }).catch((err) => console.log(err))
 
         }
 
